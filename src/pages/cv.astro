@@ -1,0 +1,132 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="CV - Dejan Vasic">
+	<main class="container">
+		<h1>Curriculum Vitae</h1>
+		
+		<section class="experience">
+			<h2>Work Experience</h2>
+			
+			<div class="job">
+				<h3>Staff Software Engineer</h3>
+				<div class="meta">
+					<span class="company">Company Name</span>
+					<span class="period">YYYY - Present</span>
+				</div>
+				<ul>
+					<li>Led development of key platform features serving X million users</li>
+					<li>Designed and implemented microservice architecture using [technologies]</li>
+					<li>Mentored junior engineers and established best practices</li>
+				</ul>
+			</div>
+			
+			<!-- Add more job entries as needed -->
+		</section>
+		
+		<section class="education">
+			<h2>Education</h2>
+			
+			<div class="degree">
+				<h3>Degree Name</h3>
+				<div class="meta">
+					<span class="institution">University Name</span>
+					<span class="period">YYYY - YYYY</span>
+				</div>
+			</div>
+		</section>
+		
+		<section class="skills">
+			<h2>Skills</h2>
+			
+			<div class="skill-category">
+				<h3>Languages & Frameworks</h3>
+				<ul class="skill-list">
+					<li>JavaScript/TypeScript</li>
+					<li>React</li>
+					<li>Node.js</li>
+					<!-- Add more skills -->
+				</ul>
+			</div>
+		</section>
+		
+		<a href="/" class="back-link">← Back to Home</a>
+	</main>
+</Layout>
+
+<style>
+	main {
+		padding: 2rem 0;
+	}
+	
+	h1 {
+		font-size: 2.5rem;
+		margin-bottom: 2rem;
+	}
+	
+	section {
+		margin-bottom: 3rem;
+	}
+	
+	h2 {
+		font-size: 1.8rem;
+		margin-bottom: 1.5rem;
+		color: var(--color-text);
+	}
+	
+	.job, .degree {
+		margin-bottom: 2rem;
+	}
+	
+	h3 {
+		font-size: 1.4rem;
+		margin-bottom: 0.5rem;
+	}
+	
+	.meta {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 1rem;
+		color: var(--color-text-light);
+	}
+	
+	ul {
+		margin-left: 1.5rem;
+		margin-bottom: 1.5rem;
+	}
+	
+	li {
+		margin-bottom: 0.5rem;
+	}
+	
+	.skill-category {
+		margin-bottom: 1.5rem;
+	}
+	
+	.skill-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-left: 0;
+		list-style: none;
+	}
+	
+	.skill-list li {
+		background-color: var(--color-primary-light);
+		color: var(--color-primary-dark);
+		padding: 0.3rem 0.8rem;
+		border-radius: 0.25rem;
+	}
+	
+	.back-link {
+		display: inline-block;
+		margin-top: 2rem;
+		color: var(--color-primary);
+		text-decoration: none;
+	}
+	
+	.back-link:hover {
+		text-decoration: underline;
+	}
+</style>

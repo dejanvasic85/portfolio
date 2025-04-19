@@ -1,0 +1,148 @@
+---
+import Layout from './Layout.astro';
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={frontmatter.title}>
+	<article class="blog-post">
+		<main class="container">
+			<header>
+				<div class="post-meta">
+					<span class="post-date">{frontmatter.date}</span>
+					{frontmatter.tags && (
+						<div class="tags">
+							{frontmatter.tags.map((tag) => (
+								<span class="tag">{tag}</span>
+							))}
+						</div>
+					)}
+				</div>
+				<h1>{frontmatter.title}</h1>
+				{frontmatter.excerpt && <p class="excerpt">{frontmatter.excerpt}</p>}
+			</header>
+			
+			<div class="content">
+				<slot />
+			</div>
+			
+			<div class="post-footer">
+				<a href="/blog" class="back-link">← Back to All Posts</a>
+			</div>
+		</main>
+	</article>
+</Layout>
+
+<!-- Code highlighting styles are now in global.css -->
+
+<style>
+	main {
+		padding: 2rem 0;
+	}
+	
+	header {
+		margin-bottom: 3rem;
+	}
+	
+	.post-meta {
+		margin-bottom: 1rem;
+	}
+	
+	.post-date {
+		color: #666;
+	}
+	
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 1rem;
+	}
+	
+	.tag {
+		background-color: var(--color-primary-light);
+		color: var(--color-primary);
+		padding: 0.25rem 0.75rem;
+		border-radius: 25px;
+		font-size: 0.85rem;
+	}
+	
+	h1 {
+		font-size: 2.5rem;
+		line-height: 1.2;
+		margin-bottom: 1rem;
+		color: var(--color-text);
+		font-weight: 700;
+		letter-spacing: -0.5px;
+	}
+	
+	.excerpt {
+		font-size: 1.2rem;
+		color: var(--color-text-light);
+		line-height: 1.6;
+		font-weight: 400;
+	}
+	
+	.content {
+		font-size: 1.1rem;
+		line-height: 1.7;
+		color: var(--color-text);
+	}
+	
+	.content h2 {
+		font-size: 1.8rem;
+		margin: 2rem 0 1rem;
+		color: var(--color-text);
+	}
+	
+	.content h3 {
+		font-size: 1.4rem;
+		margin: 1.5rem 0 1rem;
+		color: var(--color-text);
+	}
+	
+	.content p {
+		margin-bottom: 1.5rem;
+	}
+	
+	.content ul, .content ol {
+		margin-left: 2rem;
+		margin-bottom: 1.5rem;
+	}
+	
+	.content li {
+		margin-bottom: 0.5rem;
+	}
+	
+	.content img {
+		max-width: 100%;
+		border-radius: 0.5rem;
+		margin: 2rem 0;
+	}
+	
+	.post-footer {
+		margin-top: 4rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--color-border);
+	}
+	
+	.back-link {
+		display: inline-block;
+		color: var(--color-primary);
+		text-decoration: none;
+	}
+	
+	.back-link:hover {
+		text-decoration: underline;
+	}
+	
+	@media (max-width: 768px) {
+		.container {
+			padding: 1.5rem;
+		}
+		
+		h1 {
+			font-size: 2rem;
+		}
+	}
+</style>

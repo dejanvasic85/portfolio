@@ -1,0 +1,154 @@
+---
+layout: ../../layouts/BlogLayout.astro
+title: Creating a Modern React Component with TypeScript
+date: April 16, 2025
+tags: ["React", "TypeScript", "Frontend"]
+excerpt: Learn how to create a modern, type-safe React component using TypeScript, hooks, and best practices.
+---
+
+# Creating a Modern React Component with TypeScript
+
+React and TypeScript make an excellent combination for building robust, maintainable user interfaces. In this post, I'll walk through creating a modern React component with TypeScript that follows current best practices.
+
+## Setting Up the Component
+
+Let's start with a basic TypeScript React component:
+
+```tsx
+import React from 'react';
+
+type ButtonProps = {
+  label: string;
+  onClick: () => void;
+  variant?: 'primary' | 'secondary' | 'danger';
+  disabled?: boolean;
+};
+
+const Button: React.FC<ButtonProps> = ({
+  label,
+  onClick,
+  variant = 'primary',
+  disabled = false,
+}) => {
+  return (
+    <button
+      className={`button button--${variant}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {label}
+    </button>
+  );
+};
+
+export default Button;
+```
+
+## Adding State with Hooks
+
+Now let's enhance our component with some state using React hooks:
+
+```tsx
+import React, { useState } from 'react';
+
+type ButtonProps = {
+  label: string;
+  onClick: () => void;
+  variant?: 'primary' | 'secondary' | 'danger';
+  disabled?: boolean;
+};
+
+const Button: React.FC<ButtonProps> = ({
+  label,
+  onClick,
+  variant = 'primary',
+  disabled = false,
+}) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = async () => {
+    setIsLoading(true);
+    try {
+      await onClick();
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <button
+      className={`button button--${variant} ${isLoading ? 'button--loading' : ''}`}
+      onClick={handleClick}
+      disabled={disabled || isLoading}
+    >
+      {isLoading ? 'Loading...' : label}
+    </button>
+  );
+};
+
+export default Button;
+```
+
+## Custom Hooks
+
+We can extract the loading logic into a custom hook:
+
+```ts
+import { useState, useCallback } from 'react';
+
+export function useAsyncButton<T>(callback: () => Promise<T>) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      await callback();
+    } finally {
+      setIsLoading(false);
+    }
+  }, [callback]);
+
+  return { isLoading, handleClick };
+}
+```
+
+Then use it in our component:
+
+```tsx
+import React from 'react';
+import { useAsyncButton } from './hooks';
+
+type ButtonProps = {
+  label: string;
+  onClick: () => Promise<void>;
+  variant?: 'primary' | 'secondary' | 'danger';
+  disabled?: boolean;
+};
+
+const Button: React.FC<ButtonProps> = ({
+  label,
+  onClick,
+  variant = 'primary',
+  disabled = false,
+}) => {
+  const { isLoading, handleClick } = useAsyncButton(onClick);
+
+  return (
+    <button
+      className={`button button--${variant} ${isLoading ? 'button--loading' : ''}`}
+      onClick={handleClick}
+      disabled={disabled || isLoading}
+    >
+      {isLoading ? 'Loading...' : label}
+    </button>
+  );
+};
+
+export default Button;
+```
+
+## Conclusion
+
+By combining TypeScript's type safety with React's component model and hooks, we can create reusable, maintainable UI components that are a joy to work with.
+
+In future posts, I'll explore more advanced patterns like compound components, context API integration, and performance optimizations for React applications.

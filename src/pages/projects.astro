@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Projects - Dejan Vasic">
+	<main class="container">
+		<h1>Projects</h1>
+		<div class="projects-grid">
+			<!-- Project 1 -->
+			<div class="project-card">
+				<div class="project-content">
+					<h2>Project Name</h2>
+					<p class="description">A brief description of the project and what technologies were used.</p>
+					<div class="tags">
+						<span class="tag">React</span>
+						<span class="tag">TypeScript</span>
+						<span class="tag">Node.js</span>
+					</div>
+					<div class="links">
+						<a href="#" target="_blank" rel="noopener noreferrer">View Project</a>
+						<a href="#" target="_blank" rel="noopener noreferrer">Source Code</a>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Project 2 -->
+			<div class="project-card">
+				<div class="project-content">
+					<h2>Project Name</h2>
+					<p class="description">A brief description of the project and what technologies were used.</p>
+					<div class="tags">
+						<span class="tag">React</span>
+						<span class="tag">TypeScript</span>
+						<span class="tag">Node.js</span>
+					</div>
+					<div class="links">
+						<a href="#" target="_blank" rel="noopener noreferrer">View Project</a>
+						<a href="#" target="_blank" rel="noopener noreferrer">Source Code</a>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Add more project cards as needed -->
+		</div>
+		
+		<a href="/" class="back-link">← Back to Home</a>
+	</main>
+</Layout>
+
+<style>
+	main {
+		padding: 2rem 0;
+	}
+	
+	h1 {
+		font-size: 2.5rem;
+		margin-bottom: 2rem;
+	}
+	
+	.projects-grid {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		margin-bottom: 2rem;
+	}
+	
+	.project-card {
+		border-radius: 0.5rem;
+		overflow: hidden;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		transition: transform 0.3s, box-shadow 0.3s;
+	}
+	
+	.project-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+	}
+	
+	.project-content {
+		padding: 1.5rem;
+	}
+	
+	.project-card h2 {
+		font-size: 1.5rem;
+		margin-bottom: 0.75rem;
+		color: #333;
+	}
+	
+	.description {
+		color: #555;
+		margin-bottom: 1rem;
+		line-height: 1.5;
+	}
+	
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 1.5rem;
+	}
+	
+	.tag {
+		background-color: var(--color-primary-light);
+		color: var(--color-primary);
+		padding: 0.25rem 0.75rem;
+		border-radius: 25px;
+		font-size: 0.85rem;
+	}
+	
+	.links {
+		display: flex;
+		gap: 1rem;
+	}
+	
+	.links a {
+		color: var(--color-primary);
+		text-decoration: none;
+	}
+	
+	.links a:hover {
+		text-decoration: underline;
+	}
+	
+	.back-link {
+		display: inline-block;
+		margin-top: 2rem;
+		color: var(--color-primary);
+		text-decoration: none;
+	}
+	
+	.back-link:hover {
+		text-decoration: underline;
+	}
+	
+	@media (max-width: 768px) {
+		.projects-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
