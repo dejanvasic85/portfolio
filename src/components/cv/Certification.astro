@@ -1,0 +1,35 @@
+---
+interface Props {
+  name: string;
+  issuer: string;
+  date: string;
+}
+
+const { name, issuer, date } = Astro.props;
+---
+
+<div class="certification">
+  <h3>{name}</h3>
+  <div class="meta">
+    <span class="issuer">{issuer}</span>
+    <span class="date">{date}</span>
+  </div>
+</div>
+
+<style>
+  .certification {
+    margin-bottom: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-light);
+  }
+</style>

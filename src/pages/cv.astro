@@ -1,103 +1,260 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Section from '../components/cv/Section.astro';
+import JobEntry from '../components/cv/JobEntry.astro';
+import Education from '../components/cv/Education.astro';
+import SkillCategory from '../components/cv/SkillCategory.astro';
 ---
 
 <Layout title="CV - Dejan Vasic">
 	<main class="container">
-		<h1>Curriculum Vitae</h1>
+		<div class="cv-header">
+			<h1>Dejan Vasic</h1>
+			<p class="subtitle">Staff Software Engineer at Open Universities Australia</p>
+			<p class="contact">
+				Melbourne, Victoria, Australia • <a href="mailto:dejanvasic24@gmail.com"
+					>dejanvasic24@gmail.com</a
+				>
+			</p>
+		</div>
 
-		<section class="experience">
-			<h2>Work Experience</h2>
+		<Section title="Professional Summary">
+			<p>
+				As a software engineer, I regard myself as a person with ethics and principles to deliver
+				software that is ready for production. What gets me up in the morning is knowing that I can
+				contribute to someone else's life by making their mundane tasks more efficient. This way, we
+				enjoy our lives by doing things that we love.
+			</p>
+		</Section>
 
-			<div class="job">
-				<h3>Staff Software Engineer</h3>
-				<div class="meta">
-					<span class="company">Company Name</span>
-					<span class="period">YYYY - Present</span>
-				</div>
-				<ul>
-					<li>Led development of key platform features serving X million users</li>
-					<li>Designed and implemented microservice architecture using [technologies]</li>
-					<li>Mentored junior engineers and established best practices</li>
-				</ul>
-			</div>
+		<Section title="Work Experience">
+			<JobEntry
+				title="Staff Software Engineer"
+				company="Open Universities Australia"
+				period="October 2021 - Present (3 years 7 months)"
+				responsibilities={[
+					'Led the initiation, design, and successful delivery of an identity system using Auth0. Overcame intricate challenges in integrating with a legacy Sitecore application, such as implementing impersonation, federated security with OKTA, and seamless migration of existing users.',
+					'Implemented Typescript node tooling for efficient provisioning of Auth0 tenants.',
+					'Utilized Kotlin, GraphQL, and REST API with a Postgres backend for a scalable and performant architecture.',
+					'Developed custom authentication screens using React, Typescript, and styled components.',
+					'Built AWS Lambda with SNS+SQS triggers for event based updates between Auth0 and Salesforce.',
+					'Championed the development of a prototype for a ground-up rewrite of our flagship online enrolment system using Next.js, Typescript, AWS ECS, Github actions, Vitest, and Playwright.'
+				]}
+			/>
 
-			<!-- Add more job entries as needed -->
-		</section>
+			<JobEntry
+				title="Senior Software Engineer"
+				company="Open Universities Australia"
+				period="July 2020 - October 2021 (1 year 4 months)"
+				responsibilities={[
+					'Pioneered a transformative project by initiating a proof of concept, architecting, and implementing an entirely new search experience tailored for students and new visitors.',
+					'Leveraged Next.js and server-side rendering to establish a robust SEO presence for our revamped marketplace, seamlessly replacing a legacy Sitecore solution.',
+					"Drove innovation by spearheading the creation of OUA's React component library using Storybook.",
+					'Acted as a leading figure within the Front-End Guild, fostering collaboration and knowledge sharing.',
+					'Worked with React, Next.js, Typescript, GraphQL, Node, AWS Lambda, and Algolia.'
+				]}
+			/>
 
-		<section class="education">
-			<h2>Education</h2>
+			<JobEntry
+				title="Senior Software Engineer"
+				company="SEEK"
+				period="February 2019 - July 2020 (1 year 6 months)"
+				responsibilities={[
+					"Developed a range of backend and front-end services to support talent search systems for SME's and Recruiters.",
+					'Utilized AWS cloud services including Elastic Beanstalk, ECS, CloudFront, SQS, SNS, CloudFormation, and Lambdas.',
+					'Maintained front-end built in React, with redux, less, webpack.',
+					'Contributed to rebuilding of an API that would query Elastic Search for profiles and serving large traffic to downstream services.'
+				]}
+			/>
 
-			<div class="degree">
-				<h3>Degree Name</h3>
-				<div class="meta">
-					<span class="institution">University Name</span>
-					<span class="period">YYYY - YYYY</span>
-				</div>
-			</div>
-		</section>
+			<JobEntry
+				title="Senior Software Engineer"
+				company="Apthletic"
+				period="April 2018 - February 2019 (11 months)"
+				responsibilities={[
+					'Designed and built the Rest API and database (Postgres) for mobile and web using Java with Jersey Framework.',
+					'Developed front end web application built with React (Typescript) using Sagas.',
+					'Implemented Flyway library for database migrations.',
+					'Established Continuous Delivery using Terraform targeting AWS in CircleCI.',
+					'Designed and delivered an event driven system using AWS lambda, SQS, Postgres DB using the Serverless Framework.'
+				]}
+			/>
 
-		<section class="skills">
-			<h2>Skills</h2>
+			<JobEntry
+				title="Senior Software Developer"
+				company="MYOB"
+				period="September 2016 - April 2018 (1 year 8 months)"
+				responsibilities={[
+					'Developed large scale event driven systems to serve real time dashboard data to accounting firms and partners.',
+					'Built systems mostly in Node with JavaScript and Flow type checking.',
+					'Maintained some legacy C# systems and worked on Azure Functions.',
+					'Built and maintained React front end application for internal support staff.',
+					'Responsible for devops and support, using Terraform to deploy services to AWS.'
+				]}
+			/>
 
-			<div class="skill-category">
-				<h3>Languages & Frameworks</h3>
-				<ul class="skill-list">
-					<li>JavaScript/TypeScript</li>
-					<li>React</li>
-					<li>Node.js</li>
-					<!-- Add more skills -->
-				</ul>
-			</div>
-		</section>
+			<JobEntry
+				title="Senior .Net Developer"
+				company="TAL Life"
+				period="April 2014 - September 2016 (2 years 6 months)"
+				responsibilities={[
+					"Tech Lead for the development of a new website that interacted with backend services and MDM's, allowing users to login for self-service.",
+					'Delivered a revamped InsuranceLine website using Sitecore 7.2 MVC, Angular JS, Web API and Mongo DB.',
+					'Assisted in bringing the DevOps infrastructure using Team City and Octopus Deploy.',
+					'Helped set up Chef provisioning infrastructure by writing key cookbooks and recipes.',
+					'Authored a Selenium Wrapper library for executing test scenarios in multiple browsers using NUnit and WebDriver.'
+				]}
+			/>
+
+			<JobEntry
+				title="Senior .Net Developer and Scrum Master"
+				company="Unified Healthcare Group"
+				period="February 2013 - May 2014 (1 year 4 months)"
+				responsibilities={[
+					'Developed modern single page application using twitter bootstrap, knockout, jQuery, and Asp.Net MVC 4.',
+					'Implemented full continuous integration using Octopus Deploy and Jenkins.',
+					'Implemented Business Driven Development with Specflow including integration testing using Selenium web driver and NUnit.',
+					'Automated production deployments which improved confidence for more frequent releases.'
+				]}
+			/>
+
+			<JobEntry
+				title=".Net Technical Lead"
+				company="eNett"
+				period="September 2009 - February 2013 (3 years 6 months)"
+				responsibilities={[
+					'Started as Senior developer and progressed to technical lead in an Agile scrum environment.',
+					'Set up automated deployment using Octopus Deploy with TFS for wide range of applications.',
+					'Worked with Team Foundation Server 2012, Visual Studio 2008-2012, and SQL Server 2008/2012.',
+					'Developed with WCF, ASP.Net Web Forms, Windows Services.',
+					'Assisted in development of WCF frameworks and libraries and integrated with external systems including Galileo (GDS system).'
+				]}
+			/>
+
+			<JobEntry
+				title=".Net Developer"
+				company="Object Next Software"
+				period="January 2009 - September 2009 (9 months)"
+				responsibilities={[
+					'C# 2.0 and 3.5 .Net framework development.',
+					'Implemented best practices including repository patterns and Model View Presenter spanning Windows and web.',
+					'Used third party tools including Infragistincs and Telerik.',
+					'Built framework custom UI controls for both Windows and web applications.'
+				]}
+			/>
+
+			<JobEntry
+				title=".Net Developer"
+				company="Mainfreight (Pelican Solutions Software)"
+				period="May 2008 - January 2009 (9 months)"
+				responsibilities={[
+					'Delivered new features to the flagship Windows application using C# 2.0 .Net framework.',
+					'Integrated the platform using EDI Messaging and XML communication with government departments.',
+					'Presented proof of concept of WCF to replace existing COM+ components.',
+					'Presented proof of concept of WPF to integrate new features to existing Forms Application.',
+					'Worked with Visual Studio 2005/2008, SQL Server 2005, and SourceSafe source control.'
+				]}
+			/>
+
+			<JobEntry
+				title="Junior .Net Developer"
+				company="FTI Consulting"
+				period="January 2007 - May 2008 (1 year 5 months)"
+				responsibilities={[
+					'Worked in a full agile scrum environment.',
+					'Maintained existing web application using VBScript, SQL Server 2005, Visual Studio 2005.',
+					'Maintained application used for OCR Crawling images written in VB.Net.',
+					'Unit testing new application frameworks written in C# .Net 2.0.',
+					'Performed performance, scale and integration testing.'
+				]}
+			/>
+		</Section>
+
+		<Section title="Education">
+			<Education
+				degree="Computer Science, IT"
+				institution="Deakin University"
+				period="2003 - 2005"
+			/>
+		</Section>
+
+		<Section title="Skills">
+			<SkillCategory
+				title="Top Skills"
+				skills={[
+					'TypeScript',
+					'React',
+					'Node.js',
+					'Next.js',
+					'GraphQL',
+					'REST API',
+					'AWS',
+					'Terraform',
+					'Kotlin',
+					'PostgreSQL',
+					'CI/CD',
+					'Auth0'
+				]}
+			/>
+
+			<SkillCategory
+				title="Cloud & Infrastructure"
+				skills={[
+					'AWS Lambda',
+					'AWS ECS',
+					'SNS',
+					'SQS',
+					'CloudFront',
+					'CloudFormation',
+					'Elastic Beanstalk',
+					'Serverless Framework',
+					'Azure Functions'
+				]}
+			/>
+
+			<SkillCategory
+				title="Frontend"
+				skills={[
+					'React',
+					'TypeScript',
+					'Next.js',
+					'Storybook',
+					'Redux',
+					'Sagas',
+					'Styled Components',
+					'Angular JS',
+					'Knockout'
+				]}
+			/>
+
+			<SkillCategory
+				title=".NET"
+				skills={['C#', 'ASP.NET MVC', 'WCF', 'Web API', 'Windows Services', 'VB.NET']}
+			/>
+		</Section>
 
 		<a href="/" class="back-link">← Back to Home</a>
 	</main>
 </Layout>
 
 <style>
-	section {
-		margin-bottom: 3rem;
+	.cv-header {
+		margin-bottom: 2.5rem;
+		border-bottom: 1px solid var(--color-border);
+		padding-bottom: 1.5rem;
 	}
 
-	h2 {
-		font-size: 1.8rem;
-		margin-bottom: 1.5rem;
-	}
-
-	.job,
-	.degree {
-		margin-bottom: 2rem;
-	}
-
-	h3 {
+	.subtitle {
 		font-size: 1.4rem;
+		color: var(--color-text-light);
 		margin-bottom: 0.5rem;
 	}
 
-	.meta {
-		display: flex;
-		justify-content: space-between;
-		margin-bottom: 1rem;
+	.contact {
 		color: var(--color-text-light);
 	}
 
-	.skill-category {
-		margin-bottom: 1.5rem;
-	}
-
-	.skill-list {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-left: 0;
-		list-style: none;
-	}
-
-	.skill-list li {
-		background-color: var(--color-primary-light);
-		color: var(--color-primary-dark);
-		padding: 0.3rem 0.8rem;
-		border-radius: 0.25rem;
+	h1 {
+		margin-bottom: 0.5rem;
 	}
 </style>

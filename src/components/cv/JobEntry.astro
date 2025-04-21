@@ -1,0 +1,39 @@
+---
+interface Props {
+  title: string;
+  company: string;
+  period: string;
+  responsibilities: string[];
+}
+
+const { title, company, period, responsibilities } = Astro.props;
+---
+
+<div class="job">
+  <h3>{title}</h3>
+  <div class="meta">
+    <span class="company">{company}</span>
+    <span class="period">{period}</span>
+  </div>
+  <ul>
+    {responsibilities.map((responsibility) => <li>{responsibility}</li>)}
+  </ul>
+</div>
+
+<style>
+  .job {
+    margin-bottom: 2rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    color: var(--color-text-light);
+  }
+</style>

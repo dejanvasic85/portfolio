@@ -1,0 +1,35 @@
+---
+interface Props {
+  degree: string;
+  institution: string;
+  period: string;
+}
+
+const { degree, institution, period } = Astro.props;
+---
+
+<div class="degree">
+  <h3>{degree}</h3>
+  <div class="meta">
+    <span class="institution">{institution}</span>
+    <span class="period">{period}</span>
+  </div>
+</div>
+
+<style>
+  .degree {
+    margin-bottom: 2rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    color: var(--color-text-light);
+  }
+</style>
