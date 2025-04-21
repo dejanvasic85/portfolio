@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Tags from '../components/Tags.astro';
 ---
 
 <Layout title="Projects - Dejan Vasic">
@@ -9,42 +10,25 @@ import Layout from '../layouts/Layout.astro';
 			<!-- Project 1 -->
 			<div class="project-card">
 				<div class="project-content">
-					<h2>Project Name</h2>
+					<h2>My Notes</h2>
 					<p class="description">
-						A brief description of the project and what technologies were used.
+						My personal project that allows my family and I to share notes and reminders.
+						Previously, we used Google Keep, but I wanted to create something more tailored to our
+						needs and privacy.
 					</p>
-					<div class="tags">
-						<span class="tag">React</span>
-						<span class="tag">TypeScript</span>
-						<span class="tag">Node.js</span>
-					</div>
+					<Tags tags={['Svelte', 'SvelteKit', 'Postgres', 'Prisma', 'Tailwind', 'Vercel']} />
 					<div class="links">
-						<a href="#" target="_blank" rel="noopener noreferrer">View Project</a>
-						<a href="#" target="_blank" rel="noopener noreferrer">Source Code</a>
+						<a href="https://notes.vasic.com.au" target="_blank" rel="noopener noreferrer"
+							>View My Notes</a
+						>
+						<a
+							href="https://github.com/dejanvasic85/notes"
+							target="_blank"
+							rel="noopener noreferrer">Source Code</a
+						>
 					</div>
 				</div>
 			</div>
-
-			<!-- Project 2 -->
-			<div class="project-card">
-				<div class="project-content">
-					<h2>Project Name</h2>
-					<p class="description">
-						A brief description of the project and what technologies were used.
-					</p>
-					<div class="tags">
-						<span class="tag">React</span>
-						<span class="tag">TypeScript</span>
-						<span class="tag">Node.js</span>
-					</div>
-					<div class="links">
-						<a href="#" target="_blank" rel="noopener noreferrer">View Project</a>
-						<a href="#" target="_blank" rel="noopener noreferrer">Source Code</a>
-					</div>
-				</div>
-			</div>
-
-			<!-- Add more project cards as needed -->
 		</div>
 
 		<a href="/" class="back-link">← Back to Home</a>

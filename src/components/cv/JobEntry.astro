@@ -2,8 +2,8 @@
 import SkillCategory from './SkillCategory.astro';
 
 interface Publication {
-  title: string;
-  url: string;
+	title: string;
+	url: string;
 }
 
 interface Props {
@@ -28,19 +28,23 @@ const { title, company, period, responsibilities, skills, publications } = Astro
 		{responsibilities.map((responsibility) => <li>{responsibility}</li>)}
 	</ul>
 	{skills && <SkillCategory title="Skills" skills={skills} />}
-	
-	{publications && publications.length > 0 && (
-		<div class="publications">
-			<h4>Related Publications</h4>
-			<ul class="publication-list">
-				{publications.map((pub) => (
-					<li>
-						<a href={pub.url} target="_blank" rel="noopener noreferrer">{pub.title}</a>
-					</li>
-				))}
-			</ul>
-		</div>
-	)}
+
+	{
+		publications && publications.length > 0 && (
+			<div class="publications">
+				<h4>Related Publications</h4>
+				<ul class="publication-list">
+					{publications.map((pub) => (
+						<li>
+							<a href={pub.url} target="_blank" rel="noopener noreferrer">
+								{pub.title}
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+		)
+	}
 </div>
 
 <style>
@@ -59,42 +63,42 @@ const { title, company, period, responsibilities, skills, publications } = Astro
 		margin-bottom: 1rem;
 		color: var(--color-text-light);
 	}
-	
+
 	.publications {
 		margin-top: 1.25rem;
 	}
-	
+
 	.publications h4 {
 		font-size: 1.1rem;
-		margin-bottom: 0.75rem;
+		margin-bottom: var(--space-md);
 		color: var(--color-text-light);
 	}
-	
+
 	.publication-list {
 		list-style: none;
 		margin-left: 0;
 		padding-left: 0;
 	}
-	
+
 	.publication-list li {
 		margin-bottom: 0.5rem;
 		position: relative;
 		padding-left: 1.5rem;
 	}
-	
+
 	.publication-list li::before {
-		content: "📝";
+		content: '📝';
 		position: absolute;
 		left: 0;
 		top: 0;
 	}
-	
+
 	.publication-list a {
 		color: var(--color-primary);
 		text-decoration: none;
 		transition: color 0.2s ease;
 	}
-	
+
 	.publication-list a:hover {
 		color: var(--color-primary-dark);
 		text-decoration: underline;

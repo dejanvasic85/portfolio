@@ -1,4 +1,6 @@
 ---
+import Tags from '../Tags.astro';
+
 interface Props {
 	title: string;
 	skills: string[];
@@ -9,9 +11,7 @@ const { title, skills } = Astro.props;
 
 <div class="skill-category">
 	<h3>{title}</h3>
-	<ul class="tags">
-		{skills.map((skill) => <li class="tag">{skill}</li>)}
-	</ul>
+	<Tags tags={skills} />
 </div>
 
 <style>
@@ -23,5 +23,4 @@ const { title, skills } = Astro.props;
 		font-size: 1.4rem;
 		margin-bottom: var(--space-sm);
 	}
-
 </style>

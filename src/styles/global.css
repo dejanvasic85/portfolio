@@ -121,7 +121,7 @@ img {
 ul,
 ol {
 	margin-left: 2rem;
-	margin-bottom: 1.5rem;
+	margin-bottom: var(--space-md);
 }
 
 li {
@@ -253,22 +253,6 @@ li {
 
 .page-nav a:hover {
 	background-color: var(--color-primary-light);
-}
-
-.tags {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.5rem;
-	margin-left: 0;
-	list-style: none;
-}
-
-.tag {
-	background-color: var(--color-secondary-light);
-	color: var(--color-secondary);
-	padding: 0.25rem 0.75rem;
-	border-radius: var(--radius-md);
-	font-size: 0.85rem;
 }
 
 /* Code styles */
