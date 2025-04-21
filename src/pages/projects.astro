@@ -52,11 +52,6 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <style>
-	h1 {
-		font-size: 2.5rem;
-		margin-bottom: 2rem;
-	}
-
 	.projects-grid {
 		display: flex;
 		flex-direction: column;
@@ -67,7 +62,7 @@ import Layout from '../layouts/Layout.astro';
 	.project-card {
 		border-radius: 0.5rem;
 		overflow: hidden;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		box-shadow: var(--shadow-card);
 		transition:
 			transform 0.3s,
 			box-shadow 0.3s;
@@ -75,7 +70,7 @@ import Layout from '../layouts/Layout.astro';
 
 	.project-card:hover {
 		transform: translateY(-5px);
-		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+		box-shadow: var(--shadow-card-hover);
 	}
 
 	.project-content {
@@ -94,21 +89,6 @@ import Layout from '../layouts/Layout.astro';
 		line-height: 1.5;
 	}
 
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-bottom: 1.5rem;
-	}
-
-	.tag {
-		background-color: var(--color-primary-light);
-		color: var(--color-primary);
-		padding: 0.25rem 0.75rem;
-		border-radius: 25px;
-		font-size: 0.85rem;
-	}
-
 	.links {
 		display: flex;
 		gap: 1rem;
@@ -121,22 +101,5 @@ import Layout from '../layouts/Layout.astro';
 
 	.links a:hover {
 		text-decoration: underline;
-	}
-
-	.back-link {
-		display: inline-block;
-		margin-top: 2rem;
-		color: var(--color-primary);
-		text-decoration: none;
-	}
-
-	.back-link:hover {
-		text-decoration: underline;
-	}
-
-	@media (max-width: 768px) {
-		.projects-grid {
-			grid-template-columns: 1fr;
-		}
 	}
 </style>

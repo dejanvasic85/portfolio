@@ -33,13 +33,6 @@ const allPosts = await Astro.glob('./*.mdx');
 </Layout>
 
 <style>
-	h1 {
-		font-size: 2.5rem;
-		margin-bottom: 1rem;
-		font-weight: 700;
-		letter-spacing: -0.5px;
-	}
-
 	.intro {
 		color: var(--color-text-light);
 		margin-bottom: 3rem;
@@ -84,21 +77,6 @@ const allPosts = await Astro.glob('./*.mdx');
 		margin-bottom: 1rem;
 	}
 
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-bottom: 1rem;
-	}
-
-	.tag {
-		background-color: var(--color-primary-light);
-		color: var(--color-primary);
-		padding: 0.25rem 0.75rem;
-		border-radius: 25px;
-		font-size: 0.85rem;
-	}
-
 	.read-more {
 		color: var(--color-primary);
 		text-decoration: none;
@@ -106,17 +84,6 @@ const allPosts = await Astro.glob('./*.mdx');
 	}
 
 	.read-more:hover {
-		text-decoration: underline;
-	}
-
-	.back-link {
-		display: inline-block;
-		margin-top: 2rem;
-		color: var(--color-primary);
-		text-decoration: none;
-	}
-
-	.back-link:hover {
 		text-decoration: underline;
 	}
 </style>

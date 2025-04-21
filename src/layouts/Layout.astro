@@ -17,10 +17,6 @@ const { title = 'Dejan Vasic - Software Engineer' } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
-			rel="stylesheet"
-		/>
 		<title>{title}</title>
 	</head>
 	<body>
@@ -50,90 +46,4 @@ const { title = 'Dejan Vasic - Software Engineer' } = Astro.props;
 	</body>
 </html>
 
-<!-- Global styles are imported from src/styles/global.css -->
-
-<style>
-	.site-header {
-		border-bottom: 1px solid var(--color-border);
-		padding: 1rem 0;
-		background-color: var(--color-background);
-	}
-
-	.header-container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 0 var(--space-lg);
-		display: flex;
-		justify-content: end;
-		align-items: center;
-	}
-
-	.logo {
-		font-weight: 700;
-		font-size: 1.5rem;
-		color: var(--color-text);
-		letter-spacing: -0.5px;
-	}
-
-	.main-nav {
-		display: flex;
-		gap: 1.5rem;
-	}
-
-	.main-nav a {
-		color: var(--color-text);
-		font-weight: 500;
-		transition: color 0.2s;
-	}
-
-	.main-nav a:hover {
-		color: var(--color-primary);
-	}
-
-	.site-footer {
-		margin-top: auto;
-		border-top: 1px solid var(--color-border);
-		padding: 2rem 0;
-		background-color: var(--color-background-alt);
-	}
-
-	.footer-container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 0 var(--space-lg);
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.footer-container p {
-		color: var(--color-text-light);
-	}
-
-	.social-links {
-		display: flex;
-		gap: 1.5rem;
-	}
-
-	.social-links a {
-		color: var(--color-text-light);
-		transition: color 0.2s;
-	}
-
-	.social-links a:hover {
-		color: var(--color-primary);
-	}
-
-	@media (max-width: 768px) {
-		.header-container,
-		.footer-container {
-			flex-direction: column;
-			gap: 1rem;
-			text-align: center;
-		}
-
-		.main-nav {
-			justify-content: center;
-		}
-	}
-</style>
+<!-- All styles are now in global.css -->
