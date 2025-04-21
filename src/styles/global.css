@@ -120,7 +120,8 @@ img {
 	height: auto;
 }
 
-ul, ol {
+ul,
+ol {
 	margin-left: 2rem;
 	margin-bottom: 1.5rem;
 }
@@ -279,11 +280,25 @@ pre {
 	overflow-x: auto;
 	background-color: #1e1e1e;
 	margin: var(--space-lg) 0;
+	-moz-tab-size: 2;
+	tab-size: 2;
+}
+
+.code-block {
+	-moz-tab-size: 2 !important;
+	tab-size: 2 !important;
+}
+
+.code-block code {
+	-moz-tab-size: 2 !important;
+	tab-size: 2 !important;
 }
 
 code {
 	font-family: var(--font-mono);
 	font-size: 0.9em;
+	-moz-tab-size: 2;
+	tab-size: 2;
 }
 
 :not(pre) > code {
@@ -298,22 +313,22 @@ code {
 	html {
 		font-size: 14px;
 	}
-	
+
 	.container {
 		padding: 1.5rem;
 	}
-	
+
 	.header-container,
 	.footer-container {
 		flex-direction: column;
 		gap: 1rem;
 		text-align: center;
 	}
-	
+
 	.main-nav {
 		justify-content: center;
 	}
-	
+
 	h1 {
 		font-size: 2rem;
 	}

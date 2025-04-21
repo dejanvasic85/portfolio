@@ -7,8 +7,15 @@ export default defineConfig({
 	markdown: {
 		shikiConfig: {
 			theme: 'github-dark',
-			langs: ['html', 'css', 'js', 'ts', 'jsx', 'tsx', 'json', 'markdown', 'python', 'bash'],
-			wrap: true
+			wrap: true,
+			transformers: [
+				{
+					pre(node) {
+						// Add special class for our tab-size CSS
+						node.properties.className = [...(node.properties.className || []), 'code-block'];
+					}
+				}
+			]
 		}
 	},
 	integrations: [mdx()]
