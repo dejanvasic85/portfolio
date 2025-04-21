@@ -7,86 +7,90 @@ const allPosts = await Astro.glob('./*.mdx');
 	<main class="container">
 		<h1>Blog</h1>
 		<p class="intro">Thoughts on software engineering, leadership, and technology.</p>
-		
 		<div class="posts">
-			{allPosts.map((post) => (
-				<article class="post-card">
-					<div class="post-date">{post.frontmatter.date}</div>
-					<h2><a href={post.url}>{post.frontmatter.title}</a></h2>
-					<p class="excerpt">{post.frontmatter.excerpt}</p>
-					<div class="tags">
-						{post.frontmatter.tags && post.frontmatter.tags.map((tag) => (
-							<span class="tag">{tag}</span>
-						))}
-					</div>
-					<a href={post.url} class="read-more">Read post →</a>
-				</article>
-			))}
+			{
+				allPosts.map((post) => (
+					<article class="post-card">
+						<div class="post-date">{post.frontmatter.date}</div>
+						<h2>
+							<a href={post.url}>{post.frontmatter.title}</a>
+						</h2>
+						<p class="excerpt">{post.frontmatter.excerpt}</p>
+						<div class="tags">
+							{post.frontmatter.tags &&
+								post.frontmatter.tags.map((tag) => <span class="tag">{tag}</span>)}
+						</div>
+						<a href={post.url} class="read-more">
+							Read post →
+						</a>
+					</article>
+				))
+			}
 		</div>
-		
+
 		<a href="/" class="back-link">← Back to Home</a>
 	</main>
 </Layout>
 
-<style>	
+<style>
 	h1 {
 		font-size: 2.5rem;
 		margin-bottom: 1rem;
 		font-weight: 700;
 		letter-spacing: -0.5px;
 	}
-	
+
 	.intro {
 		color: var(--color-text-light);
 		margin-bottom: 3rem;
 		font-size: 1.2rem;
 		font-weight: 400;
 	}
-	
+
 	.posts {
 		display: grid;
 		gap: 2.5rem;
 		margin-bottom: 3rem;
 	}
-	
+
 	.post-card {
 		padding-bottom: 2rem;
 		border-bottom: 1px solid var(--color-border);
 	}
-	
+
 	.post-date {
 		color: var(--color-text-light);
 		font-size: 0.9rem;
 		margin-bottom: 0.5rem;
 	}
-	
+
 	.post-card h2 {
 		font-size: 1.8rem;
 		margin-bottom: 0.75rem;
 	}
-	
+
 	.post-card h2 a {
 		color: var(--color-text);
 		text-decoration: none;
 	}
-	
+
 	.post-card h2 a:hover {
 		color: var(--color-primary);
 	}
-	
+
 	.excerpt {
 		color: var(--color-text-light);
 		line-height: 1.6;
 		margin-bottom: 1rem;
 	}
-	
+
 	.tags {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.5rem;
 		margin-bottom: 1rem;
 	}
-	
+
 	.tag {
 		background-color: var(--color-primary-light);
 		color: var(--color-primary);
@@ -94,24 +98,24 @@ const allPosts = await Astro.glob('./*.mdx');
 		border-radius: 25px;
 		font-size: 0.85rem;
 	}
-	
+
 	.read-more {
 		color: var(--color-primary);
 		text-decoration: none;
 		font-weight: bold;
 	}
-	
+
 	.read-more:hover {
 		text-decoration: underline;
 	}
-	
+
 	.back-link {
 		display: inline-block;
 		margin-top: 2rem;
 		color: var(--color-primary);
 		text-decoration: none;
 	}
-	
+
 	.back-link:hover {
 		text-decoration: underline;
 	}
