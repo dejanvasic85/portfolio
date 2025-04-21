@@ -37,8 +37,22 @@ import SkillCategory from '../components/cv/SkillCategory.astro';
 					'Implemented Typescript node tooling for efficient provisioning of Auth0 tenants.',
 					'Utilized Kotlin, GraphQL, and REST API with a Postgres backend for a scalable and performant architecture.',
 					'Developed custom authentication screens using React, Typescript, and styled components.',
-					'Built AWS Lambda with SNS+SQS triggers for event based updates between Auth0 and Salesforce.',
+					'Syncing solution to ensure data consistency between Auth0 and Salesforce using an event based design.',
 					'Championed the development of a prototype for a ground-up rewrite of our flagship online enrolment system using Next.js, Typescript, AWS ECS, Github actions, Vitest, and Playwright.'
+				]}
+				publications={[
+					{
+						title: 'Using AI in Technical Interviews',
+						url: 'https://medium.com/openunisau-engineering/using-ai-in-technical-interviews-b87c4df6a773'
+					},
+					{
+						title: 'MonoRepos powered by Turborepo',
+						url: 'https://medium.com/openunisau-engineering/monorepos-powered-by-turborepo-3f22d39c3d28'
+					},
+					{
+						title: 'The engineering journey @ Open Universities Australia',
+						url: 'https://medium.com/openunisau-engineering/the-engineering-journey-open-universities-811cdc384b8'
+					}
 				]}
 			/>
 
@@ -171,47 +185,10 @@ import SkillCategory from '../components/cv/SkillCategory.astro';
 		</Section>
 
 		<Section title="Education">
-			<Education
-				degree="Computer Science, IT"
-				institution="Deakin University"
-				period="2003 - 2005"
-			/>
+			<Education degree="Computer Science" institution="Deakin University" period="2003 - 2005" />
 		</Section>
 
-		<Section title="Skills">
-			<SkillCategory
-				title="Top Skills"
-				skills={[
-					'TypeScript',
-					'React',
-					'Node.js',
-					'Next.js',
-					'GraphQL',
-					'REST API',
-					'AWS',
-					'Terraform',
-					'Kotlin',
-					'PostgreSQL',
-					'CI/CD',
-					'Auth0'
-				]}
-			/>
-
-			<SkillCategory
-				title="Cloud & Infrastructure"
-				skills={[
-					'AWS Lambda',
-					'AWS ECS',
-					'SNS',
-					'SQS',
-					'CloudFront',
-					'CloudFormation',
-					'Elastic Beanstalk',
-					'Serverless Framework',
-					'Azure Functions'
-				]}
-			/>
-
+		<Section title="Skills and Technologies">
 			<SkillCategory
 				title="Frontend"
 				skills={[
@@ -219,17 +196,35 @@ import SkillCategory from '../components/cv/SkillCategory.astro';
 					'TypeScript',
 					'Next.js',
 					'Storybook',
-					'Redux',
-					'Sagas',
+					'Zustand',
 					'Styled Components',
-					'Angular JS',
-					'Knockout'
+					'Svelte'
 				]}
 			/>
 
 			<SkillCategory
-				title=".NET"
-				skills={['C#', 'ASP.NET MVC', 'WCF', 'Web API', 'Windows Services', 'VB.NET']}
+				title="Backend"
+				skills={['Node.js', 'GraphQL', 'REST API', 'Kotlin', 'Golang', 'PostgreSQL', 'Golang']}
+			/>
+
+			<SkillCategory
+				title="Cloud & Infrastructure"
+				skills={['AWS Lambda', 'AWS ECS', 'SNS', 'SQS', 'CloudFront', 'CloudFormation', 'AWS RDS']}
+			/>
+
+			<SkillCategory
+				title="Third party services"
+				skills={[
+					'Auth0',
+					'Buildkite',
+					'Algolia',
+					'Optomizely',
+					'Launch Darkly',
+					'Github Actions',
+					'Github Copilot',
+					'Datadog',
+					'Sentry'
+				]}
 			/>
 		</Section>
 

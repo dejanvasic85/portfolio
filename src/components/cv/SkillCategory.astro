@@ -1,41 +1,27 @@
 ---
 interface Props {
-  title: string;
-  skills: string[];
+	title: string;
+	skills: string[];
 }
 
 const { title, skills } = Astro.props;
 ---
 
 <div class="skill-category">
-  <h3>{title}</h3>
-  <ul class="skill-list">
-    {skills.map((skill) => <li>{skill}</li>)}
-  </ul>
+	<h3>{title}</h3>
+	<ul class="tags">
+		{skills.map((skill) => <li class="tag">{skill}</li>)}
+	</ul>
 </div>
 
 <style>
-  .skill-category {
-    margin-bottom: 1.5rem;
-  }
+	.skill-category {
+		margin-bottom: 1.5rem;
+	}
 
-  h3 {
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-  }
+	h3 {
+		font-size: 1.4rem;
+		margin-bottom: var(--space-sm);
+	}
 
-  .skill-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-left: 0;
-    list-style: none;
-  }
-
-  .skill-list li {
-    background-color: var(--color-primary-light);
-    color: var(--color-primary-dark);
-    padding: 0.3rem 0.8rem;
-    border-radius: 0.25rem;
-  }
 </style>

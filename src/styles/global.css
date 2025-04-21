@@ -228,14 +228,14 @@ li {
 .tags {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.5rem;
+	gap: var(--space-xs);
 	margin-bottom: 1rem;
 }
 
 .tag {
 	background-color: var(--color-primary-light);
 	color: var(--color-primary);
-	padding: 0.25rem 0.75rem;
+	padding: 0.3rem 0.8rem;
 	border-radius: 25px;
 	font-size: 0.85rem;
 }
@@ -270,6 +270,22 @@ li {
 
 .page-nav a:hover {
 	background-color: var(--color-primary-light);
+}
+
+.tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-left: 0;
+	list-style: none;
+}
+
+.tag {
+	background-color: var(--color-primary-light);
+	color: var(--color-primary);
+	padding: 0.25rem 0.75rem;
+	border-radius: var(--radius-md);
+	font-size: 0.85rem;
 }
 
 /* Code styles */
@@ -331,5 +347,31 @@ code {
 
 	h1 {
 		font-size: 2rem;
+	}
+}
+
+@media print {
+	.site-header {
+		display: none;
+	}
+	.site-footer {
+		display: none;
+	}
+
+	.container {
+		padding: 0;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		margin-bottom: 0.5rem;
+	}
+
+	p {
+		margin-bottom: 0.5rem;
 	}
 }

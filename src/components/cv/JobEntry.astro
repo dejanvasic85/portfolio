@@ -1,39 +1,102 @@
 ---
-interface Props {
+import SkillCategory from './SkillCategory.astro';
+
+interface Publication {
   title: string;
-  company: string;
-  period: string;
-  responsibilities: string[];
+  url: string;
 }
 
-const { title, company, period, responsibilities } = Astro.props;
+interface Props {
+	title: string;
+	company: string;
+	period: string;
+	responsibilities: string[];
+	skills?: string[];
+	publications?: Publication[];
+}
+
+const { title, company, period, responsibilities, skills, publications } = Astro.props;
 ---
 
 <div class="job">
-  <h3>{title}</h3>
-  <div class="meta">
-    <span class="company">{company}</span>
-    <span class="period">{period}</span>
-  </div>
-  <ul>
-    {responsibilities.map((responsibility) => <li>{responsibility}</li>)}
-  </ul>
+	<h3>{title}</h3>
+	<div class="meta">
+		<span class="company">{company}</span>
+		<span class="period">{period}</span>
+	</div>
+	<ul>
+		{responsibilities.map((responsibility) => <li>{responsibility}</li>)}
+	</ul>
+	{skills && <SkillCategory title="Skills" skills={skills} />}
+	
+	{publications && publications.length > 0 && (
+		<div class="publications">
+			<h4>Related Publications</h4>
+			<ul class="publication-list">
+				{publications.map((pub) => (
+					<li>
+						<a href={pub.url} target="_blank" rel="noopener noreferrer">{pub.title}</a>
+					</li>
+				))}
+			</ul>
+		</div>
+	)}
 </div>
 
 <style>
-  .job {
-    margin-bottom: 2rem;
-  }
+	.job {
+		margin-bottom: 2rem;
+	}
 
-  h3 {
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-  }
+	h3 {
+		font-size: 1.4rem;
+		margin-bottom: 0.5rem;
+	}
 
-  .meta {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-    color: var(--color-text-light);
-  }
+	.meta {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 1rem;
+		color: var(--color-text-light);
+	}
+	
+	.publications {
+		margin-top: 1.25rem;
+	}
+	
+	.publications h4 {
+		font-size: 1.1rem;
+		margin-bottom: 0.75rem;
+		color: var(--color-text-light);
+	}
+	
+	.publication-list {
+		list-style: none;
+		margin-left: 0;
+		padding-left: 0;
+	}
+	
+	.publication-list li {
+		margin-bottom: 0.5rem;
+		position: relative;
+		padding-left: 1.5rem;
+	}
+	
+	.publication-list li::before {
+		content: "📝";
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+	
+	.publication-list a {
+		color: var(--color-primary);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+	
+	.publication-list a:hover {
+		color: var(--color-primary-dark);
+		text-decoration: underline;
+	}
 </style>
