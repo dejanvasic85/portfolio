@@ -4,8 +4,13 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Dejan Vasic - Software Engineer">
 	<main class="container">
-		<h1>Dejan Vasic</h1>
-		<h2>Staff Software Engineer</h2>
+		<div class="hero">
+			<div>
+				<h1>Dejan Vasic</h1>
+				<h2>Staff Software Engineer</h2>
+			</div>
+			<img src="/images/profile.jpeg" alt="Dejan Vasic" />
+		</div>
 
 		<div class="content">
 			<p>
@@ -13,15 +18,15 @@ import Layout from '../layouts/Layout.astro';
 				scalable web applications.
 			</p>
 
-			<p>My expertise includes:</p>
+			<p>My expertise includes (but not limited to):</p>
 			<ul>
-				<li>Frontend development with React and TypeScript</li>
-				<li>Backend systems with Node.js</li>
+				<li>Frontend development with React and TypeScript. Svelte by night.</li>
+				<li>Backend systems with Node.js and other Javascript runtimes.</li>
 				<li>Cloud infrastructure and DevOps</li>
-				<li>Engineering leadership and mentorship</li>
+				<li>Solution design and architecture</li>
 			</ul>
 
-			<p>When I'm not coding, you can find me [Your hobbies/interests].</p>
+			<p>When I'm not coding, you can find me playing and coaching football ⚽</p>
 		</div>
 
 		<nav class="page-nav">
@@ -48,5 +53,26 @@ import Layout from '../layouts/Layout.astro';
 	.content {
 		line-height: 1.6;
 		margin-bottom: 2rem;
+	}
+
+	.hero {
+		container-type: inline-size;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: var(--space-sm);
+		gap: var(--space-md);
+
+		img {
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+	}
+
+	@media (width > 768px) {
+		.hero {
+			margin-bottom: var(--space-lg);
+		}
 	}
 </style>
