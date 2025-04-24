@@ -47,3 +47,22 @@ const { title = 'Dejan Vasic - Software Engineer' } = Astro.props;
 </html>
 
 <!-- All styles are now in global.css -->
+
+<style>
+	.main-nav {
+		display: flex;
+		gap: 1.5rem;
+	}
+
+	.main-nav a {
+		color: var(--color-text);
+		font-weight: 500;
+		transition: color 0.2s;
+		border-bottom: 3px solid var(--color-background);
+		padding: var(--space-sm)
+	}
+
+	.main-nav a:hover {
+		border-bottom: 3px solid var(--color-primary);
+	}
+</style>

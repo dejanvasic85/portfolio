@@ -172,21 +172,6 @@ li {
 	letter-spacing: -0.5px;
 }
 
-.main-nav {
-	display: flex;
-	gap: 1.5rem;
-}
-
-.main-nav a {
-	color: var(--color-text);
-	font-weight: 500;
-	transition: color 0.2s;
-}
-
-.main-nav a:hover {
-	color: var(--color-primary);
-}
-
 .site-footer {
 	margin-top: auto;
 	border-top: 1px solid var(--color-border);

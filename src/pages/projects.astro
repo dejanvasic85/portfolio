@@ -12,14 +12,14 @@ import Tags from '../components/Tags.astro';
 				<div class="project-content">
 					<h2>My Notes</h2>
 					<p class="description">
-						My personal project that allows my family and I to share notes and reminders.
-						Previously, we used Google Keep, but I wanted to create something more tailored to our
-						needs and privacy.
+						A hobby project that allowsusers to create notes and share them with friends. The main
+						users are my family. Previously, we used Google Keep, but I wanted to create something
+						more tailored to our needs and privacy. It was also my foray into Svelte and SvelteKit!
 					</p>
 					<Tags tags={['Svelte', 'SvelteKit', 'Postgres', 'Prisma', 'Tailwind', 'Vercel']} />
 					<div class="links">
 						<a href="https://notes.vasic.com.au" target="_blank" rel="noopener noreferrer"
-							>View My Notes</a
+							>Check it out</a
 						>
 						<a
 							href="https://github.com/dejanvasic85/notes"
@@ -53,7 +53,6 @@ import Tags from '../components/Tags.astro';
 	}
 
 	.project-card:hover {
-		transform: translateY(-5px);
 		box-shadow: var(--shadow-card-hover);
 	}
 
