@@ -1,34 +1,45 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Tags from '../components/Tags.astro';
+import Project from '../components/Project.astro';
+
+const projects = [
+	{
+		title: 'My Notes',
+		description: `A hobby project that allows users to create notes and share them with friends. 
+			The main users are my family. Previously, we used Google Keep, 
+			but I wanted to create something more tailored to our needs and privacy. 
+			It was also my foray into Svelte and SvelteKit!`,
+		tags: ['Svelte', 'SvelteKit', 'Postgres', 'Prisma', 'Tailwind', 'Vercel'],
+		projectUrl: 'https://notes.vasic.com.au',
+		sourceCodeUrl: 'https://github.com/dejanvasic85/notes'
+	},
+	{
+		title: 'SES Melbourne',
+		description: `A clean website and blog for a local business in Melbourne, Australia. 
+			The website is built with Next.js and Sanity CMS. 
+			It is a simple website that showcases the services offered by the business.`,
+		tags: ['Nextjs', 'Tailwind', 'Sanity CMS', 'Tailwind', 'Vercel'],
+		projectUrl: 'https://www.sesmelbourne.com.au/',
+		sourceCodeUrl: 'https://github.com/dejanvasic85/ses-next'
+	}
+];
 ---
 
 <Layout title="Projects - Dejan Vasic">
 	<main class="container">
 		<h1>Projects</h1>
 		<div class="projects-grid">
-			<!-- Project 1 -->
-			<div class="project-card">
-				<div class="project-content">
-					<h2>My Notes</h2>
-					<p class="description">
-						A hobby project that allowsusers to create notes and share them with friends. The main
-						users are my family. Previously, we used Google Keep, but I wanted to create something
-						more tailored to our needs and privacy. It was also my foray into Svelte and SvelteKit!
-					</p>
-					<Tags tags={['Svelte', 'SvelteKit', 'Postgres', 'Prisma', 'Tailwind', 'Vercel']} />
-					<div class="links">
-						<a href="https://notes.vasic.com.au" target="_blank" rel="noopener noreferrer"
-							>Check it out</a
-						>
-						<a
-							href="https://github.com/dejanvasic85/notes"
-							target="_blank"
-							rel="noopener noreferrer">Source Code</a
-						>
-					</div>
-				</div>
-			</div>
+			{
+				projects.map((project) => (
+					<Project
+						title={project.title}
+						description={project.description}
+						tags={project.tags}
+						projectUrl={project.projectUrl}
+						sourceCodeUrl={project.sourceCodeUrl}
+					/>
+				))
+			}
 		</div>
 
 		<a href="/" class="back-link">← Back to Home</a>
@@ -41,48 +52,5 @@ import Tags from '../components/Tags.astro';
 		flex-direction: column;
 		gap: 2rem;
 		margin-bottom: 2rem;
-	}
-
-	.project-card {
-		border-radius: 0.5rem;
-		overflow: hidden;
-		box-shadow: var(--shadow-card);
-		transition:
-			transform 0.3s,
-			box-shadow 0.3s;
-	}
-
-	.project-card:hover {
-		box-shadow: var(--shadow-card-hover);
-	}
-
-	.project-content {
-		padding: 1.5rem;
-	}
-
-	.project-card h2 {
-		font-size: 1.5rem;
-		margin-bottom: 0.75rem;
-		color: #333;
-	}
-
-	.description {
-		color: #555;
-		margin-bottom: 1rem;
-		line-height: 1.5;
-	}
-
-	.links {
-		display: flex;
-		gap: 1rem;
-	}
-
-	.links a {
-		color: var(--color-primary);
-		text-decoration: none;
-	}
-
-	.links a:hover {
-		text-decoration: underline;
 	}
 </style>
