@@ -2,6 +2,8 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 
+import vercel from '@astrojs/vercel';
+
 // https://astro.build/config
 export default defineConfig({
 	markdown: {
@@ -18,5 +20,7 @@ export default defineConfig({
 			]
 		}
 	},
-	integrations: [mdx()]
+
+	integrations: [mdx()],
+	adapter: vercel()
 });
