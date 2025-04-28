@@ -37,9 +37,23 @@ const { title = 'Dejan Vasic - Software Engineer' } = Astro.props;
 			<div class="footer-container">
 				<p>&copy; {new Date().getFullYear()} Dejan Vasic. All rights reserved.</p>
 				<div class="social-links">
-					<a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
-					<a href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-					<a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">Twitter</a>
+					<a href="https://github.com/dejanvasic85" target="_blank" rel="noopener noreferrer"
+						>GitHub
+					</a>
+					<a
+						href="https://www.linkedin.com/in/dejan-vasic/"
+						target="_blank"
+						rel="noopener noreferrer">LinkedIn</a
+					>
+					<a href="https://x.com/dejanvasic85" target="_blank" rel="noopener noreferrer">X</a>
+					<a
+						href="https://bsky.app/profile/dejanvasic.bsky.social"
+						target="_blank"
+						rel="noopener noreferrer">Blue Sky</a
+					>
+					<a href="https://medium.com/@dejanvasic24" target="_blank" rel="noopener noreferrer"
+						>Medium</a
+					>
 				</div>
 			</div>
 		</footer>
@@ -59,10 +73,23 @@ const { title = 'Dejan Vasic - Software Engineer' } = Astro.props;
 		font-weight: 500;
 		transition: color 0.2s;
 		border-bottom: 3px solid var(--color-background);
-		padding: var(--space-sm)
+		padding: var(--space-sm);
 	}
 
 	.main-nav a:hover {
 		border-bottom: 3px solid var(--color-primary);
+	}
+
+	.site-footer {
+		margin-top: auto;
+		border-top: 1px solid var(--color-border);
+		padding: 2rem 0;
+		background-color: var(--color-background-alt);
+	}
+
+	@media print {
+		.site-footer {
+			display: none;
+		}
 	}
 </style>

@@ -172,13 +172,6 @@ li {
 	letter-spacing: -0.5px;
 }
 
-.site-footer {
-	margin-top: auto;
-	border-top: 1px solid var(--color-border);
-	padding: 2rem 0;
-	background-color: var(--color-background-alt);
-}
-
 .footer-container {
 	max-width: 800px;
 	margin: 0 auto;
@@ -304,9 +297,6 @@ code {
 
 @media print {
 	.site-header {
-		display: none;
-	}
-	.site-footer {
 		display: none;
 	}
 
