@@ -1,16 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-const allPosts = await Astro.glob('./*.mdx');
+const allPosts = await Astro.glob('./**/*.mdx');
+const sortedPosts = allPosts.sort((a, b) => {
+  return new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf();
+});
 ---
 
 <Layout title="Blog - Dejan Vasic">
 	<main class="container">
 		<h1>Blog</h1>
-		<p>Coming soon... under construction.</p>
-		<!-- <p class="intro">Thoughts on software engineering, leadership, and technology.</p>
+		<p class="intro">Thoughts on software engineering, leadership, and technology.</p>
 		<div class="posts">
 			{
-				allPosts.map((post) => (
+				sortedPosts.map((post) => (
 					<article class="post-card">
 						<div class="post-date">{post.frontmatter.date}</div>
 						<h2>
@@ -27,7 +29,7 @@ const allPosts = await Astro.glob('./*.mdx');
 					</article>
 				))
 			}
-		</div> -->
+		</div>
 
 		<a href="/" class="back-link">← Back to Home</a>
 	</main>
@@ -86,5 +88,16 @@ const allPosts = await Astro.glob('./*.mdx');
 
 	.read-more:hover {
 		text-decoration: underline;
+	}
+	
+	.tag {
+		display: inline-block;
+		background-color: var(--color-bg-secondary);
+		color: var(--color-text-light);
+		font-size: 0.8rem;
+		padding: 0.25rem 0.75rem;
+		border-radius: 2rem;
+		margin-right: 0.5rem;
+		margin-bottom: 0.5rem;
 	}
 </style>

@@ -7,7 +7,8 @@
 		"dev": "astro dev",
 		"build": "astro build",
 		"preview": "astro preview",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"migrate-wp": "node --no-warnings wp-to-astro.cjs"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^4.2.5",
@@ -16,7 +17,9 @@
 		"shiki": "^3.2.2"
 	},
 	"devDependencies": {
+		"@xmldom/xmldom": "^0.8.10",
 		"prettier": "3.5.3",
-		"prettier-plugin-astro": "0.14.1"
+		"prettier-plugin-astro": "0.14.1",
+		"turndown": "^7.1.2"
 	}
 }
