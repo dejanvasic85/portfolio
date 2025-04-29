@@ -1,0 +1,137 @@
+---
+layout: ../../../layouts/BlogLayout.astro
+title: "Ant Design Upload to S3 Bucket and GraphQL"
+date: September 10, 2020
+tags: ["ant-design","aws","graphql","react","s3"]
+excerpt: "Ant Design's Upload component is packed full of features. When it comes to uploading to an AWS S3 bucket using a signed request, there's obvious lack of docu..."
+---
+
+Ant Design's Upload component is packed full of features. When it comes to uploading to an AWS S3 bucket using a signed request, there's obvious lack of documentation on how to achieve this.
+
+There's definitely a few approaches available but I found the easiest route is to use the Signed Request URL form S3.
+
+The flow:
+
+![](https://dejanvasic.wordpress.com/wp-content/uploads/2020/09/image.png?w=422)
+
+First we need to get a signed URL for the action from the S3 bucket, then upload the file to that endpoint. Once completed, we should update the affected record in the API / database.
+
+Here's the final component with explanatory comments on how it all hangs together.
+
+```
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { Upload, message, notification } from 'antd';
+import ImgCrop from 'antd-img-crop';
+
+import { UPLOAD_FILE } from './ProfilePic.graphql';
+import { Props, Request, Response } from './ProfilePic.types';
+
+const ProfilePic = ({ id, currentImgUrl, updatePicture }: Props) => {
+  const initialState = currentImgUrl
+    ? [
+        {
+          uid: 'current',
+          status: 'done',
+          url: currentImgUrl,
+        },
+      ]
+    : [];
+
+  const [uploadFile, { data: uploadFileData }] = useMutation<Response, Request>(UPLOAD_FILE);
+  const [fileList, setFileList] = useState<any[]>(initialState);
+  const [headers, setHeaders] = useState<any>();
+
+  const handleFileChanged = ({ file }) => {
+    if (file.status === 'removed') {
+      setFileList([]);
+    } else if (file.status === 'uploading') {
+      setFileList([file]);
+    } else if (file.status === 'done') {
+      const {
+        createSignedUrl: { url },
+      } = uploadFileData;
+
+      const newFile = {
+        ...file,
+        url,
+      };
+      setFileList([newFile]);
+      notification.success({ message: 'Image updated successfully' });
+    }
+  };
+
+  const handleBeforeCrop = (file: any): boolean => {
+    // Do some checks like image type and size...
+    return true;
+  };
+
+  const handleBeforeUpload = async ({ name, type }): Promise<void> => {
+    
+    // Headers are required by Amazon S3
+    setHeaders({
+      'x-amz-acl': 'public-read',
+      'Content-Type': type,
+    });
+
+    // Fetches the Signed URL from S3 bucket
+    // Prepend with the ID to make the file name unique
+    await uploadFile({
+      variables: {
+        input: {
+          fileName: `${id}.${name}`,
+          fileType: type,
+        },
+      },
+    });
+  };
+
+  // Custom xhr upload method
+  const handleUpload = async ({ onSuccess, onError, file }: any) => {
+    const xhr = new XMLHttpRequest();
+    const {
+      createSignedUrl: { signedRequest, url },
+    } = uploadFileData;
+
+    // S3 requires PUT method!
+    xhr.open('PUT', signedRequest);
+    xhr.onreadystatechange = async () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+
+          // Calls the update prop 
+          await updatePicture({
+            variables: { input: { picture: url } },
+          });
+          onSuccess(null, file);
+        } else {
+          onError(xhr.responseText, xhr.response, file);
+        }
+      }
+    };
+    xhr.send(file);
+  };
+
+  // SignedRequest from s3 needs to be set as the action. This is the glue.
+  const action = uploadFileData?.createSignedUrl?.signedRequest;
+
+  return (
+    <ImgCrop zoom rotate shape="round" beforeCrop={(e) => handleBeforeCrop(e)}>
+      <Upload
+        listType="picture-card"
+        action={action}
+        headers={headers}
+        fileList={fileList}
+        showUploadList={{ showDownloadIcon: false, showPreviewIcon: true }}
+        customRequest={(e) => handleUpload(e)}
+        beforeUpload={(args) => handleBeforeUpload(args)}
+        onChange={(e) => handleFileChanged(e)}
+      >
+        {fileList.length === 0 && '+ Upload'}
+      </Upload>
+    </ImgCrop>
+  );
+};
+export default ProfilePic;
+
+```

@@ -1,0 +1,164 @@
+---
+layout: ../../../layouts/BlogLayout.astro
+title: "Query GraphQL in Nextjs and SSR Rehydration"
+date: February 28, 2022
+tags: ["Development"]
+excerpt: "There are a bunch of articles on how to setup Apollo GraphQL in Nextjs and a github repository from NextJs docs. Great starting points particularly for query..."
+---
+
+There are a bunch of articles on how to setup [Apollo GraphQL in Nextjs](https://www.apollographql.com/blog/apollo-client/next-js/next-js-getting-started/) and a github repository from [NextJs docs](https://github.com/vercel/next.js/tree/canary/examples/with-apollo). Great starting points particularly for querying an API that is hosted externally to our App. The docs were not so generous however with describing how to accomplish server side rendering and performing query once on the server.
+
+The data needs to make its way to the client on initial render and there are a couple of ways to achieve this. The method I made use of and describe here is to execute all the initial queries on the server page, extract the cache from the Apollo client, that will then be passed as a Page Prop to the Apollo Provider on the client.
+
+**User component with useQuery**
+
+Let's say that we have the following component that makes use of \`useQuery\` from Apollo. Without cache hydration, the component render would run on the server and the client producing multiple queries to the backend.
+
+```
+import React from 'react';
+import { useQuery } from '@apollo/client';
+
+import { USER_PROFILE } from './queries';
+
+const UserProfile = () => {
+  const { data, loading } = useQuery(USER_PROFILE);
+  
+  if (loading) {
+      return <div>loading...</div>;
+   }
+
+   return <div>Name: { data.user.name }</div>
+}
+```
+
+### Apollo provider
+
+In Nextjs we need to setup the Apollo provider. We do that in the root \`\_app.tsx\` component with the apolloCache passed down as a page prop:
+
+```
+export default function MyApp({ Component, pageProps, props }): JSX.Element {
+  const apolloClient = useApollo({ initialCache: pageProps.apolloCache });
+  const getLayout = Component.getLayout ?? getDefaultLayout;
+
+  return (
+      <ApolloProvider client={apolloClient}>
+          {getLayout(<Component {...pageProps} />)}
+      </ApolloProvider>
+  );
+}
+```
+
+### Apollo client
+
+The useApollo function is a custom hook that is responsible for creating the Apollo client that will be used for either server or browser. Function can be found here:
+
+```
+import { useMemo } from 'react';
+import { ApolloClient, NormalizedCacheObject, InMemoryCache } from '@apollo/client';
+
+interface Props {
+  initialCache: NormalizedCacheObject;
+}
+
+let _cachedClient: ApolloClient<NormalizedCacheObject>;
+
+const getOrCreateApolloClient = ({ initialCache }: Props) => {
+  if (_cachedClient) {
+    if (initialCache) {
+      _cachedClient.cache.restore(initialCache);
+    }
+
+    return _cachedClient;
+  }
+
+  _cachedClient = new ApolloClient<NormalizedCacheObject>({
+    cache: new InMemoryCache(),
+    credentials: 'same-origin',
+    uri: '/api/graphql',
+  });
+
+  _cachedClient.cache.restore(initialCache);
+  return _cachedClient;
+};
+
+export default function useApollo({ initialCache }: Props) {
+  const client = useMemo(() => getOrCreateApolloClient({ initialCache }), [initialCache]);
+
+  return client;
+}
+```
+
+The uri \`/api/graphql\` is the relative url configured for GraphQL server running within the same App.
+
+### NextJS Page
+
+Here's NextJS page app with getServerSideProps method preparing the apolloCache:
+
+```
+
+const UserProfilePage = ({ errorCode, ...restProps }) => {
+  if (errorCode) {
+    return <Error statusCode={errorCode} />;
+  }
+
+  return <UserProfile {...restProps} />;
+};
+
+export const getServerSideProps: GetServerSideProps<UserProfilePageProps> = async (context) => {
+  const apolloClient = await createServerApolloClient({ context });
+
+  await apolloClient.query({
+    query: USER_PROFILE,
+    variables: {
+      username,
+    },
+  });
+
+  const apolloCache = apolloClient.cache.extract();
+
+  return {
+    props: {
+      apolloCache,
+    },
+  };
+};
+
+export default UserProfilePage;
+```
+
+### Apollo client for the server
+
+The call to creating the Apollo client on the server is important for querying database resources. Since the schema and methods are located locally we can make use of the 
+```
+makeExecutableSchema
+```
+ method from graphQL tools and pass in the schema and resolvers.
+
+This was the missing piece for me when searching for solutions online.
+
+```
+export async function createServerApolloClient({
+  context
+}: {
+  context: GetServerSidePropsContext;
+}): Promise<ApolloClient<NormalizedCacheObject>> {
+
+  const schema = makeExecutableSchema({ typeDefs, resolvers });
+
+  return new ApolloClient<NormalizedCacheObject>({
+    link: new SchemaLink({
+      schema,
+      context: (): ApiContext => {
+        return { db, config };
+      },
+    }),
+    ssrMode: true,
+    cache: new InMemoryCache(),
+  });
+}
+
+```
+
+Other resources including the article [from Kellen Mace](https://developers.wpengine.com/blog/apollo-client-cache-rehydration-in-next-js) is really useful for querying remote API's externally to our Next App.
+
+Hopefully this article can help you and fill the gap on querying from the same server.

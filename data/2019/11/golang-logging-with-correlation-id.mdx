@@ -1,0 +1,199 @@
+---
+layout: ../../../layouts/BlogLayout.astro
+title: "GoLang api logging with correlation ID"
+date: November 1, 2019
+tags: ["API","BestPractices","CorrelationID","Golang","Logging","Microservicea","RequestID"]
+excerpt: "The ability to correlate Logs during an API request can be of utter importance in large traffic applications. It provides easier diagnoses for issues and esp..."
+---
+
+The ability to correlate Logs during an API request can be of utter importance in large traffic applications. It provides easier diagnoses for issues and especially across applications (micro services) managed by different teams.
+
+Generally the way we correlate requests is by using 'Correlation-ID' or 'X-Request-Id' or anything else that is a binding contract between teams and usually passed in by headers in the shape of a GUID.
+
+There are various parts of the application that make a lot of sense to have logs. That in itself is probably another topic. But a good pattern is to log in different layers of the application like a security later, request entry, validation, business operation and so on.
+
+Here we have a very simple API with an endpoint to fetch users and log some stuff along the way:
+
+```
+package main
+
+import (
+	"encoding/json"
+	"net/http"
+
+	"github.com/gorilla/mux"
+	log "github.com/sirupsen/logrus"
+)
+
+var users = map[string]string{
+	"foo": "Mister Fooooo",
+	"bar": "Missus Barrrr",
+}
+
+func HandleGetUser(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userID := params["id"]
+
+	log.Infof("Fetching user %s", userID)
+
+	if value, exists := users[userID]; exists {
+		log.Infof("Found user %s", value)
+		data := struct {
+			Hello string
+		}{
+			Hello: value,
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(data)
+		return
+	}
+
+	w.WriteHeader(http.StatusNotFound)
+}
+
+func main() {
+	r := mux.NewRouter()
+
+	r.HandleFunc("/users/{id}", HandleGetUser)
+
+	log.Info("Starting server on port 9001")
+	log.Fatal(http.ListenAndServe("localhost:9001", r), "Listening on port 9001")
+}
+
+```
+
+Once we call the users endpoints with "foo" we get this output:
+
+```
+$ go run .
+time="2019-11-01T21:52:49+11:00" level=info msg="Starting server on port 9001"
+time="2019-11-01T21:53:48+11:00" level=info msg="Fetching user foo"
+time="2019-11-01T21:53:48+11:00" level=info msg="Found user Mister Fooooo"
+```
+
+In this instance I'm using logrus for the logger but it can be easily replaced.
+
+So this is all cool when the API is single threaded because the logs will be in sequential order and then we can see all the events and trace the sequence of actions in that request.
+
+In reality, however; our logs will probably look like this instead (regardless of language platform given the nature of Api's):
+
+```
+time="2019-11-01T21:53:48+11:00" level=info msg="Fetching user foo"
+time="2019-11-01T21:53:48+11:00" level=info msg="Fetching user bar"
+time="2019-11-01T21:53:48+11:00" level=info msg="Fetching user foo"
+time="2019-11-01T21:53:48+11:00" level=info msg="Found user Mister Fooooo"
+time="2019-11-01T21:53:48+11:00" level=info msg="Found user Mister Fooooo"
+time="2019-11-01T21:53:48+11:00" level=info msg="Found user Mister bar"
+```
+
+Logs are now all our of order. Many log aggregation tools like splunk or sumo allow us to search these entries but we need to identify them somehow. Enter Correlation ID.
+
+At this point as a GoLang newbie, I was left scratching my head. Usually, I would solve this problem in .Net using dependency injection to get the current Logger (per request) and using middleware to read the header and set the correlation ID for this logger. Then in all the other controllers and services that need to log anything, the correlation ID would be logged with it as an additional field.
+
+> With Gorilla mux in golang, I haven't seen dependency injection or at least in the same way to resolve controllers and their dependencies. Wait, there ARE no controllers.
+> 
+> [Tweet](http://twitter.com/share?&text=With%20Gorilla%20mux%20in%20golang%2C%20I%20haven't%20seen%20dependency%20injection%20or%20at%20least%20in%20the%20same%20way%20to%20resolve%20controllers%20and%20their%20dependencies.%20Wait%2C%20there%20ARE%20no%20controllers.%20&url=https://dejanvasic.wordpress.com/2019/11/01/golang-logging-with-correlation-id/)
+
+That's ok. We'll do with what we have.
+
+*   [Middleware](https://github.com/gorilla/mux#middleware)
+*   [Golang Context](https://golang.org/pkg/context/)
+*   [Logrus](https://github.com/sirupsen/logrus) fields - yes it does use some nifty logrus features
+*   Dependency Injection - Might come back to this later. Haven't figured it out yet.
+
+First, middleware will be executed before the handler to read the correlation ID and set it in to the context. Let's do that first. _Excuse the naughty magic strings everywhere._
+
+```
+func CorrelationMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		id := r.Header.Get("Correlation-ID")
+		ctx := context.WithValue(r.Context(), "CorrelationID", id)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
+```
+
+And make sure to add it to the main function:
+
+```
+func main() {
+	r := mux.NewRouter()
+
+	r.Use(CorrelationMiddleware)
+	r.HandleFunc("/users/{id}", HandleGetUser)
+
+	log.Info("Starting server on port 9001")
+	log.Fatal(http.ListenAndServe("localhost:9001", r), "Listening on port 9001")
+}
+
+```
+
+At this point, we the correlation ID ready in the context for subsequent handlers / middleware. So we could easily read it out every time we need to log and append it at the start or end of our logs. But we can do one better than that. Logrus logger has a nice 
+```
+WithFields
+```
+ method that creates an entry. This instance can be stored on the context as well or even just replace the correlation ID entry. So it becomes like this:
+
+```
+func CorrelationMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		id := r.Header.Get("Correlation-ID")
+		entry := log.WithFields(log.Fields{
+			"correlationID": id,
+		})
+		ctx := context.WithValue(r.Context(), "RequestLogger", entry)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
+```
+
+So in our handlers we can now fetch the 
+```
+RequestLogger
+```
+ from our context instead of calling 
+```
+Log
+```
+ directly. Our handler is updated to look like this:
+
+```
+func HandleGetUser(w http.ResponseWriter, r *http.Request) {
+	logger := r.Context().Value("RequestLogger").(*log.Entry)
+	params := mux.Vars(r)
+	userID := params["id"]
+
+	logger.Infof("Fetching user %s", userID)
+
+	if value, exists := users[userID]; exists {
+		logger.Infof("Found user %s", value)
+		data := struct {
+			Hello string
+		}{
+			Hello: value,
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(data)
+		return
+	}
+
+	w.WriteHeader(http.StatusNotFound)
+}
+```
+
+And the output?
+
+```
+time="2019-11-01T22:57:51+11:00" level=info msg="Fetching user foo" correlationID=111
+time="2019-11-01T22:57:54+11:00" level=info msg="Fetching user foo" correlationID=222
+time="2019-11-01T22:57:54+11:00" level=info msg="Found user Mister Fooooo" correlationID=222
+time="2019-11-01T22:57:51+11:00" level=info msg="Found user Mister Fooooo" correlationID=111
+```
+
+Whenever we fetch the logger from the context we will have any fields associated to the logger up to that point. We could also add things like App Version, App Name, request method, endpoint name etc etc.
+
+[Logrus](https://github.com/sirupsen/logrus) is the only library I have explored in my miniscule time looking at golang but it does have support for JSON logs along with many other features.
+
+One thing I would like to explore next is the possibility of using dependency injection to resolve a logger instead of fetching from the context on every handler entry. This would also help a lot if another dependency in the request call stack needs to log something. It would save us from passing it as an argument. Hope this all makes sense. I definitely learned something from it.

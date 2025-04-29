@@ -1,5 +1,6 @@
 ---
 import Layout from './Layout.astro';
+import Tags from '../components/Tags.astro';
 
 const { frontmatter } = Astro.props;
 ---
@@ -12,10 +13,8 @@ const { frontmatter } = Astro.props;
 					<span class="post-date">{frontmatter.date}</span>
 					{
 						frontmatter.tags && (
-							<div class="tags">
-								{frontmatter.tags.map((tag) => (
-									<span class="tag">{tag}</span>
-								))}
+							<div class="tag-container">
+								<Tags tags={frontmatter.tags.map((t: string) => t)} />
 							</div>
 						)
 					}
@@ -48,7 +47,7 @@ const { frontmatter } = Astro.props;
 		color: #666;
 	}
 
-	.tags {
+	.tag-container {
 		margin-top: 1rem;
 	}
 

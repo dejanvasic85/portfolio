@@ -1,0 +1,215 @@
+---
+layout: ../../../layouts/BlogLayout.astro
+title: "SvelteKit with Auth0 integration"
+date: March 3, 2024
+tags: ["Development"]
+excerpt: "Auth0 excels at offering pre-made libraries for web applications. The Next.js template simplifies the process significantly, requiring only an npm install, c..."
+---
+
+Auth0 excels at offering pre-made libraries for web applications. The Next.js template simplifies the process significantly, requiring only an npm install, configuration of environment variables, creation of a route for the auth endpoints, and finally, crafting components for managing login/logout buttons. Getting up and running is incredibly fast, sparing engineers from delving deeply into the nuances of how OAuth works.
+
+When it comes to integrating with new frameworks like SvelteKit, many of us (myself included) anticipate a similar experience. However, the convenience of these libraries has led to a loss of basic understanding of OAuth flows along the way. Why not take just 10 minutes to learn and implement it yourself? It's not as difficult as it seems!
+
+## Authorization code flow
+
+For web applications with a backend server, you'll want to use the Authorization Code Flow, and implementing it in SvelteKit is straightforward. At the end of the flow, we issue a session cookie to the user and validate it on every request to our protected routes. Here's a diagram of the basic flow:
+
+[![](https://dejanvasic.wordpress.com/wp-content/uploads/2024/03/image.png?w=1024)](https://dejanvasic.wordpress.com/wp-content/uploads/2024/03/image.png)
+
+We need two endpoints for this flow: the initial authentication request from the user (for example, clicking a login link or requesting a protected page) and a callback endpoint for verifying the authorization code from Auth0. Similar to Next.js, we can leverage API endpoints to achieve this.
+
+## Login
+
+Starting with the login let's deep dive in to the GET request. You can create this file under 
+```
+/routes/api/auth/login/+server.ts
+```
+
+```
+import type { RequestHandler } from '@sveltejs/kit';  
+import { AUTH0_DOMAIN, AUTH0_CLIENT_ID } from '$env/static/private';  
+import { PUBLIC_BASE_URL } from '$env/static/public';  
+  
+export const GET: RequestHandler = ({ cookies, url }) => {  
+	const csrfState = Math.random().toString(36).substring(7);  
+	cookies.set('csrfState', csrfState, {  
+		httpOnly: true,  
+		sameSite: 'lax',  
+		maxAge: 1000,  
+		path: '/'  
+	});  
+  
+	const returnUrl = encodeURIComponent(url.searchParams.get('returnUrl') || '/');  
+  
+	const query = {  
+		scope: 'openid profile email',  
+		response_type: 'code',  
+		client_id: AUTH0_CLIENT_ID,  
+		redirect_uri: `${PUBLIC_BASE_URL}/api/auth/callback?returnUrl=${returnUrl}`,  
+		state: csrfState  
+	};  
+  
+	return new Response(null, {  
+		status: 302,  
+		headers: {  
+			location: `https://${AUTH0_DOMAIN}/authorize?${new URLSearchParams(query).toString()}`  
+		}  
+	});  
+};
+```
+
+This process is quite straightforward. We generate a random string to store in a cookie for the user. Using a cookie to provide the CSRF token to the client prevents successful attacks because the attacker cannot read the cookie value, which is required for server-side CSRF validation.
+
+The code then creates a redirect URL to the Authorization server, passing additional parameters like the scopes required. In this snippet, we request the openid, profile, and email scopes. The return URL is also an important factor; the snippet redirects the user to the homepage by default unless a query parameter is passed. Another good option would be to redirect the user to the HTTP referrer of the incoming request.
+
+## Callback
+
+Next up is the callback. I used the endpoint 
+```
+/routes/api/auth/callback/+server.ts
+```
+
+```
+export const GET: RequestHandler = async ({ url, cookies }) => {  
+    const code = url.searchParams.get('code');  
+    const state = url.searchParams.get('state');  
+    const returnUrl = url.searchParams.get('returnUrl') || '/';  
+  
+    const csrfState = cookies.get('csrfState');  
+  
+    if (state !== csrfState || !code) {  
+        return new Response('Invalid state', { status: 403 });  
+    }  
+  
+    try {  
+        const token = await getToken({ code });   
+        const authUser = await verifyToken(token.id_token);   
+        const user = await getOrCreateUser({ authId: authUser.sub, authUserProfile: authUser });   
+  
+        setAuthCookie(cookies, user);   
+        cookies.delete('csrfState', { path: '/' });  
+  
+        return new Response(null, { status: 302, headers: { location: returnUrl } });  
+    } catch (err) {  
+        return new Response(`Failed to get token. Err: ${err}`, { status: 500 });  
+    }  
+};  
+  
+  
+let cachedKey: string | undefined = undefined;  
+  
+function getKey(header: JwtHeader, callback: SigningKeyCallback) {  
+	client.getSigningKey(header.kid, function (err, key) {  
+		if (err) {  
+			callback(err);  
+		}  
+		if (cachedKey) {  
+			callback(null, cachedKey);  
+		} else {  
+			const signingKey = key?.getPublicKey();  
+			cachedKey = signingKey;  
+			callback(null, signingKey);  
+		}  
+	});  
+}  
+  
+export async function verifyToken<T>(token: string): Promise<T> {  
+	return new Promise((resolve, reject) => {  
+		jwt.verify(token, getKey, {}, (err, payload) => {  
+			if (err) {  
+				reject(err);  
+			} else {  
+				resolve(payload as T);  
+			}  
+		});  
+	});  
+}  
+  
+export async function getToken({ code } ) {  
+ const resp = await fetch(`https://${AUTH0_DOMAIN}/oauth/token`, {  
+			method: 'POST',  
+			body: JSON.stringify({  
+				code,  
+				client_id: AUTH0_CLIENT_ID,  
+				client_secret: AUTH0_CLIENT_SECRET,  
+				redirect_uri: `${PUBLIC_BASE_URL}/api/auth/callback`,  
+				grant_type: 'authorization_code'  
+			}),  
+			headers: {  
+				'Content-Type': 'application/json'  
+			}  
+		});  
+   return await resp.json();  
+}  
+  
+export const setAuthCookie = (cookies: Cookies, user: User) => {  
+	const cookieValue = jwt.sign(user, SESSION_SECRET);  
+	cookies.set(COOKIE_NAME, cookieValue, {  
+		httpOnly: true,  
+		sameSite: 'lax',  
+		maxAge: COOKIE_DURATION_SECONDS,  
+		path: '/'  
+	});  
+};
+```
+
+This callback function does several important things:
+
+1.  It uses the query parameters to verify that the state matches the cookie value created during login.
+2.  It uses the Auth code obtained from Auth0 to exchange it for a JWT token. This is done in 
+    ```
+    getToken
+    ```
+    .
+3.  Verifying the token returns the payload, which should contain the user details.
+4.  At this point, we can either create the user in our backend or simply proceed if we don't need to persist any user information.
+5.  A session cookie is created using our own secret, with properties including 
+    ```
+    httpOnly
+    ```
+     to ensure it's not accessible in JavaScript.
+
+The environment variables are self-explanatory, and you can use third-party libraries like 
+```
+jsonwebtoken
+```
+ for verifying and signing JWTs.
+
+## Middleware: Extending session and protecting routes
+
+The final piece is the middleware. We need to make use of SvelteKit hooks.server.ts.
+
+```
+export const handle = async ({ event, resolve }) => {  
+  
+	const cookie = event.cookies.get('session');  
+	const url = new URL(event.request.url);  
+  
+	if (cookie) {  
+		// Extend the cookie  
+		const user = jwt.verify(cookie, SESSION_SECRET) as User;  
+		setAuthCookie(event.cookies, user);  
+		return await resolve(event);  
+	}  
+  
+	if (!cookie && privateRoutes.has(url.pathname)) {  
+		return new Response('LoginRequired', {  
+			status: 302,  
+			headers: { location: `/api/auth/login?returnUrl=${url.pathname}` }  
+		});  
+	}  
+	return await resolve(event);  
+};  
+
+```
+
+This method gets hit on every request. It decodes the contents of the session cookie, then sets a new cookie which extends it for the session duration, effectively creating a sliding window.
+
+Your app should now be protected by Auth0!
+
+## Relevant links
+
+*   [https://community.auth0.com/t/sveltekit-integration/72204](https://community.auth0.com/t/sveltekit-integration/72204)
+*   [https://dominictobias.medium.com/writing-an-oauth-flow-from-scratch-in-nodejs-397496acafbe](https://dominictobias.medium.com/writing-an-oauth-flow-from-scratch-in-nodejs-397496acafbe)
+*   [https://www.youtube.com/watch?v=DJvM2lSPn6w&t=13s](https://www.youtube.com/watch?v=DJvM2lSPn6w&t=13s)
+*   [https://www.reddit.com/r/sveltejs/comments/qgnmvx/sveltekit\_auth0/](https://www.reddit.com/r/sveltejs/comments/qgnmvx/sveltekit_auth0/)

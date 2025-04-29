@@ -1,8 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Tags from '../../components/Tags.astro';
+
 const allPosts = await Astro.glob('./**/*.mdx');
 const sortedPosts = allPosts.sort((a, b) => {
-  return new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf();
+	return new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf();
 });
 ---
 
@@ -19,10 +21,7 @@ const sortedPosts = allPosts.sort((a, b) => {
 							<a href={post.url}>{post.frontmatter.title}</a>
 						</h2>
 						<p class="excerpt">{post.frontmatter.excerpt}</p>
-						<div class="tags">
-							{post.frontmatter.tags &&
-								post.frontmatter.tags.map((tag) => <span class="tag">{tag}</span>)}
-						</div>
+						<Tags tags={post.frontmatter.tags?.map((t: string) => t)} />
 						<a href={post.url} class="read-more">
 							Read post →
 						</a>
@@ -89,7 +88,7 @@ const sortedPosts = allPosts.sort((a, b) => {
 	.read-more:hover {
 		text-decoration: underline;
 	}
-	
+
 	.tag {
 		display: inline-block;
 		background-color: var(--color-bg-secondary);

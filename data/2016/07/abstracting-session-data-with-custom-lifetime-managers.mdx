@@ -1,0 +1,11 @@
+---
+layout: ../../../layouts/BlogLayout.astro
+title: 'Abstracting session data with custom lifetime managers'
+date: July 10, 2016
+tags: ['.Net', 'ASP.Net']
+excerpt: ''
+---
+
+Yes, there's many ways of abstracting the HttpContext and Session objects that make our MVC Controllers "more" testable. Unless of course the HttpContextBase is injected that can also be mocked. The more obvious method is the very simple ISession or similar named interface which the concrete implementation that would access the HttpContext directly (see last file in the gist). The obvious disadvantage here is hardcoded session key names and this can get very messy particularly across multiple controllers or other server side components. Some would argue that constants may do the trick and that's absolutely all fine. I found that managing more complex objects can be a lot neater by allowing unity to manage the lifetime (could be session or any other store) and then simply injecting in our controllers would give us access to all of it's properties/methods! For example:
+
+[code]public class BookingData { public DateTime StartDate{get;set;} } public class HomeController( BookingData bookingData ) { \_bookingData = bookingData; } The "SessionLifetimeManager" implementation (see gist below) would create a new BookingData object for us and inject it to the HomeController automatically. To register this object now is simply a matter of: public void UnityConfig(IUnityContainer container) { container.RegisterType<BookingData>(new SessionLifetimeManager<BookingData>()); } [/code] Here's the full gist: https://gist.github.com/dejanvasic85/59184570ef7a2119c4993a839dceea37

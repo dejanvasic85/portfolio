@@ -1,0 +1,113 @@
+---
+layout: ../../../layouts/BlogLayout.astro
+title: "CircleCi and Heroku Orb"
+date: June 23, 2020
+tags: ["buildnumber","circleci","Continuous Delivery","heroku"]
+excerpt: "Recently I've had some pain trying to use the Heroku Orb in Circle CI config."
+---
+
+Recently I've had some pain trying to use the [Heroku Orb](https://circleci.com/orbs/registry/orb/circleci/heroku#quick-start) in Circle CI config.
+
+My goal was simple. **Send the build number from Circle CI as part of the heroku deployment.**
+
+There are two ways to use this orb:
+
+*   Commands
+*   Jobs
+
+The problem I was facing was that I had my blinkers on the Jobs and originally the config.yml looked like this:
+
+```
+version: 2.1
+orbs:
+  node: circleci/node@2.1.1
+  heroku: circleci/heroku@1.0.1
+
+workflows:
+  build-test-deploy:
+    jobs:
+      - node/test
+      - heroku/deploy-via-git:
+          app-name: application-name
+          requires:
+            - node/test
+          filters:
+            branches:
+              only: master
+
+```
+
+This is very simple right? However, where is the build number? How do we set that environment variable in Heroku so that the application can load it at runtime?
+
+![](https://dejanvasic.wordpress.com/wp-content/uploads/2020/06/image.png?w=1024)
+
+To set the environment variable, we'd need access to the heroku command line and call \`heroku config:set ...\`. Then, I came across the pre-deploy step/hook for that job and that seemed to work!
+
+```
+...
+
+workflows:
+  build-test-deploy:
+    jobs:
+      - node/test
+      - heroku/deploy-via-git:
+          app-name: application-name
+          pre-deploy:
+            - run: heroku config:set BUILD_NUMBER=$CIRCLE_BUILD_NUM -a application-name
+....
+```
+
+Nice :) But then I came across this error on the subsequent builds :(
+
+```
+#!/bin/bash -eo pipefail
+if false;then
+  force="-f"
+fi
+git push $force https://heroku:$HEROKU\_API\_KEY@git.heroku.com/xxxxx.git $CIRCLE\_BRANCH:master
+To https://git.heroku.com/\*\*\*\*\*\*\*\*\*\*\*\*.git
+ ! \[rejected\]        master -> master (fetch first)
+error: failed to push some refs to 'https://heroku:\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*@git.heroku.com/\*\*\*\*\*\*\*\*\*\*\*\*.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+```
+
+## The Fix!
+
+The above error was happening probably because the container had cached git files and needed to do a force push. i.e. \`git push -f ....\` which happens inside this job. But guess what? The job didn't have that parameter available so we have to use the heroku commands instead!
+
+The final working outcome is this (notice the \`force:true\`):
+
+```
+version: 2.1
+orbs:
+  node: circleci/node@2.1.1
+  heroku: circleci/heroku@1.0.1
+
+jobs:
+  deploy:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - run: heroku config:set BUILD_NUMBER=$CIRCLE_BUILD_NUM -a application-name
+      - heroku/deploy-via-git:
+          app-name: application-name
+          force: true
+        
+workflows:
+  build-test-deploy:
+    jobs:
+      - node/test
+      - deploy:
+          requires:
+            - node/test
+          filters:
+            branches:
+              only: master
+
+```
