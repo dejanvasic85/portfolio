@@ -1,0 +1,75 @@
+---
+layout: ../../../../layouts/BlogLayout.astro
+title: 'React Hook Form with Nextjs server actions causing Not Found'
+date: February 29, 2024
+tags: ['nextjs', 'react', 'react-hook-form', 'server-actions']
+excerpt: "A deep dive into the 'Form Not Found' issue in Next.js applications using React Hook Form, and how to resolve it effectively."
+---
+
+Recently, our Next.js application started reporting that a handful of users were experiencing a 'Not Found'
+error after submitting a form. Upon reviewing session replays, it became clear that users were encountering a
+404 error immediately after form submission, despite the page and form being fully rendered.
+
+## The problem
+
+In our setup, we used [react-hook-form](https://react-hook-form.com/) within a client-side component to
+submit forms to an API endpoint.
+
+When a user initially loads the HTML page, the form is visible, but the JavaScript `onSubmit` handler is absent
+until the Next.js page chunk fully loads. If a user submits the form before the handler is ready, the form defaults
+to a GET action, appending the selected value as a URL parameter e.g. `/form-url?australianCitizen=yes`,
+leading to a 404 since that endpoint does not exist.
+
+## **Solution 1: Disabling the Submit Button**
+
+To address this, we decided to prevent form submission until the JavaScript was fully loaded.
+This was achieved by disabling the submit button initially and then enabling it using the `useEffect` hook.
+The only way the button could be enabled is when the JavaScript was fully loaded!
+
+Full code sample:
+
+```JSX
+'use client';
+import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
+
+export const CitizenForm = () => {
+  const [isEnabled, setEnabled] = useState(false);
+  const form = useForm();
+
+  useEffect(() => {
+    setEnabled(true);
+  }, []);
+
+  const onSubmit = (data) => {
+    fetch('/api/citizenship', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  };
+
+  return (
+    <form onSubmit={form.handleSubmit(onSubmit)}>
+      ...
+      <button type="submit" disabled={!isEnabled}>Submit</button>
+    </form>
+  );
+};
+```
+
+## **Solution 2: Leveraging Server Actions**
+
+Another potential solution, which I hadn't explored at the time, involves utilizing
+server actions in Next.js. This approach allows for form submissions without relying
+on client-side JavaScript, offering a more streamlined and elegant solution.
+
+## Conclusion
+
+Addressing the 'Form Not Found' issue in Next.js applications can be challenging but is crucial for maintaining a seamless user experience. By either disabling the submit button until the JavaScript loads or utilizing server actions, developers can ensure reliable form submissions in their applications.
+
+## **Additional Resources**
+
+For further reading, consider exploring the official documentation for 
+[React Hook Form](https://react-hook-form.com/) and [Next.js](https://nextjs.org/docs).
+
+_Thank you for reading!_
