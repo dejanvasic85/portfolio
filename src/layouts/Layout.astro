@@ -6,6 +6,7 @@ interface Props {
 }
 
 const { title = 'Dejan Vasic - Software Engineer' } = Astro.props;
+const { pathname } = Astro.url;
 ---
 
 <!doctype html>
@@ -23,10 +24,10 @@ const { title = 'Dejan Vasic - Software Engineer' } = Astro.props;
 		<header class="site-header">
 			<div class="header-container">
 				<nav class="main-nav">
-					<a href="/">Home</a>
-					<a href="/cv">CV</a>
-					<a href="/projects">Projects</a>
-					<a href="/blog">Blog</a>
+					<a href="/" class={pathname === '/' ? 'active' : ''}>Home</a>
+					<a href="/cv" class={pathname === '/cv' ? 'active' : ''}>CV</a>
+					<a href="/projects" class={pathname === '/projects' ? 'active' : ''}>Projects</a>
+					<a href="/blog" class={pathname === '/blog' ? 'active' : ''}>Blog</a>
 				</nav>
 			</div>
 		</header>
@@ -72,12 +73,16 @@ const { title = 'Dejan Vasic - Software Engineer' } = Astro.props;
 		color: var(--color-text);
 		font-weight: 500;
 		transition: color 0.2s;
-		border-bottom: 3px solid var(--color-background);
 		padding: var(--space-sm);
 	}
 
-	.main-nav a:hover {
+	.main-nav a.active {
 		border-bottom: 3px solid var(--color-primary);
+	}
+
+	.main-nav a:hover {
+		border-radius: var(--radius-sm);
+		background-color: var(--color-background-alt);
 	}
 
 	.site-footer {
