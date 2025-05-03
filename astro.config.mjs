@@ -4,8 +4,9 @@ import mdx from '@astrojs/mdx';
 
 import vercel from '@astrojs/vercel';
 
-// https://astro.build/config
 export default defineConfig({
+	adapter: vercel(),
+	integrations: [mdx()],
 	markdown: {
 		shikiConfig: {
 			theme: 'github-dark',
@@ -21,6 +22,6 @@ export default defineConfig({
 		}
 	},
 
-	integrations: [mdx()],
-	adapter: vercel()
+	output: 'static',
+	site: 'https://dejan.vasic.com.au'
 });
