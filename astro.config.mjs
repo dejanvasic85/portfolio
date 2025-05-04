@@ -21,7 +21,5 @@ export default defineConfig({
 			]
 		}
 	},
-
-	output: 'static',
 	site: 'https://dejan.vasic.com.au'
 });
