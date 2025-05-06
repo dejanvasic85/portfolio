@@ -1,0 +1,17 @@
+---
+// Replace MEASUREMENT_ID with your actual Google Analytics ID
+const gaId = 'G-6JXZJGLW09';
+---
+
+<!-- Google tag (gtag.js) -->
+<script is:inline define:vars={{ gaId }}>
+	// Define the gtag function type for TypeScript
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		window.dataLayer.push(arguments);
+	}
+	gtag('js', new Date());
+	gtag('config', gaId);
+</script>
+
+<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 
 interface Props {
 	title?: string;
@@ -19,6 +20,7 @@ const normalizedPathname = pathname.replace(/\/$/, '');
 		<meta name="generator" content={Astro.generator} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<GoogleAnalytics />
 		<title>{title}</title>
 	</head>
 	<body>
@@ -27,7 +29,8 @@ const normalizedPathname = pathname.replace(/\/$/, '');
 				<nav class="main-nav">
 					<a href="/" class={normalizedPathname === '' ? 'active' : ''}>Home</a>
 					<a href="/cv" class={normalizedPathname === '/cv' ? 'active' : ''}>CV</a>
-					<a href="/projects" class={normalizedPathname === '/projects' ? 'active' : ''}>Projects</a>
+					<a href="/projects" class={normalizedPathname === '/projects' ? 'active' : ''}>Projects</a
+					>
 					<a href="/blog" class={normalizedPathname === '/blog' ? 'active' : ''}>Blog</a>
 				</nav>
 			</div>
