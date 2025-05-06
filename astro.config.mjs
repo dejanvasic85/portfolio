@@ -1,12 +1,14 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
+	site: 'https://dejan.vasic.com.au',
 	adapter: vercel(),
-	integrations: [mdx()],
+	integrations: [mdx(), sitemap()],
 	markdown: {
 		shikiConfig: {
 			theme: 'github-dark',
@@ -20,6 +22,5 @@ export default defineConfig({
 				}
 			]
 		}
-	},
-	site: 'https://dejan.vasic.com.au'
+	}
 });
