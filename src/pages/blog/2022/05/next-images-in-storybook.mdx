@@ -1,0 +1,95 @@
+---
+layout: ../../../../layouts/BlogLayout.astro
+title: 'Next Images in Storybook'
+date: May 8, 2022
+tags: ['nextjs', 'storybook', 'react']
+excerpt: 'The Image component is very much a key selling point for the Next framework. This is a must use for performance and user experience but a situation inevitabl...'
+---
+
+The [Image](https://nextjs.org/docs/api-reference/next/image) component is very much a key
+selling point for the Next framework. This is a must use for performance and user experience
+but a situation inevitably arises to use it in a custom component that we'd like to test
+out in [Storybook](https://storybook.js.org). Doing this produces the following error.
+
+> Invalid src prop xxx on next/image hostname xxx is not configured under images in your next.config.js
+
+[![](/images/blog/2022/05/image-1.webp)](/images/blog/2022/05/image-1.webp)
+
+When I ran to this problem initially, [I found the original solution worked a treat](https://stackoverflow.com/a/64765638/971085). However, after a Nextjs [12.1.5](https://github.com/vercel/next.js/releases/tag/v12.1.5) release, the issue came back and the original workaround lost the battle.
+
+To simply remove this error in storybook, we just need to apply the \`unoptimized\` prop to the \`next/image\` component and voila! Storybook is back and working again.
+
+But this isn't how we want roll in production so we need to find a way to apply this prop
+to be false only in production code. A strategy I found useful here to use is the React Context.
+So we begin by creating the Provider and Context which has the `unoptimized` prop and set to false by default.
+
+```typescript
+import React from 'react';
+
+interface ImageOptions {
+  unoptimized: boolean;
+}
+
+interface ProviderProps extends ImageOptions {
+  children: React.ReactNode;
+}
+
+export const ImageOptimisationContext = React.createContext<ImageOptions>({ unoptimized: false });
+
+// This provider is useful for allowing storybook to use a unoptimized: true
+export const ImageOptimisationProvider = ({ children, unoptimized }: ProviderProps) => {
+  return <ImageOptimisationContext.Provider value={{ unoptimized }}>{children}</ImageOptimisationContext.Provider>;
+};
+
+```
+
+The new custom wrapper Image component gets access to the React context and applies this property along with the rest of the
+`next/image` component. And is very similar to the solution applied previously.
+
+```typescript
+import React from 'react';
+import NextImage, { ImageProps } from 'next/image';
+
+import { ImageOptimisationContext } from '@providers';
+
+const Image = (props: ImageProps) => {
+  const { unoptimized } = React.useContext(ImageOptimisationContext);
+  return <NextImage {...props} unoptimized={unoptimized} />;
+};
+
+export default Image;
+```
+
+Wherever we use the next/image component, we replace it with our custom Image.
+Whip that find and replace if you like to live on the edge.
+
+```typescript
+// From
+import Image from 'next/image`;
+
+// To
+import Image from './components'
+```
+
+### The final touch
+
+[A global storybook](https://storybook.js.org/docs/react/writing-stories/decorators#global-decorators)
+decorator would flip the prop to true and we should once again be rid of this issue, or at least for now.
+
+Here's the final `./storybook/preview.js`:
+
+```typescript
+import React from 'react';
+
+import { ImageOptimisationProvider } from '../src/providers';
+
+export const decorators = [
+  (Story) => (
+    <ImageOptimisationProvider unoptimized={true}>
+      <Story />
+    </ImageOptimisationProvider>
+  ),
+];
+```
+
+Happy story booking...
