@@ -22,7 +22,7 @@ an appreciation for the evolutionary shift in approach.
 Let's start by dissecting a straightforward Svelte Typescript API endpoint that employs an imperative style for a GET request in a
 Notes app. For simplicity, the function assumes that user authentication has made the user ID available on the `locals` object.
 
-[![](/public/images/blog/2023/12/image-5.png)](/public/images/blog/2023/12/image-5.png)
+[![](/images/blog/2023/12/image-5.png)](/images/blog/2023/12/image-5.png)
 
 The imperative style handles errors at the API level with different status codes for various scenarios: Note not found (404), user not found (403), unauthorized access (403), and unexpected errors (500).
 
@@ -32,7 +32,7 @@ Now imagine the other API methods like PATCH and DELETE. What would they look li
 
 Now, let's delve into the functional approach:
 
-[![](/public/images/blog/2023/12/image-6.png)](/public/images/blog/2023/12/image-6.png)
+[![](/images/blog/2023/12/image-6.png)](/images/blog/2023/12/image-6.png)
 
 The TE is a naming [convention](https://gcanti.github.io/fp-ts/guides/code-conventions.html) in fp-ts used for [TaskEither](https://gcanti.github.io/fp-ts/modules/TaskEither.ts.html) which is basically akin of the Either type for asynchronous operations.
 In the world of Node, async operations have become the norm fp-ts provices TaskEither to handle them.
@@ -53,15 +53,15 @@ Using the pipe method, we can start to chain operations. Let's start from the to
 Digging deeper, the methods for data retrieval and validation return a Server Error in the left container. For example, the `getUser`
 method has the following signature:
 
-[![](/public/images/blog/2023/12/image-7.png)](/public/images/blog/2023/12/image-7.png)
+[![](/images/blog/2023/12/image-7.png)](/images/blog/2023/12/image-7.png)
 
 The method is part of a repository layer and should not have any knowledge about API statuses like 404 or 500 but it should be able to return specific errors like database connection error, or a record not found error. In typescript we could take advantage of union types to handle this:
 
-[![](/public/images/blog/2023/12/image-8.png)](/public/images/blog/2023/12/image-8.png)
+[![](/images/blog/2023/12/image-8.png)](/images/blog/2023/12/image-8.png)
 
 We can proceed to compose methods that operate on the business errors (ServerError) and when we're ready it can then be mapped to an API error where it matters.
 
-[![](/public/images/blog/2023/12/image-9.png)](/public/images/blog/2023/12/image-9.png)
+[![](/images/blog/2023/12/image-9.png)](/images/blog/2023/12/image-9.png)
 
 ## Conclusion
 
