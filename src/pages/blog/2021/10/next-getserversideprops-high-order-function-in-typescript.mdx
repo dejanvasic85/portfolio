@@ -1,0 +1,96 @@
+---
+layout: ../../../../layouts/BlogLayout.astro
+title: 'Next getServerSideProps High Order function in Typescript'
+date: October 27, 2021
+tags: ['hoc', 'nextjs', 'react']
+excerpt: 'Have you needed to reuse some code for Next pages in particular within the server side function getServerSideProps?'
+---
+
+Have you needed to reuse some code for Next pages in particular within the server side function `getServerSideProps`
+when preparing the props for a page?
+
+Some common and practical examples include fetching a user and authorising them. But for simplicity sake,
+we'll use logging latency. Here we have a simple page that requires Props to be created based on an Api call.
+We want to capture the latency by capturing the current timestamp, execute code for assembling the props and then log the latency at the end.
+
+```typescript
+import axios from 'axios';
+import logger from './logger';
+
+interface PageProps {
+  hello: string;
+}
+
+export default function MyPage<PageProps>({hello}) {
+  return <h1>{hello}</h1>
+}
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext): Promise<GetServerSidePropsResult<P>> => {
+  const startTime = Date.now();
+
+  const apiResult = await axios.fetch('/api/hello');
+
+  const finish = Date.now() - start;
+  logger.info({ message: 'httpLog', latencyMs: finish });
+
+  return {
+    props: {
+      hello: apiResult.data,
+    }
+  }
+}
+```
+
+We may want to repeat our logging code in other pages. Copy pasting it would be breaking our
+DRY principles and that would make a lot of people sad.
+
+Instead we can wrap our function in a High Order Function. In React this concept is very
+similar to HOC's and in Express think of this as middleware.
+
+For good measure, here's an example with Typescript!
+
+```typescript
+import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+
+import logger from './logger';
+
+export const withLogging = <P extends { [key: string]: any } = { [key: string]: any }>(
+	gssp: GetServerSideProps<P>
+) => {
+	return async (ctx: GetServerSidePropsContext): Promise<GetServerSidePropsResult<P>> => {
+		const startTime = Date.now();
+		const result = await gssp(ctx);
+		const latency = Date.now() - startTime;
+
+		logger.info({
+			latency,
+			msg: 'HttpLog',
+			url: ctx.resolvedUrl
+		});
+
+		return result;
+	};
+};
+```
+
+So our re-written page function would look like:
+
+```typescript
+export const getServerSideProps = withLogging(
+	async (ctx: GetServerSidePropsContext): Promise<GetServerSidePropsResult<P>> => {
+		const apiResult = await axios.fetch('/api/hello');
+
+		return {
+			props: {
+				hello: apiResult.data
+			}
+		};
+	}
+);
+```
+
+Auth0 NextJS library uses a similar concept but much harder to read/understand code. https://github.com/auth0/nextjs-auth0/blob/main/src/helpers/with-page-auth-required.ts#L98
+
+So this was my attempt to simplify it for others and provide a working example.
+
+Happy coding with Nextjs!
