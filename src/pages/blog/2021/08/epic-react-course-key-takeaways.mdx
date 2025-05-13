@@ -2,7 +2,7 @@
 layout: ../../../../layouts/BlogLayout.astro
 title: 'Epic react course key takeaways - useState lazy load and react hook flow'
 date: August 23, 2021
-tags: ['react', 'react-hooks', 'education'],
+tags: ['react', 'react-hooks', 'education']
 excerpt: "Learning react hooks and patterns from Kent C Dodds Epic React course"
 ---
 
@@ -19,7 +19,10 @@ different posts to prevent an overly large post.
 ## Calling useState with a function for Lazy Loading
 
 After visiting the React documentation, it was confirmed that this was not mentioned anywhere.
-Not sure why but it could be pretty useful, in particular to a situation outlined below. Every time we invoke useState, we can supply a function instead of a value. This function is the lazy initialiser and can be used for situations where setting initial state is a little more expensive than just setting a hardcoded value. One example used in the course was reading from local storage and deserializing an object for a nifty little **useLocalStorage** hook:
+Not sure why but it could be pretty useful, in particular to a situation outlined below. Every time we invoke useState,
+we can supply a function instead of a value. This function is the lazy initialiser and can be used for
+situations where setting initial state is a little more expensive than just setting a hardcoded value.
+One example used in the course was reading from local storage and deserializing an object:
 
 ```typescript
 function useLocalStorage(
@@ -27,8 +30,8 @@ function useLocalStorage(
 	defaultValue = '',
 	{ serialize = JSON.stringify, deserialize = JSON.parse } = {}
 ) {
-	// check out the function that we pass in to useState!
 	const [value, setValue] = React.useState(() => {
+		// Lazy initialiser
 		const localStorageValue = window.localStorage.getItem(key);
 		if (localStorageValue) {
 			return deserialize(localStorageValue);
