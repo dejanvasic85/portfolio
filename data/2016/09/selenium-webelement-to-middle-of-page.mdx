@@ -1,9 +1,0 @@
----
-layout: ../../../../layouts/BlogLayout.astro
-title: "Selenium WebElement to middle of page"
-date: September 26, 2016
-tags: ["Development"]
-excerpt: ""
----
-
-Having a sticky header and/or sticky footer in a web page is not uncommon these days particularly with the help of open-source CSS frameworks like bootstrap or foundation and thousands of others that people haven't had the pleasure of working with. Enabling this feature though can be a pain when it comes to using test automation tools such as Selenium WebDriver because when calling an action on the element like Click() the driver will attempt to put the element either on top of the page or the bottom. Almost always (depending on the size of elements and clicking area), the sticky header or footer will appear in-front of the desired element and that will cause an exception, so the best outcome is to put the element in the middle of the page. How do we do this? Well, among thousands of solutions out there... I realised that there's nothing really simple and robust so once again I rolled out my own which is a very simple one liner (see gist). One catch! You will need jQuery... but I'm certain you have it references already :)   https://gist.github.com/dejanvasic85/3937d5ddd7f014f7f7026bdaeec24bb6

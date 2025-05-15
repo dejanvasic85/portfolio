@@ -1,0 +1,148 @@
+---
+layout: ../../../../layouts/BlogLayout.astro
+title: 'React Typescript and Ant Design'
+date: June 5, 2020
+tags:
+  [
+    'ant-design',
+    'antdesign',
+    'boilerplate',
+    'react',
+    'template',
+    'theming',
+    'typescript',
+    'webpack'
+  ]
+excerpt: 'A lean React + TypeScript + Ant Design boilerplate with theming and modern tooling.'
+---
+
+Yet another React boilerplate (GitHub template) project!
+
+Skip and show me the code: [https://github.com/dejanvasic85/react-ts-ant](https://github.com/dejanvasic85/react-ts-ant)
+
+Purpose:
+
+To have a "leaner" react solution ready to go when I'd like to build something from scratch. The amount of
+dependencies and tools that we require on the front-end these days is astonishing. If you like to calculate
+the permutations, be my guest but here are the choices I've made for starting a new Single Page Application
+in React:
+
+- Language: Typescript
+- Freshness: [Renovate](https://github.com/renovatebot/renovate)
+- CSS Modules with [Ant Design](https://ant.design/)
+- Bundler: [Webpack](https://webpack.js.org/)
+- Unit Testing: [Jest](https://jestjs.io/) and [Enzyme](https://enzymejs.github.io/enzyme/) (no snapshots but thanks)
+- Build: Circle CI (coming soon)
+- Cypress end 2 end testing (coming soon)
+
+After having a bad experience with some package dependencies, I came to the conclusion that I need to move
+away from Create React App. As a react newbie, I keep trying with CRA, but something always seems to be
+getting in the way.
+
+### Ant Design and Theme
+
+Ant Design is a pretty damn sweet React framework so this is something I wanted to start using. It's always
+the lazy option to use the basic theme so why not instead make use of the _[theming options](https://ant.design/docs/react/customize-theme)_
+that are already available?
+
+My goal is to have a single theme.less file which overrides the default Ant variables.
+To achieve it, we'll have to do a bit of work by making
+use of webpack css loaders. Assuming you have knowledge of what they are!
+
+When dissecting this file: https://github.com/dejanvasic85/react-ts-ant/blob/master/webpack/loaders.js
+
+We can see the Ant Style loaders need to happen first.
+
+```json
+ {
+    test: /antd.*\.less$/,
+    loader: isDevEnvironment ? ['style-loader', ...antStyleLoaders] : [MiniCssExtractPlugin.loader, ...antStyleLoaders],
+  },
+  {
+    test: /\.less?$/,
+    exclude: excludedFolders,
+    loader: isDevEnvironment ? ['style-loader', ...cssStyleLoaders] : [MiniCssExtractPlugin.loader, ...cssStyleLoaders],
+  },
+```
+
+The ant style loaders are defined here (cssLoaders.js):
+
+```javascript
+module.exports.antStyleLoaders = [
+	{
+		loader: 'css-loader'
+	},
+	postCssLoader,
+	{
+		loader: 'less-loader',
+		options: {
+			lessOptions: {
+				javascriptEnabled: true,
+				modifyVars
+			}
+		}
+	}
+];
+```
+
+The `javascriptEnabled` must be true for . And notice the `modifyVars` variable? 
+That's where the magic happens for the theme to take effect.
+
+Let's have a look at the declarations at the top of that file.
+
+```javascript
+const fs = require('fs');
+const lessToJs = require('less-vars-to-js');
+
+const { localIdentName, rootPath } = require('./env');
+const themeFile = fs.readFileSync(`${rootPath}/src/styles/theme.less`, 'utf-8');
+const modifyVars = lessToJs(themeFile, { resolveVariables: true, stripPrefix: true });
+```
+
+There is a convenient package `less-vars-to-js` which allows us to use the `theme.less`
+(which is what I wanted) to declare all variables that will then be converted to a JSON object which in turn
+is used for the ant 'less-loader' in the previous code snippet.
+
+At the moment `theme.less` file only contains a single variable to prove that it's working:
+
+```
+// Colour Palette
+@primary-color: #4953fb;
+```
+
+This is converted to primaryColor when lessToJs does its work. There is however a huge amount of variables you can override from this [list found here](https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less).
+And that's it! Now we can import styles and reference classes in our React components like this:
+
+```typescript
+import styles from './App.less';
+
+const { Header, Content } = Layout;
+
+const App = () => {
+  return (
+    <Layout>
+      <Header className={styles.heading}>To Do</Header>
+      <Content>
+        <div className={styles.container}>
+          <div className={styles.content}>
+            <Typography.Title level={4}>What is on for today?</Typography.Title>
+            <TodoList />
+          </div>
+        </div>
+      </Content>
+    </Layout>
+  );
+};
+```
+
+### Keeping everything up to date
+
+Renovate is a tool I could not recommend enough to ensure that our dependencies are kept up to date with
+automatic Pull Requests. Given this is a small starter project, it can be used to test some of these major
+releases and breakages that may happen for other larger projects.
+
+### Testing
+
+Enzyme and Jest seem to be the natural choices for React these days but some examples can be a little tricky
+and hard to remember. This is why it's nice to have a full CRUD such as a To Do example in this solution.
+Saves me from hunting down some examples on using these tools.

@@ -1,9 +1,9 @@
 ---
 layout: ../../../../layouts/BlogLayout.astro
-title: "CircleCi and Heroku Orb"
+title: 'CircleCi and Heroku Orb'
 date: June 23, 2020
-tags: ["buildnumber","circleci","Continuous Delivery","heroku"]
-excerpt: "Recently I've had some pain trying to use the Heroku Orb in Circle CI config."
+tags: ['circleci', 'heroku']
+excerpt: 'How to use the Heroku Orb in CircleCI to deploy and set build numbers as environment variables.'
 ---
 
 Recently I've had some pain trying to use the [Heroku Orb](https://circleci.com/orbs/registry/orb/circleci/heroku#quick-start) in Circle CI config.
@@ -12,12 +12,12 @@ My goal was simple. **Send the build number from Circle CI as part of the heroku
 
 There are two ways to use this orb:
 
-*   Commands
-*   Jobs
+- Commands
+- Jobs
 
 The problem I was facing was that I had my blinkers on the Jobs and originally the config.yml looked like this:
 
-```
+```yaml
 version: 2.1
 orbs:
   node: circleci/node@2.1.1
@@ -34,18 +34,17 @@ workflows:
           filters:
             branches:
               only: master
-
 ```
 
-This is very simple right? However, where is the build number? How do we set that environment variable in Heroku so that the application can load it at runtime?
+This is very simple right? However, where is the build number? How do we set that environment variable in
+Heroku so that the application can load it at runtime?
 
 ![](https://dejanvasic.wordpress.com/wp-content/uploads/2020/06/image.png?w=1024)
 
-To set the environment variable, we'd need access to the heroku command line and call \`heroku config:set ...\`. Then, I came across the pre-deploy step/hook for that job and that seemed to work!
+To set the environment variable, we'd need access to the heroku command line and call \`heroku config:set ...\`.
+Then, I came across the pre-deploy step/hook for that job and that seemed to work!
 
-```
-...
-
+```yaml
 workflows:
   build-test-deploy:
     jobs:
@@ -54,12 +53,11 @@ workflows:
           app-name: application-name
           pre-deploy:
             - run: heroku config:set BUILD_NUMBER=$CIRCLE_BUILD_NUM -a application-name
-....
 ```
 
 Nice :) But then I came across this error on the subsequent builds :(
 
-```
+```sh
 #!/bin/bash -eo pipefail
 if false;then
   force="-f"
@@ -82,7 +80,7 @@ The above error was happening probably because the container had cached git file
 
 The final working outcome is this (notice the \`force:true\`):
 
-```
+```yaml
 version: 2.1
 orbs:
   node: circleci/node@2.1.1
@@ -98,7 +96,7 @@ jobs:
       - heroku/deploy-via-git:
           app-name: application-name
           force: true
-        
+
 workflows:
   build-test-deploy:
     jobs:
@@ -109,5 +107,4 @@ workflows:
           filters:
             branches:
               only: master
-
 ```

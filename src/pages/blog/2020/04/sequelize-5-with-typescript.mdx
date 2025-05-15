@@ -3,18 +3,24 @@ layout: ../../../../layouts/BlogLayout.astro
 title: "Sequelize 5 with Typescript"
 date: April 5, 2020
 tags: ["JavaScript","Postgres","Sequelize","typescript"]
-excerpt: "In the past I have used the pretty awesome Sequelize library for connecting to Postgres which allows really nifty query methods as well as database migration..."
+excerpt: "Using Sequelize v5 with TypeScript for Postgres, including model setup and type safety tips."
 ---
 
-In the past I have used the pretty awesome [Sequelize](https://sequelize.org/) library for connecting to Postgres which allows really nifty query methods as well as database migrations and seeding.
+In the past I have used the pretty awesome [Sequelize](https://sequelize.org/) library for 
+connecting to Postgres which allows really nifty query methods as well as database migrations and 
+seeding.
 
-Doing it in Javascript is quite straight forward and their documentation is thorough enough to get up and running. However, Typescript is a lot to be desired and the articles I found online reference an older version of the library (v4). The current version I'm looking at the moment is 5.21.5. From my understanding, the types have been migrated to be part of v5, so types @types/sequelize package should be avoided. The latest version should contain all the type definitions.
+Doing it in Javascript is quite straight forward and their documentation is thorough enough to get 
+up and running. However, Typescript is a lot to be desired and the articles I found online reference 
+an older version of the library (v4). The current version I'm looking at the moment is 5.21.5. From 
+my understanding, the types have been migrated to be part of v5, so types @types/sequelize package 
+should be avoided. The latest version should contain all the type definitions.
 
 ### Creating models
 
 This would be a typical way of creating a new model in version 5.
 
-```
+```typescript
 import { Model, BuildOptions, Sequelize, DataTypes } from 'sequelize';
 
 export interface UserAttributes extends Model {
@@ -54,13 +60,16 @@ export function initUser(seq: Sequelize): UserModel {
 
 ```
 
-The next step is to expose models in an index.ts file. Connection string should come from an environment variable (loaded maybe through a secret).
+The next step is to expose models in an index.ts file. Connection string should come from an 
+environment variable (loaded maybe through a secret).
 
-```
+```typescript
 import Sequelize from 'sequelize';
 import { initUser } from './user';
 
-const sequelize = new Sequelize.Sequelize('connectionStringGoesHere', { dialect: 'postgres' });
+const sequelize = new Sequelize.Sequelize('connectionStringGoesHere', {
+  dialect: 'postgres',
+});
 
 const db = {
   sequelize,
@@ -76,9 +85,10 @@ Object.values(db).forEach((model: any) => {
 export default db;
 ```
 
-In my Koa application (which is very similar to express), I first ensure that my application can connect to the database. Which then can proceed to fetch users.
+In my Koa application (which is very similar to express), I first ensure that my application can 
+connect to the database. Which then can proceed to fetch users.
 
-```
+```typescript
 import Koa from 'Koa';
 
 import db from './models';
@@ -100,9 +110,10 @@ start();
 
 ### Migrations
 
-Migrations can be used as normal and they don't require Typescript. So a root folder can be used with a name like 'db'. Which can then be ignored by Typescript tsconfig.
+Migrations can be used as normal and they don't require Typescript. So a root folder can be used 
+with a name like 'db'. Which can then be ignored by Typescript tsconfig.
 
-```
+```json
 {
   "compilerOptions": {
     ...
@@ -117,18 +128,19 @@ Migrations can be used as normal and they don't require Typescript. So a root fo
 
 The root of the application still requires a .sequelizerc file with the following contents:
 
-```
+```javascript
 const path = require('path');
 
 module.exports = {
   'config': path.resolve('db', 'dbconfig.js'),
-  'migrations-path': path.resolve('db', 'migrations')
+  'migrations-path': path.resolve('db', 'migrations'),
 }
 ```
 
-One more config remaining and that is the dbconfig.js file. I prefer to have this as Javascript than plain json file. Reason being, is to load environment variables before running migrations like so:
+One more config remaining and that is the dbconfig.js file. I prefer to have this as Javascript than 
+plain json file. Reason being, is to load environment variables before running migrations like so:
 
-```
+```javascript
 // This configuration is for sequelize migrations only
 
 const dotenv = require('dotenv');
@@ -153,11 +165,13 @@ module.exports = {
 
 ```
 
-There's no real need to have multiple environments in this file in my opinion given that the variables should be loaded from the environment anyway. The database url and SSL is really all you need unless something more complicated is required.
+There's no real need to have multiple environments in this file in my opinion given that the 
+variables should be loaded from the environment anyway. The database url and SSL is really all you 
+need unless something more complicated is required.
 
 The sequelize-cli can then be used as normal to generate and run migrations as per documentation.
 
-```
+```sh
 sequelize migration:generate --name create-users
 sequelize db:migrate --env production
 ```

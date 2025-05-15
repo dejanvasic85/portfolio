@@ -1,48 +1,46 @@
 ---
 layout: ../../../../layouts/BlogLayout.astro
-title: "Unit of work with node mssql and typescript"
+title: 'Unit of work with node mssql and typescript'
 date: January 3, 2020
-tags: ["JavaScript","javascript","lambda","Node","typescript","unitofwork"]
-excerpt: "Recently I had the opportunity to rewrite a microservice responsible for writing records to two different databases in a single atomic transaction. The servi..."
+tags: ['javascript', 'lambda', 'node', 'typescript']
+excerpt: 'Implementing a unit of work pattern for atomic transactions in Node.js with TypeScript and MSSQL.'
 ---
 
-Recently I had the opportunity to rewrite a microservice responsible for writing records to two different databases in a single atomic transaction. The service is written in Typescript and deployed in a lambda using the [serverless framework](http://serverless.com).
+Recently I had the opportunity to rewrite a microservice responsible for writing records to
+two different databases in a single atomic transaction. The service is written in Typescript
+and deployed in a lambda using the [serverless framework](http://serverless.com).
 
-With my old .Net hat back, transactions were easily achieved with a transaction scope or the Entity Framework's Db Context. Yes, there were still some patterns required.
+With my old .Net hat back, transactions were easily achieved with a transaction
+scope or the Entity Framework's Db Context. Yes, there were still some patterns required.
 
-Coming across the [mssql](https://www.npmjs.com/package/mssql) node package, it seemed to do the trick for all the simple SQL statements. This code would live in a repository that exposes a few create methods. So let's say we have this in some business processing layer where two records need to be inserted but should be accomplished with a single database transaction:
+Coming across the [mssql](https://www.npmjs.com/package/mssql) node package, it seemed to
+do the trick for all the simple SQL statements. This code would live in a repository that
+exposes a few create methods. So let's say we have this in some business processing layer where
+two records need to be inserted but should be accomplished with a single database transaction:
 
-```
+```typescript
 import repository from './repository';
 
 export const addUser = async (name, email, password) => {
-  await repository.createProfile(name, email);
-  await repository.createLogin(email, password);
-}
+	await repository.createProfile(name, email);
+	await repository.createLogin(email, password);
+};
 ```
 
-If the 
-```
-createLogin
-```
- method fails, then the 
-```
-createProfile
-```
- method should roll back successfully.
+If the `createLogin` method fails, then the `createProfile` method should roll back successfully.
 
 Given a simple unit of work pattern, I wanted to simply surround these two methods so it looks like the following:
 
-```
-  const unitOfWork = withUnitOfWork(repository);
-  await repository.createProfile(name, email);
-  await repository.createLogin(email, password);
-  await unitOfWork.commit();
+```typescript
+const unitOfWork = withUnitOfWork(repository);
+await repository.createProfile(name, email);
+await repository.createLogin(email, password);
+await unitOfWork.commit();
 ```
 
 That type of syntax would be ideal because it is testable in my opinion. What if multiple repositories needed to be called like this?
 
-```
+```typescript
 import userRepository from './userRepository';
 import authRepository from './authRepository';
 import withUnitOfWork from './unitOfWork';
@@ -57,13 +55,9 @@ export const addUser = async (name, email, password) => {
 
 Yes, that would also be a valuable requirement here. Generally a business method would span multiple repositories.
 
-Firstly, using typescript each repository needs to have a 
-```
-beginTransaction
-```
- method.
+Firstly, using typescript each repository needs to have a `beginTransaction` method.
 
-```
+```typescript
 export interface Repository {
   beginTransaction: () => Promise<Transaction>;
 }
@@ -71,7 +65,7 @@ export interface Repository {
 
 Then, the unit of work should be as simple as:
 
-```
+```typescript
 import { Repository, UnitOfWork } from './types';
 import { Transaction } from 'mssql';
 import logger from './logger';
@@ -99,12 +93,10 @@ const withUnitOfWork = async (...repositories: Repository[]): Promise<UnitOfWork
 export default withUnitOfWork;
 ```
 
-So what's happening here is very simple. Each repository has a beginTransaction method which will connect to the required database and start a transaction then return it to the unit of work. On commit, each transaction's 
-```
-commit
-```
- is called.
+So what's happening here is very simple. Each repository has a beginTransaction method which will connect to the 
+required database and start a transaction then return it to the unit of work. On commit, each transaction's
+`commit` is called.
 
 Should there be any errors thrown, all the transactions will be rolled back.
 
-Happy coding
+Happy coding with transactions in Node.js and Typescript.

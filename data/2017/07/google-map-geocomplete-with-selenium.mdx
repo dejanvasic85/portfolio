@@ -1,9 +1,0 @@
----
-layout: ../../../../layouts/BlogLayout.astro
-title: "Google Map GeoComplete with Selenium"
-date: July 31, 2017
-tags: ["Development"]
-excerpt: ""
----
-
-Recently I attempted to upgrade the selenium webdriver on a .Net pet project. The versions selected are in the package.json file in the gist. Everything went quite smoothly until it came to selecting an address from the google maps using the GeoComplete component. Previously (see Old.cs), it was quite simple clicking on the pac-item elements. But the click stopped working in every way possible. Even attempting this using jQuery and native JavaScript was impossible. Nothing happens! So, the pac-container and pac-items solution had to be thrown out. After trying to downgrade some of the packages, there were other problems encountered like having to also downgrade the actual browser versions. Not ideal! Then, it came to me. We don't have to always simulate clicks. And this component is very keyboard friendly. So, why don't we just SendKeys instead? Yes, that works perfect :) See New.cs for the solution. https://gist.github.com/dejanvasic85/e838d8434899852b32474a31246b89e1

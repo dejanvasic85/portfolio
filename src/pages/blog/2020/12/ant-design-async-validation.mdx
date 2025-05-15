@@ -1,0 +1,130 @@
+---
+layout: ../../../../layouts/BlogLayout.astro
+title: "Ant Design Async Input Validation"
+date: December 21, 2020
+tags: ["ant-design","forms","graphql","react","server-side-validation","validation"]
+excerpt: "How to perform async server-side validation for unique phone/email fields in Ant Design forms using Apollo GraphQL."
+---
+
+[![](https://dejanvasic.wordpress.com/wp-content/uploads/2020/12/image.png?w=1024)](https://dejanvasic.wordpress.com/wp-content/uploads/2020/12/image.png)
+
+Recently I came across the scenario where I needed to validate phone number or email are unique. 
+So I had to use some server side validation on a form input.
+
+There's a few ways that this can be solved.
+
+Doing the validation in the API on form submit is definitely one of them. This logic should definitely
+remain server side in any case, since we don't want to completely rely on protecting our system only 
+on our clients. I've even gone ahead and ensured that the Database Table has a unique only value for phone and email.
+
+But how can we improve the user experience, so they don't have to wait to click a button and only then 
+find out? Well, a nice way to do it is, is while the user typing or the input is validating.
+
+[Ant Design](https://ant.design) docs could be a little friendlier, but I actually found the custom 
+validator supports the async (or server side) validation out of the box. Check out this really simple PhoneInput component with Apollo GraphQL as a nice touch :)
+
+```typescript
+import React from 'react';
+import { useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
+import { Input, Form } from 'antd';
+import { PhoneOutlined } from '@ant-design/icons';
+
+interface Props {
+  required?: boolean;
+  validateUnique?: boolean;
+}
+
+interface ValidateResponse {
+  validatePhone: boolean;
+}
+
+interface ValidateRequest {
+  phoneNumber: string;
+  ignoreMyPhone: boolean;
+}
+
+const VALIDATE_PHONE = gql`
+  mutation VerifyPhone($phoneNumber: String!) {
+    validatePhone(phoneNumber: $phoneNumber)
+  }
+`;
+
+const PhoneInput = ({ required = true, validateUnique = true }: Props) => {
+  const [validatePhone] = useMutation<ValidateResponse, ValidateRequest>(VALIDATE_PHONE);
+
+  const pattern = /^!*(\[0-9\]!*){10,10}$/g;
+
+  const handlePhoneValidation = async (_, phoneNumber: string): Promise<boolean> => {
+    const resp = await validatePhone({ variables: { phoneNumber, ignoreMyPhone } });
+
+    if (!resp.data.validatePhone) {
+      return Promise.reject(resp.data.validatePhone);
+    }
+    return Promise.resolve(true);
+  };
+
+  return (
+    <Form.Item
+      name="phone"
+      label="Phone"
+      validateFirst={true}
+      validateTrigger="onBlur"
+      rules={[
+        { required, message: 'Phone is required' },
+        { pattern, message: 'Phone must be in the right format' },
+        ...[
+          validateUnique
+            ? { validator: handlePhoneValidation, message: `This number is already associated to an account` }
+            : null,
+        ],
+      ]}
+      hasFeedback
+    >
+      <Input prefix={<PhoneOutlined />} size="large" placeholder="04xxxxxxxx" />
+    </Form.Item>
+  );
+};
+
+export default PhoneInput;
+```
+
+Method `handlePhoneValidation` is invoked by the custom validator defined in the rules array of the 
+field. It's as simple as declaring the method as async. We simple invoke the API method, and then 
+we could either throw an error, or a rejected promise.
+
+Another thing to note. The prop `validateFirst` is set to true. I don't really like this name, 
+because it feels it needs explanation. Basically, it will only fire one validation at a time. 
+In this instance, there is a pattern validator which is better to fire first before hitting our API. 
+If something isn't working locally, it wouldn't make sense to load the server with an invalid field. 
+Parallel validation sounds good, but not so much in this situation.
+
+The prop `validateTrigger` being set to `onBlur`, is another not-required property but in this instance 
+I find useful because it will only fire when the focus leaves the element. The default Ant Design 
+validation is on every keystroke.
+
+How about the server side? The GraphQL resolver should be quite simple. Try and find a user by phone 
+and return the appropriate response.
+
+```typescript
+interface Args {
+  phoneNumber: string;
+  ignoreMyPhone: boolean;
+}
+
+const validatePhone = async (_, args: Args, { dataSources, user }: ApiContext): Promise<boolean> => {
+  const phoneNumber = userService.convertPhoneTo164(args.phoneNumber);
+  if (!phoneNumber) {
+    throw new UserInputError(Errors.INVALID_PHONE);
+  }
+
+  const { userRepository } = dataSources;
+  const anotherUser = await userRepository.findByPhone(phoneNumber);
+
+  return !anotherUser;
+};
+
+export default validatePhone;
+```
+
+Happy validating!
