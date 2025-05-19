@@ -1,0 +1,87 @@
+---
+layout: ../../../../layouts/BlogLayout.astro
+title: 'Javascript file upload chunking using JQuery and Bootstrap progress bar'
+date: December 03, 2013
+tags: ['jquery', 'javascript', 'upload', 'chunking', 'progress bar', 'bootstrap']
+excerpt: 'Uploading is not easy and chunking is even harder. Here is a simple solution using JQuery and Bootstrap progress bar.'
+---
+
+I'm currently working on a single page application that is hosted in a windows form application using the
+.Net browser control. Pretty interesting stuff given that the windows application exposes an "API"
+full of JavaScript handlers to hook on.
+
+TL/DR: Here's the full fiddle: http://jsfiddle.net/dejanvasic/9ahU8/ (don't click start because the
+fiddle post wasn't hooked on properly)
+
+Explanation:
+
+The purpose of the file manager is to be able to receive the file data in fluent way and report back
+to the UI about the progress once "uploadFiles" method is called:
+
+```javascript
+var manager = new FileManager(128)
+	.addFile('1', 'Kd93kjf93ll')
+	.addFile('2', 'kLKdn2201Akjk')
+	.uploadFiles(progressHandler);
+```
+
+Using bootstrap for css framework, the progressHandler can simply adjust accordingly:
+
+```javascript
+function progressHandler(data) {
+	$('.bar').width(data.TotalProgress + '%');
+}
+```
+
+Given the server side is using ASP.Net MVC action method, the chunks have to come in order so that it can be
+simply appended to a file stream:
+
+```csharp
+[HttpPost]
+public JsonResult UploadFileChunk(string id, string data, int currentPosition)
+{
+    if (id.IsNullOrEmpty() || data.IsNullOrEmpty())
+    {
+        return Json(new { Successful = false, ErrorMessage = "Id and Data must be supplied and cannot be empty." });
+    }
+
+    // Stream to an existing file (but delete file if it's at the beginning
+    var path = "C:\\Temp\\" + fileId;
+
+    // Stream to the file in append mode!
+    using (var stream = new FileStream(path, FileMode.Append))
+    {
+        var bytes = Convert.FromBase64String(data);
+        stream.Write(bytes, 0, bytes.Length);
+    }
+
+    return Json(new { Successful = true });
+ }
+```
+
+To give a smooth progress, the calls have to be async which means that the order would be screwed up. To fix this, the
+recursive method was used "uploadChunk" which gets invoked on each successful ajax callback and reports back to the
+incoming callback method also that the chunk has completed.
+
+This method also does the slicing up of the encoded data by keeping the current position, total individual file size
+and requested chunk byte size. Once ready, the Ajax method prepares the full JSON object.
+
+```javascript
+var nextChunk = _chunkSize;
+
+if (_sizeToUpload - _currentPosition < nextChunk) {
+	nextChunk = _sizeToUpload - _currentPosition;
+}
+
+var dataToSend = data.slice(_currentPosition, _currentPosition + nextChunk);
+
+$.ajax('http://someurlgoeshere.com', {
+	type: 'POST',
+	async: true,
+	contentType: 'application/json;',
+	dataType: 'json',
+	data: JSON.stringify({ id: id, data: dataToSend, currentposition: _currentPosition })
+});
+```
+
+Happy uploading! 🎉
