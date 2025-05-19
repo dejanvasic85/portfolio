@@ -1,0 +1,42 @@
+---
+layout: ../../../../layouts/BlogLayout.astro
+title: 'Generating full Content URL in ASP.MVC'
+date: March 26, 2013
+tags: ['asp.net', 'mvc', 'url']
+excerpt: 'Absolute URL generation in ASP.NET MVC'
+---
+
+Ever needed to provide a full and absolute URL to a script, css or image in MVC?
+
+Well, you may find that Url.Content helper is quite handy as it does return an absolute
+path of the application just as it was done in WebForms so that something like the following would occur if used anywhere within the application:
+
+```csharp
+@Url.Content("~/Scripts/javascriptfile.js")
+```
+
+Converts to /SomeVirtualPath/Scripts/javascriptfile.js down to the browser (which is really a relative path rather than an absolute).
+
+However, what if you wanted to return the full and absolute URL: "http://domainname.com/VirtualPath/Scripts/javascriptfile.js"
+by specifying a relative path on the server. After searching google for quite a while I came to a realisation that this must
+be one of the least demanded answers for ASP.Net.
+
+So, here's something I put together:
+
+```csharp
+public static class UrlHelperExtensions
+{
+    public static string ContentAbsUrl(this UrlHelper url, string relativeContentPath)
+    {
+        Uri contextUri = HttpContext.Current.Request.Url;
+        var baseUri = string.Format("{0}://{1}{2}", contextUri.Scheme, contextUri.Host, contextUri.Port == 80 ? string.Empty : ":" + contextUri.Port);
+        return string.Format("{0}{1}", baseUri, VirtualPathUtility.ToAbsolute(relativeContentPath));
+    }
+}
+```
+
+So calling it from a razor view:
+
+`<script type="text/javascript" src="@Url.ContentAbsUrl("~/Scripts/magic.js")"></script>`
+
+Happy .Net coding!
