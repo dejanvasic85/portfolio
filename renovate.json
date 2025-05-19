@@ -1,0 +1,17 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		":rebaseStalePrs",
+		":renovatePrefix",
+		":semanticCommits",
+		":timezone(Australia/Melbourne)",
+		":updateNotScheduled",
+		":dependencyDashboard",
+		"group:allNonMajor"
+	],
+	"commitMessageAction": "",
+	"labels": ["dependencies"],
+	"prConcurrentLimit": 3,
+	"semanticCommitType": "deps",
+	"packageRules": []
+}
