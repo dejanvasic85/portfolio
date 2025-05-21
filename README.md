@@ -1,48 +1,70 @@
-# Astro Starter Kit: Basics
 
-```sh
-npm create astro@latest -- --template basics
-```
+<h1 align="center">Dejan Vasic – Portfolio Website</h1>
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+<p align="center">
+  A personal portfolio and blog built with Astro, showcasing my work, experience, and thoughts on software engineering.
+</p>
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+<p align="center">
+  <a href="#features"><strong>Features</strong></a> ·
+  <a href="#tooling"><strong>Tooling</strong></a> ·
+  <a href="#developing-and-running-locally"><strong>Developing and Running Locally</strong></a>
+</p>
+<br/>
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## Features
 
-## 🚀 Project Structure
+- Personal portfolio and CV, including work experience, education, and skills.
+- Blog with posts organized by year and month, written in MDX.
+- Projects section highlighting selected work.
+- Responsive, accessible design.
+- SEO-friendly with sitemap and metadata.
+- Deployed on Vercel for fast, global delivery.
+- Google Analytics integration.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Tooling
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- **Astro**: Static site generator for modern web projects.
+- **MDX**: Write blog posts and content in Markdown with embedded components.
+- **Vercel**: Hosting and deployment.
+- **Prettier**: Code formatting.
+- **Shiki**: Syntax highlighting for code blocks.
+- **@astrojs/sitemap**: Automatic sitemap generation.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Why I Built This
 
-## 🧞 Commands
+This site is my digital home to share my professional journey, projects, and technical insights. It serves as a living CV, a blog for my thoughts on software engineering, and a showcase for selected work. Building it with Astro allowed me to explore modern static site generation and best practices for performance and maintainability.
 
-All commands are run from the root of the project, from a terminal:
+## Developing and Running Locally
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+To run the site locally, follow these steps:
 
-## 👀 Want to learn more?
+1. **Install dependencies**:
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+   ```bash
+   npm install
+   ```
+
+2. **Run the development server**:
+
+   ```bash
+   npm run dev
+   ```
+
+3. **Preview the site**:
+
+   - Open [http://localhost:4321](http://localhost:4321) in your browser.
+
+4. **Format code** (optional):
+
+   ```bash
+   npm run format
+   ```
+
+## Deploying
+
+The site is deployed on Vercel. To deploy your own version, connect the repository to Vercel and set up the project. No special environment variables are required for a basic portfolio/blog.
+
+---
+
+This project is a labor of love and a way to share my work and ideas with the world. Feedback and contributions are welcome!
