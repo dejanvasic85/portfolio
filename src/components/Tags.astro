@@ -26,4 +26,11 @@ const { tags } = Astro.props;
 		border-radius: var(--radius-md);
 		font-size: 0.85rem;
 	}
+
+	@media (prefers-color-scheme: dark) {
+		.tag {
+			background-color: var(--color-secondary);
+			color: var(--color-secondary-light);
+		}
+	}
 </style>

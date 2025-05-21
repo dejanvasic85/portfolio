@@ -26,7 +26,7 @@ import Layout from '../layouts/Layout.astro';
 				<li>Solution design and architecture</li>
 			</ul>
 
-			<p>When I'm not coding, you can find me: </p>
+			<p>When I'm not coding, you can find me:</p>
 			<ul>
 				<li>Playing or coaching football ⚽</li>
 				<li>Running after the little ones 👶</li>
@@ -73,6 +73,27 @@ import Layout from '../layouts/Layout.astro';
 			border-radius: 50%;
 			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 		}
+	}
+
+	.page-nav {
+		display: flex;
+		gap: 2rem;
+		margin-top: 3rem;
+		border-top: 1px solid var(--color-border);
+		padding-top: 2rem;
+	}
+
+	.page-nav a {
+		padding: 0.5rem 1rem;
+		text-decoration: none;
+		color: var(--color-primary);
+		font-weight: 600;
+		border-radius: var(--radius-sm);
+		transition: background-color 0.2s;
+	}
+
+	.page-nav a:hover {
+		background-color: var(--color-background-hover);
 	}
 
 	@media (width > 768px) {

@@ -86,14 +86,14 @@ const normalizedPathname = pathname.replace(/\/$/, '');
 
 	.main-nav a:not(.active):hover {
 		border-radius: var(--radius-sm);
-		background-color: var(--color-background-alt);
+		background-color: var(--color-background-hover);
 	}
 
 	.site-footer {
 		margin-top: auto;
 		border-top: 1px solid var(--color-border);
 		padding: 2rem 0;
-		background-color: var(--color-background-alt);
+		background-color: var(--color-background-hover);
 	}
 
 	.site-header {
@@ -127,12 +127,8 @@ const normalizedPathname = pathname.replace(/\/$/, '');
 	}
 
 	@media (prefers-color-scheme: dark) {
-		.main-nav a:not(.active):hover {
-			background-color: var(--color-dark-hover);
-		}
-
 		.site-footer {
-			background-color: var(--color-dark);
+			background-color: var(--color-background);
 		}
 	}
 
