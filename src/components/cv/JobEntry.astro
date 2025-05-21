@@ -19,10 +19,12 @@ const { title, company, period, responsibilities, skills, publications } = Astro
 ---
 
 <div class="job">
-	<h3>{title}</h3>
-	<div class="meta">
-		<span class="company">{company}</span>
-		<span class="period">{period}</span>
+	<div class="job-title">
+		<h3>{title}</h3>
+		<div class="meta">
+			<span class="company">{company}</span>
+			<span class="period">{period}</span>
+		</div>
 	</div>
 	<ul>
 		{responsibilities.map((responsibility) => <li>{responsibility}</li>)}
@@ -50,6 +52,17 @@ const { title, company, period, responsibilities, skills, publications } = Astro
 <style>
 	.job {
 		margin-bottom: 2rem;
+	}
+
+	.job-title {
+		position: sticky;
+		top: 0;
+		display: flex;
+		padding-top: 1rem;
+		width: 100%;
+		flex-direction: column;
+		background-color: var(--color-background);
+		z-index: 10;
 	}
 
 	h3 {
@@ -84,23 +97,5 @@ const { title, company, period, responsibilities, skills, publications } = Astro
 		margin-bottom: 0.5rem;
 		position: relative;
 		padding-left: 1.5rem;
-	}
-
-	.publication-list li::before {
-		content: '📝';
-		position: absolute;
-		left: 0;
-		top: 0;
-	}
-
-	.publication-list a {
-		color: var(--color-primary);
-		text-decoration: none;
-		transition: color 0.2s ease;
-	}
-
-	.publication-list a:hover {
-		color: var(--color-primary-dark);
-		text-decoration: underline;
 	}
 </style>
