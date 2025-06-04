@@ -1,0 +1,113 @@
+---
+layout: ../../../../layouts/BlogLayout.astro
+title: 'Avoiding the any keyword in Typescript tests'
+date: June 4, 2025
+tags: ['typescript', 'testing', 'zod', 'zod-mock', 'faker']
+excerpt: "Using the any type in TypeScript tests can lead to less maintainable and error-prone code. Let's explore how to avoid it and improve our test quality."
+---
+
+When we use `any` in TypeScript, we are telling the compiler to opt out of type checking. Going back to using plain JavaScript.
+This is defeating the purpose of using TypeScript in the first place.
+
+I totally sided with this approach, but I was open to the idea of using `any` in tests. It's not production code after all
+and the tests are focused only on the data required to run the tests, not the actual types.
+
+There is a better way to handle this, and it is to use data fixtures.
+
+## Creating data fixtures
+
+The simplest way to create data fixtures is to hand craft them using factory functions and partial building.
+This is a great way to ensure that the data is valid and meets the requirements of the tests without having to use `any`.
+
+Let's take a look at an example:
+
+```typescript
+type User = {
+	id: string;
+	name: string;
+	email: string;
+};
+
+function createUser(overrides: Partial<User> = {}): User {
+	return {
+		id: 'default-id',
+		name: 'Default Name',
+		email: 'default@example.com',
+		...overrides
+	};
+}
+```
+
+This function allows us to create a `User` object with default values, while also allowing us to override any of the properties we want.
+
+When it comes to testing, we may be interested in only a few of the properties because
+the production code is operating on a subset of the data. This is where we can use pass the overrides:
+
+```typescript
+const user = createUser({ name: 'John Doe', email: 'john.doe@example.com' });
+```
+
+This would still yield a valid user object with the default `id` but with the overridden `name` and `email` properties.
+Given all the AI tooling available today, you can generate these factory functions quickly and easily.
+
+## Using faker
+
+This is fairly static data but we can make it a bit more interesting by using the `faker` library to generate random data.
+
+```typescript
+import { faker } from '@faker-js/faker';
+type User = {
+	id: string;
+	name: string;
+	email: string;
+};
+function createUser(overrides: Partial<User> = {}): User {
+	return {
+		id: faker.string.uuid(),
+		name: faker.person.fullName(),
+		email: faker.internet.email(),
+		...overrides
+	};
+}
+```
+
+This could test the robustness of the code against a wider range of data, while still ensuring that the data
+is valid and meets the requirements of the tests. It could result in non-deterministic tests, but that is a trade-off
+worth considering.
+
+### Using zod-mock
+
+[Zod](https://zod.dev/) has become a standard library for schema validation in Typescript. Many developers use it
+to define their data structures and infer types from them. A library that could be paired with this is
+[zod-mock](https://www.npmjs.com/package/@anatine/zod-mock), which can generate mock data based on Zod schemas.
+
+```typescript
+import { z } from 'zod';
+import { mock } from '@anatine/zod-mock';
+
+type User = z.infer<typeof userSchema>;
+
+const userSchema = z.object({
+	id: z.string().uuid(),
+	name: z.string(),
+	email: z.string().email()
+});
+
+function createUser(overrides: Partial<User> = {}): User {
+	const user = mock(userSchema);
+	return { ...user, ...overrides };
+}
+```
+
+This approach allows you to define your data structure using Zod and then generate mock data based on that schema.
+It combines the benefits of type safety and ease of use, making it a powerful tool for testing.
+
+## Conclusion
+
+After reading this, there are not many excuses to continoue using `any` in your TypeScript tests.
+
+Looking at that last example above, there is not a lot of boilerplate code to create a data fixture. So stop using `any`
+and start using data fixtures to create valid test data. This will help you write better tests, catch more bugs, and
+improve the overall quality of your codebase.
+
+Happy testing! 🧑‍💻
