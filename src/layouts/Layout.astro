@@ -136,6 +136,20 @@ const normalizedPathname = pathname.replace(/\/$/, '');
 		}
 	}
 
+	.social-links {
+		display: flex;
+		gap: 1.5rem;
+	}
+
+	.social-links a {
+		color: var(--color-text-light);
+		transition: color 0.2s;
+	}
+
+	.social-links a:hover {
+		color: var(--color-primary);
+	}
+
 	@media (max-width: 768px) {
 		.main-nav {
 			justify-content: center;
@@ -146,6 +160,10 @@ const normalizedPathname = pathname.replace(/\/$/, '');
 			flex-direction: column;
 			gap: 1rem;
 			text-align: center;
+		}
+
+		.social-links {
+			justify-content: center;
 		}
 	}
 </style>

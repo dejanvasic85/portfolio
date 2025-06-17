@@ -22,7 +22,7 @@ const sortedPosts = allPosts.sort((a, b) => {
 						</h2>
 						<p class="excerpt">{post.frontmatter.excerpt}</p>
 						<Tags tags={post.frontmatter.tags?.map((t: string) => t)} />
-						<a href={post.url} class="read-more">
+						<a href={post.url} class="btn-link small">
 							Read post →
 						</a>
 					</article>
@@ -30,7 +30,7 @@ const sortedPosts = allPosts.sort((a, b) => {
 			}
 		</div>
 
-		<a href="/" class="back-link">← Back to Home</a>
+		<a href="/" class="btn-link" style="margin-top: 2rem;">← Back to Home</a>
 	</main>
 </Layout>
 
@@ -80,13 +80,7 @@ const sortedPosts = allPosts.sort((a, b) => {
 	}
 
 	.read-more {
-		color: var(--color-primary);
-		text-decoration: none;
-		font-weight: bold;
-	}
-
-	.read-more:hover {
-		text-decoration: underline;
+		/* Styles now handled by .btn-link class in global.css */
 	}
 
 	.tag {

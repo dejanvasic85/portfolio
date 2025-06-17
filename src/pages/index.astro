@@ -35,9 +35,9 @@ import Layout from '../layouts/Layout.astro';
 		</div>
 
 		<nav class="page-nav">
-			<a href="/cv">CV</a>
-			<a href="/projects">Projects</a>
-			<a href="/blog">Blog</a>
+			<a href="/cv" class="btn-link">CV</a>
+			<a href="/projects" class="btn-link">Projects</a>
+			<a href="/blog" class="btn-link">Blog</a>
 		</nav>
 	</main>
 </Layout>
@@ -81,19 +81,14 @@ import Layout from '../layouts/Layout.astro';
 		margin-top: 3rem;
 		border-top: 1px solid var(--color-border);
 		padding-top: 2rem;
+		flex-wrap: wrap;
 	}
 
-	.page-nav a {
-		padding: 0.5rem 1rem;
-		text-decoration: none;
-		color: var(--color-primary);
-		font-weight: 600;
-		border-radius: var(--radius-sm);
-		transition: background-color 0.2s;
-	}
-
-	.page-nav a:hover {
-		background-color: var(--color-background-hover);
+	@media (max-width: 768px) {
+		.page-nav {
+			flex-direction: column;
+			gap: 1rem;
+		}
 	}
 
 	@media (width > 768px) {
