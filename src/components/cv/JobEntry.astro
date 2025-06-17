@@ -38,7 +38,7 @@ const { title, company, period, responsibilities, skills, publications } = Astro
 				<ul class="publication-list">
 					{publications.map((pub) => (
 						<li>
-							<a href={pub.url} target="_blank" rel="noopener noreferrer">
+							<a href={pub.url} target="_blank" rel="noopener noreferrer" class="btn-link btn-link-external list">
 								{pub.title}
 							</a>
 						</li>

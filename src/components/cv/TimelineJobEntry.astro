@@ -1,0 +1,311 @@
+---
+import SkillCategory from './SkillCategory.astro';
+
+interface Publication {
+	title: string;
+	url: string;
+}
+
+interface Props {
+	title: string;
+	company: string;
+	startDate: string; // Format: "YYYY-MM" for timeline positioning
+	endDate?: string; // Format: "YYYY-MM" or "Present" for timeline display
+	responsibilities: string[];
+	skills?: string[];
+	publications?: Publication[];
+}
+
+const { title, company, startDate, endDate, responsibilities, skills, publications } = Astro.props;
+
+// Function to format date for timeline display
+function formatTimelineDate(dateStr: string): string {
+	const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	
+	let month: number;
+	let year: string;
+	
+	if (dateStr === 'Present') {
+		// Calculate current month/year
+		const now = new Date();
+		month = now.getMonth();
+		year = now.getFullYear().toString();
+	} else {
+		// Parse provided date
+		const [yearStr, monthStr] = dateStr.split('-');
+		month = parseInt(monthStr) - 1; // Convert to 0-based index
+		year = yearStr;
+	}
+	
+	const monthName = monthNames[month];
+	const shortYear = year.slice(-2); // Get last 2 digits of year
+	return `${monthName} ${shortYear}`;
+}
+
+// Create the display range
+const startDisplay = formatTimelineDate(startDate);
+const endDisplay = endDate ? formatTimelineDate(endDate) : formatTimelineDate('Present');
+const dateRange = `${startDisplay} - ${endDisplay}`;
+---
+
+<div class="timeline-item">
+	<!-- Timeline marker - only visible on larger screens -->
+	<div class="timeline-marker">
+		<div class="timeline-dot"></div>
+		<div class="timeline-date">
+			<div class="timeline-range">{dateRange}</div>
+		</div>
+	</div>
+
+	<div class="timeline-content">
+		<!-- Sticky header for small/medium screens only -->
+		<div class="job-header job-header-sticky">
+			<h3>{title}</h3>
+			<div class="job-meta">
+				<span class="company">{company}</span>
+				<span class="period">{dateRange}</span>
+			</div>
+		</div>
+
+		<!-- Regular header for large screens -->
+		<div class="job-header job-header-regular">
+			<h3>{title}</h3>
+			<div class="job-meta">
+				<span class="company">{company}</span>
+			</div>
+		</div>
+
+		<ul class="responsibilities">
+			{responsibilities.map((responsibility) => <li>{responsibility}</li>)}
+		</ul>
+
+		{skills && <SkillCategory title="Skills" skills={skills} />}
+
+		{
+			publications && publications.length > 0 && (
+				<div class="publications">
+					<h4>Related Publications</h4>
+					<ul class="publication-list">
+						{publications.map((pub) => (
+							<li>
+								<a href={pub.url} target="_blank" rel="noopener noreferrer" class="btn-link btn-link-external list">
+									{pub.title}
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			)
+		}
+	</div>
+</div>
+
+<style>
+	.timeline-item {
+		position: relative;
+		display: flex;
+		margin-bottom: 3rem;
+		padding-left: 0;
+	}
+
+	.timeline-marker {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-right: 2rem;
+		min-width: 80px;
+	}
+
+	.timeline-dot {
+		width: 16px;
+		height: 16px;
+		background-color: var(--color-secondary);
+		border-radius: 50%;
+		border: 3px solid var(--color-background);
+		box-shadow: 0 0 0 3px var(--color-secondary);
+		z-index: 2;
+		margin-bottom: 0.5rem;
+	}
+
+	.timeline-date {
+		text-align: center;
+		position: sticky;
+		top: 2rem;
+		background-color: var(--color-background);
+		padding: 0.5rem;
+		border-radius: var(--radius-sm);
+		border: 1px solid var(--color-border);
+		min-width: 80px;
+		z-index: 3;
+	}
+
+	.timeline-range {
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: var(--color-secondary);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		white-space: nowrap;
+	}
+
+	.timeline-content {
+		flex: 1;
+		background-color: var(--color-background);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		padding: 1.5rem;
+		box-shadow: var(--shadow-card);
+	}
+
+	.job-header {
+		margin-bottom: 1.5rem;
+	}
+
+	/* Regular header - visible on large screens only */
+	.job-header-regular {
+		display: block;
+	}
+
+	/* Sticky header - hidden on large screens, visible on small/medium screens */
+	.job-header-sticky {
+		display: none;
+		position: sticky;
+		top: 0;
+		background-color: var(--color-background);
+		border-bottom: 1px solid var(--color-border);
+		margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+		padding: 1rem 1.5rem;
+		z-index: 10;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		backdrop-filter: blur(8px);
+	}
+
+	.job-header h3 {
+		font-size: 1.4rem;
+		margin-bottom: 0.5rem;
+		color: var(--color-text);
+	}
+
+	.job-meta {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		color: var(--color-text-light);
+		font-size: 0.9rem;
+	}
+
+	.company {
+		font-weight: 600;
+	}
+
+	.responsibilities {
+		margin-bottom: 1.5rem;
+		padding-left: 1.25rem;
+	}
+
+	.responsibilities li {
+		margin-bottom: 0.75rem;
+		line-height: 1.5;
+	}
+
+	.publications {
+		margin-top: 1.5rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.publications h4 {
+		font-size: 1.1rem;
+		margin-bottom: 1rem;
+		color: var(--color-text-light);
+	}
+
+	.publication-list {
+		list-style: none;
+		padding-left: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.publication-list li {
+		margin-bottom: 0;
+	}
+
+	/* Timeline line connecting dots */
+	.timeline-item:not(:last-child) .timeline-marker::after {
+		content: '';
+		position: absolute;
+		top: 20px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 2px;
+		height: calc(100% + 3rem);
+		background: linear-gradient(to bottom, var(--color-secondary) 0%, var(--color-secondary) 100%);
+		z-index: 1;
+	}
+
+	/* Responsive breakpoints */
+	@media (max-width: 1024px) {
+		/* Hide timeline elements on medium and small screens */
+		.timeline-marker {
+			display: none;
+		}
+
+		.timeline-item {
+			padding-left: 0;
+			margin-bottom: 2rem;
+		}
+
+		/* Show sticky header, hide regular header */
+		.job-header-regular {
+			display: none;
+		}
+
+		.job-header-sticky {
+			display: block;
+		}
+
+		/* Remove timeline line */
+		.timeline-item:not(:last-child) .timeline-marker::after {
+			display: none;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.timeline-content {
+			border-radius: var(--radius-sm);
+			padding: 1rem;
+		}
+
+		.job-header-sticky {
+			margin: -1rem -1rem 1rem -1rem;
+			padding: 0.75rem 1rem;
+		}
+
+		.job-header h3 {
+			font-size: 1.2rem;
+		}
+
+		.job-meta {
+			font-size: 0.85rem;
+		}
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.timeline-content {
+			background-color: var(--color-background-hover);
+		}
+
+		.timeline-date {
+			background-color: var(--color-background-hover);
+		}
+
+		.job-header-sticky {
+			background-color: var(--color-background-hover);
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+		}
+	}
+</style>

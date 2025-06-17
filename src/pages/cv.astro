@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Section from '../components/cv/Section.astro';
-import JobEntry from '../components/cv/JobEntry.astro';
+import TimelineJobEntry from '../components/cv/TimelineJobEntry.astro';
 import Education from '../components/cv/Education.astro';
 import SkillCategory from '../components/cv/SkillCategory.astro';
 ---
@@ -16,172 +16,190 @@ import SkillCategory from '../components/cv/SkillCategory.astro';
 
 		<Section title="Professional Summary">
 			<p>
-				As a software engineer, I regard myself as a person with ethics and principles to deliver
-				software that is ready for production. What gets me up in the morning is knowing that I can
-				contribute to someone else's life by making their mundane tasks more efficient. This way, we
-				enjoy our lives by doing things that we love.
+				I'm a software engineer committed to delivering high-quality, production-ready solutions.
+				I'm passionate about continuous learning and enjoy mentoring others while staying current
+				with emerging technologies and best practices.
+			</p>
+			<p>
+				Currently, I specialize in modernizing legacy systems by breaking down monolithic
+				applications into scalable microservices, while leveraging AI-powered development tools to
+				enhance productivity and code quality.
 			</p>
 		</Section>
 
 		<Section title="Work Experience">
-			<JobEntry
-				title="Staff Software Engineer"
-				company="Open Universities Australia"
-				period="October 2021 - Present"
-				responsibilities={[
-					'Led the initiation, design, and successful delivery of an identity system using Auth0. Overcame intricate challenges in integrating with a legacy Sitecore application, such as implementing impersonation, federated security with OKTA, and seamless migration of existing users.',
-					'Implemented Typescript node tooling for efficient provisioning of Auth0 tenants.',
-					'Utilized Kotlin, GraphQL, and REST API with a Postgres backend for a scalable and performant architecture.',
-					'Developed custom authentication screens using React, Typescript, and styled components.',
-					'Syncing solution to ensure data consistency between Auth0 and Salesforce using an event based design.',
-					'Championed the development of a prototype for a ground-up rewrite of our flagship online enrolment system using Next.js, Typescript, AWS ECS, Github actions, Vitest, and Playwright.'
-				]}
-				publications={[
-					{
-						title: 'From Surveys to Scorecards: System Health Evolution at OUA',
-						url: 'https://medium.com/openunisau-engineering/from-surveys-to-scorecards-system-health-evolution-at-oua-216bc989e090'
-					},
-					{
-						title: 'Using AI in Technical Interviews',
-						url: 'https://medium.com/openunisau-engineering/using-ai-in-technical-interviews-b87c4df6a773'
-					},
-					{
-						title: 'MonoRepos powered by Turborepo',
-						url: 'https://medium.com/openunisau-engineering/monorepos-powered-by-turborepo-3f22d39c3d28'
-					},
-					{
-						title: 'The engineering journey @ Open Universities Australia',
-						url: 'https://medium.com/openunisau-engineering/the-engineering-journey-open-universities-811cdc384b8'
-					}
-				]}
-			/>
+			<div class="timeline-container">
+				<TimelineJobEntry
+					title="Staff Software Engineer"
+					company="Open Universities Australia"
+					startDate="2021-10"
+					endDate="Present"
+					responsibilities={[
+						'Led the initiation, design, and successful delivery of an identity system using Auth0. Overcame intricate challenges in integrating with a legacy Sitecore application, such as implementing impersonation, federated security with OKTA, and seamless migration of existing users.',
+						'Implemented Typescript node tooling for efficient provisioning of Auth0 tenants.',
+						'Utilized Kotlin, GraphQL, and REST API with a Postgres backend for a scalable and performant architecture.',
+						'Developed custom authentication screens using React, Typescript, and styled components.',
+						'Syncing solution to ensure data consistency between Auth0 and Salesforce using an event based design.',
+						'Championed the development of a prototype for a ground-up rewrite of our flagship online enrolment system using Next.js, Typescript, AWS ECS, Github actions, Vitest, and Playwright.'
+					]}
+					publications={[
+						{
+							title: 'From Surveys to Scorecards: System Health Evolution at OUA',
+							url: 'https://medium.com/openunisau-engineering/from-surveys-to-scorecards-system-health-evolution-at-oua-216bc989e090'
+						},
+						{
+							title: 'Using AI in Technical Interviews',
+							url: 'https://medium.com/openunisau-engineering/using-ai-in-technical-interviews-b87c4df6a773'
+						},
+						{
+							title: 'MonoRepos powered by Turborepo',
+							url: 'https://medium.com/openunisau-engineering/monorepos-powered-by-turborepo-3f22d39c3d28'
+						},
+						{
+							title: 'The engineering journey @ Open Universities Australia',
+							url: 'https://medium.com/openunisau-engineering/the-engineering-journey-open-universities-811cdc384b8'
+						}
+					]}
+				/>
 
-			<JobEntry
-				title="Senior Software Engineer"
-				company="Open Universities Australia"
-				period="July 2020 - October 2021"
-				responsibilities={[
-					'Pioneered a transformative project by initiating a proof of concept, architecting, and implementing an entirely new search experience tailored for students and new visitors.',
-					'Leveraged Next.js and server-side rendering to establish a robust SEO presence for our revamped marketplace, seamlessly replacing a legacy Sitecore solution.',
-					"Drove innovation by spearheading the creation of OUA's React component library using Storybook.",
-					'Acted as a leading figure within the Front-End Guild, fostering collaboration and knowledge sharing.',
-					'Worked with React, Next.js, Typescript, GraphQL, Node, AWS Lambda, and Algolia.'
-				]}
-			/>
+				<TimelineJobEntry
+					title="Senior Software Engineer"
+					company="Open Universities Australia"
+					startDate="2020-07"
+					endDate="2021-10"
+					responsibilities={[
+						'Pioneered a transformative project by initiating a proof of concept, architecting, and implementing an entirely new search experience tailored for students and new visitors.',
+						'Leveraged Next.js and server-side rendering to establish a robust SEO presence for our revamped marketplace, seamlessly replacing a legacy Sitecore solution.',
+						"Drove innovation by spearheading the creation of OUA's React component library using Storybook.",
+						'Acted as a leading figure within the Front-End Guild, fostering collaboration and knowledge sharing.',
+						'Worked with React, Next.js, Typescript, GraphQL, Node, AWS Lambda, and Algolia.'
+					]}
+				/>
 
-			<JobEntry
-				title="Senior Software Engineer"
-				company="SEEK"
-				period="February 2019 - July 2020"
-				responsibilities={[
-					"Developed a range of backend and front-end services to support talent search systems for SME's and Recruiters.",
-					'Utilized AWS cloud services including Elastic Beanstalk, ECS, CloudFront, SQS, SNS, CloudFormation, and Lambdas.',
-					'Maintained front-end built in React, with redux, less, webpack.',
-					'Contributed to rebuilding of an API that would query Elastic Search for profiles and serving large traffic to downstream services.'
-				]}
-			/>
+				<TimelineJobEntry
+					title="Senior Software Engineer"
+					company="SEEK"
+					startDate="2019-02"
+					endDate="2020-07"
+					responsibilities={[
+						"Developed a range of backend and front-end services to support talent search systems for SME's and Recruiters.",
+						'Utilized AWS cloud services including Elastic Beanstalk, ECS, CloudFront, SQS, SNS, CloudFormation, and Lambdas.',
+						'Maintained front-end built in React, with redux, less, webpack.',
+						'Contributed to rebuilding of an API that would query Elastic Search for profiles and serving large traffic to downstream services.'
+					]}
+				/>
 
-			<JobEntry
-				title="Senior Software Engineer"
-				company="Apthletic"
-				period="April 2018 - February 2019"
-				responsibilities={[
-					'Designed and built the Rest API and database (Postgres) for mobile and web using Java with Jersey Framework.',
-					'Developed front end web application built with React (Typescript) using Sagas.',
-					'Implemented Flyway library for database migrations.',
-					'Established Continuous Delivery using Terraform targeting AWS in CircleCI.',
-					'Designed and delivered an event driven system using AWS lambda, SQS, Postgres DB using the Serverless Framework.'
-				]}
-			/>
+				<TimelineJobEntry
+					title="Senior Software Engineer"
+					company="Apthletic"
+					startDate="2018-04"
+					endDate="2019-02"
+					responsibilities={[
+						'Designed and built the Rest API and database (Postgres) for mobile and web using Java with Jersey Framework.',
+						'Developed front end web application built with React (Typescript) using Sagas.',
+						'Implemented Flyway library for database migrations.',
+						'Established Continuous Delivery using Terraform targeting AWS in CircleCI.',
+						'Designed and delivered an event driven system using AWS lambda, SQS, Postgres DB using the Serverless Framework.'
+					]}
+				/>
 
-			<JobEntry
-				title="Senior Software Developer"
-				company="MYOB"
-				period="September 2016 - April 2018"
-				responsibilities={[
-					'Developed large scale event driven systems to serve real time dashboard data to accounting firms and partners.',
-					'Built systems mostly in Node with JavaScript and Flow type checking.',
-					'Maintained some legacy C# systems and worked on Azure Functions.',
-					'Built and maintained React front end application for internal support staff.',
-					'Responsible for devops and support, using Terraform to deploy services to AWS.'
-				]}
-			/>
+				<TimelineJobEntry
+					title="Senior Software Developer"
+					company="MYOB"
+					startDate="2016-09"
+					endDate="2018-04"
+					responsibilities={[
+						'Developed large scale event driven systems to serve real time dashboard data to accounting firms and partners.',
+						'Built systems mostly in Node with JavaScript and Flow type checking.',
+						'Maintained some legacy C# systems and worked on Azure Functions.',
+						'Built and maintained React front end application for internal support staff.',
+						'Responsible for devops and support, using Terraform to deploy services to AWS.'
+					]}
+				/>
 
-			<JobEntry
-				title="Senior .Net Developer"
-				company="TAL Life"
-				period="April 2014 - September 2016"
-				responsibilities={[
-					"Tech Lead for the development of a new website that interacted with backend services and MDM's, allowing users to login for self-service.",
-					'Delivered a revamped InsuranceLine website using Sitecore 7.2 MVC, Angular JS, Web API and Mongo DB.',
-					'Assisted in bringing the DevOps infrastructure using Team City and Octopus Deploy.',
-					'Helped set up Chef provisioning infrastructure by writing key cookbooks and recipes.',
-					'Authored a Selenium Wrapper library for executing test scenarios in multiple browsers using NUnit and WebDriver.'
-				]}
-			/>
+				<TimelineJobEntry
+					title="Senior .Net Developer"
+					company="TAL Life"
+					startDate="2014-04"
+					endDate="2016-09"
+					responsibilities={[
+						"Tech Lead for the development of a new website that interacted with backend services and MDM's, allowing users to login for self-service.",
+						'Delivered a revamped InsuranceLine website using Sitecore 7.2 MVC, Angular JS, Web API and Mongo DB.',
+						'Assisted in bringing the DevOps infrastructure using Team City and Octopus Deploy.',
+						'Helped set up Chef provisioning infrastructure by writing key cookbooks and recipes.',
+						'Authored a Selenium Wrapper library for executing test scenarios in multiple browsers using NUnit and WebDriver.'
+					]}
+				/>
+				/>
 
-			<JobEntry
-				title="Senior .Net Developer and Scrum Master"
-				company="Unified Healthcare Group"
-				period="February 2013 - May 2014"
-				responsibilities={[
-					'Developed modern single page application using twitter bootstrap, knockout, jQuery, and Asp.Net MVC 4.',
-					'Implemented full continuous integration using Octopus Deploy and Jenkins.',
-					'Implemented Business Driven Development with Specflow including integration testing using Selenium web driver and NUnit.',
-					'Automated production deployments which improved confidence for more frequent releases.'
-				]}
-			/>
+				<TimelineJobEntry
+					title="Senior .Net Developer and Scrum Master"
+					company="Unified Healthcare Group"
+					startDate="2013-02"
+					endDate="2014-05"
+					responsibilities={[
+						'Developed modern single page application using twitter bootstrap, knockout, jQuery, and Asp.Net MVC 4.',
+						'Implemented full continuous integration using Octopus Deploy and Jenkins.',
+						'Implemented Business Driven Development with Specflow including integration testing using Selenium web driver and NUnit.',
+						'Automated production deployments which improved confidence for more frequent releases.'
+					]}
+				/>
 
-			<JobEntry
-				title=".Net Technical Lead"
-				company="eNett"
-				period="September 2009 - February 2013"
-				responsibilities={[
-					'Started as Senior developer and progressed to technical lead in an Agile scrum environment.',
-					'Set up automated deployment using Octopus Deploy with TFS for wide range of applications.',
-					'Worked with Team Foundation Server 2012, Visual Studio 2008-2012, and SQL Server 2008/2012.',
-					'Developed with WCF, ASP.Net Web Forms, Windows Services.',
-					'Assisted in development of WCF frameworks and libraries and integrated with external systems including Galileo (GDS system).'
-				]}
-			/>
+				<TimelineJobEntry
+					title=".Net Technical Lead"
+					company="eNett"
+					startDate="2009-09"
+					endDate="2013-02"
+					responsibilities={[
+						'Started as Senior developer and progressed to technical lead in an Agile scrum environment.',
+						'Set up automated deployment using Octopus Deploy with TFS for wide range of applications.',
+						'Worked with Team Foundation Server 2012, Visual Studio 2008-2012, and SQL Server 2008/2012.',
+						'Developed with WCF, ASP.Net Web Forms, Windows Services.',
+						'Assisted in development of WCF frameworks and libraries and integrated with external systems including Galileo (GDS system).'
+					]}
+				/>
 
-			<JobEntry
-				title=".Net Developer"
-				company="Object Next Software"
-				period="January 2009 - September 2009"
-				responsibilities={[
-					'C# 2.0 and 3.5 .Net framework development.',
-					'Implemented best practices including repository patterns and Model View Presenter spanning Windows and web.',
-					'Used third party tools including Infragistincs and Telerik.',
-					'Built framework custom UI controls for both Windows and web applications.'
-				]}
-			/>
+				<TimelineJobEntry
+					title=".Net Developer"
+					company="Object Next Software"
+					startDate="2009-01"
+					endDate="2009-09"
+					responsibilities={[
+						'C# 2.0 and 3.5 .Net framework development.',
+						'Implemented best practices including repository patterns and Model View Presenter spanning Windows and web.',
+						'Used third party tools including Infragistincs and Telerik.',
+						'Built framework custom UI controls for both Windows and web applications.'
+					]}
+				/>
 
-			<JobEntry
-				title=".Net Developer"
-				company="Mainfreight (Pelican Solutions Software)"
-				period="May 2008 - January 2009"
-				responsibilities={[
-					'Delivered new features to the flagship Windows application using C# 2.0 .Net framework.',
-					'Integrated the platform using EDI Messaging and XML communication with government departments.',
-					'Presented proof of concept of WCF to replace existing COM+ components.',
-					'Presented proof of concept of WPF to integrate new features to existing Forms Application.',
-					'Worked with Visual Studio 2005/2008, SQL Server 2005, and SourceSafe source control.'
-				]}
-			/>
+				<TimelineJobEntry
+					title=".Net Developer"
+					company="Mainfreight (Pelican Solutions Software)"
+					startDate="2008-05"
+					endDate="2009-01"
+					responsibilities={[
+						'Delivered new features to the flagship Windows application using C# 2.0 .Net framework.',
+						'Integrated the platform using EDI Messaging and XML communication with government departments.',
+						'Presented proof of concept of WCF to replace existing COM+ components.',
+						'Presented proof of concept of WPF to integrate new features to existing Forms Application.',
+						'Worked with Visual Studio 2005/2008, SQL Server 2005, and SourceSafe source control.'
+					]}
+				/>
 
-			<JobEntry
-				title="Junior .Net Developer"
-				company="FTI Consulting"
-				period="January 2007 - May 2008"
-				responsibilities={[
-					'Worked in a full agile scrum environment.',
-					'Maintained existing web application using VBScript, SQL Server 2005, Visual Studio 2005.',
-					'Maintained application used for OCR Crawling images written in VB.Net.',
-					'Unit testing new application frameworks written in C# .Net 2.0.',
-					'Performed performance, scale and integration testing.'
-				]}
-			/>
+				<TimelineJobEntry
+					title="Junior .Net Developer"
+					company="FTI Consulting"
+					startDate="2007-01"
+					endDate="2008-05"
+					responsibilities={[
+						'Worked in a full agile scrum environment.',
+						'Maintained existing web application using VBScript, SQL Server 2005, Visual Studio 2005.',
+						'Maintained application used for OCR Crawling images written in VB.Net.',
+						'Unit testing new application frameworks written in C# .Net 2.0.',
+						'Performed performance, scale and integration testing.'
+					]}
+				/>
+			</div>
 		</Section>
 
 		<Section title="Education">
@@ -232,15 +250,13 @@ import SkillCategory from '../components/cv/SkillCategory.astro';
 			/>
 		</Section>
 
-		<a href="/" class="back-link">← Back to Home</a>
+		<a href="/" class="btn-link" style="margin-top: 2rem;">← Back to Home</a>
 	</main>
 </Layout>
 
 <style>
 	.cv-header {
-		margin-bottom: 2.5rem;
-		border-bottom: 1px solid var(--color-border);
-		padding-bottom: 1.5rem;
+		margin-bottom: 1.5rem;
 	}
 
 	.subtitle {
@@ -255,5 +271,23 @@ import SkillCategory from '../components/cv/SkillCategory.astro';
 
 	h1 {
 		margin-bottom: 0.5rem;
+	}
+
+	.timeline-container {
+		position: relative;
+		padding-left: 0;
+	}
+
+	/* Optional: Add some spacing for the Work Experience section */
+	:global(.cv-section h2) {
+		background-color: var(--color-background);
+		padding: 1rem 0;
+		margin-bottom: 2rem;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(.cv-section h2) {
+			background-color: var(--color-background);
+		}
 	}
 </style>
