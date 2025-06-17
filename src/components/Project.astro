@@ -20,8 +20,18 @@ const { title, description, projectUrl, sourceCodeUrl, tags } = Astro.props;
 		</p>
 		<Tags tags={tags} />
 		<div class="links">
-			<a href={projectUrl} target="_blank" rel="noopener noreferrer" class="btn-link btn-link-external small">Check it out</a>
-			<a href={sourceCodeUrl} target="_blank" rel="noopener noreferrer" class="btn-link btn-link-external small">Source Code</a>
+			<a
+				href={projectUrl}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="btn-link btn-link-external small">Check it out</a
+			>
+			<a
+				href={sourceCodeUrl}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="btn-link btn-link-external small">Source Code</a
+			>
 		</div>
 	</div>
 </div>
@@ -66,11 +76,5 @@ const { title, description, projectUrl, sourceCodeUrl, tags } = Astro.props;
 		display: flex;
 		gap: 1rem;
 		flex-wrap: wrap;
-	}
-
-	@media (max-width: 768px) {
-		.links {
-			flex-direction: column;
-		}
 	}
 </style>

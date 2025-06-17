@@ -7,15 +7,16 @@ import Layout from '../layouts/Layout.astro';
 		<div class="hero">
 			<div>
 				<h1>Dejan Vasic</h1>
-				<h2>Staff Software Engineer</h2>
 			</div>
 			<img src="/images/profile.jpeg" alt="Dejan Vasic" />
 		</div>
 
 		<div class="content">
 			<p>
-				Hi, I'm Dejan Vasic, a Staff Software Engineer with a passion for building robust and
-				scalable web applications.
+				Hi, I'm Dejan Vasic, currently at Staff Software Engineer at
+				<a href="https://www.open.edu.au/" target="_blank" rel="noopener noreferrer"
+					>Open Universities Australia</a
+				> with a passion for building robust and scalable web applications.
 			</p>
 
 			<p>My expertise includes (but not limited to):</p>
@@ -82,13 +83,6 @@ import Layout from '../layouts/Layout.astro';
 		border-top: 1px solid var(--color-border);
 		padding-top: 2rem;
 		flex-wrap: wrap;
-	}
-
-	@media (max-width: 768px) {
-		.page-nav {
-			flex-direction: column;
-			gap: 1rem;
-		}
 	}
 
 	@media (width > 768px) {
