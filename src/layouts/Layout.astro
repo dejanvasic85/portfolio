@@ -69,102 +69,10 @@ const normalizedPathname = pathname.replace(/\/$/, '');
 		</footer>
 
 		<script>
-			// Enhanced page transition utilities for Astro portfolio
-			class TransitionEnhancer {
-				constructor() {
-					this.init();
-				}
+			import { initializeTransitions } from '../scripts/transitionEnhancer';
 
-				init() {
-					// Add transition listeners
-					document.addEventListener(
-						'astro:before-preparation',
-						this.handleBeforePreparation.bind(this)
-					);
-					document.addEventListener('astro:before-swap', this.handleBeforeSwap.bind(this));
-					document.addEventListener('astro:after-swap', this.handleAfterSwap.bind(this));
-				}
-
-				handleBeforePreparation(event: Event) {
-					// Add custom loading states
-					document.body.classList.add('page-transitioning');
-				}
-
-				handleBeforeSwap(event: Event) {
-					// Before DOM swap
-					this.preserveScrollPosition();
-				}
-
-				handleAfterSwap(event: Event) {
-					// After DOM swap - re-initialize any JavaScript components
-					document.body.classList.remove('page-transitioning');
-					this.initializeNewPageElements();
-					this.handleScrollRestoration();
-				}
-
-				preserveScrollPosition() {
-					// Store scroll position for specific elements if needed
-					const mainContent = document.querySelector('main');
-					if (mainContent) {
-						sessionStorage.setItem('scrollPosition', mainContent.scrollTop.toString());
-					}
-				}
-
-				handleScrollRestoration() {
-					// Restore scroll position if needed, or scroll to top for new pages
-					const shouldScrollToTop = !sessionStorage.getItem('preserveScroll');
-					if (shouldScrollToTop) {
-						window.scrollTo({ top: 0, behavior: 'smooth' });
-					}
-					sessionStorage.removeItem('preserveScroll');
-				}
-
-				initializeNewPageElements() {
-					// Re-initialize any components that need JavaScript
-
-					// Example: Re-initialize any custom components
-					this.initializeInteractiveElements();
-				}
-
-				initializeInteractiveElements() {
-					// Add hover effects to project cards
-					const projectCards = document.querySelectorAll('.project-card');
-					projectCards.forEach((card) => {
-						const htmlCard = card as HTMLElement;
-						htmlCard.addEventListener('mouseenter', () => {
-							htmlCard.style.transform = 'translateY(-4px)';
-						});
-
-						htmlCard.addEventListener('mouseleave', () => {
-							htmlCard.style.transform = 'translateY(0)';
-						});
-					});
-
-					// Add smooth scrolling to anchor links
-					const anchorLinks = document.querySelectorAll('a[href^="#"]');
-					anchorLinks.forEach((link) => {
-						link.addEventListener('click', (e) => {
-							e.preventDefault();
-							const href = link.getAttribute('href');
-							if (href) {
-								const target = document.querySelector(href);
-								if (target) {
-									target.scrollIntoView({ behavior: 'smooth' });
-								}
-							}
-						});
-					});
-				}
-			}
-
-			// Initialize when DOM is ready
-			if (document.readyState === 'loading') {
-				document.addEventListener('DOMContentLoaded', () => {
-					new TransitionEnhancer();
-				});
-			} else {
-				new TransitionEnhancer();
-			}
+			// Initialize page transitions
+			initializeTransitions();
 		</script>
 	</body>
 </html>
