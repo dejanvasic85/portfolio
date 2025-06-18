@@ -1,0 +1,75 @@
+---
+// Simple loading indicator component
+---
+
+<div id="loading-indicator" class="loading-indicator" style="display: none;">
+	<div class="loading-spinner"></div>
+</div>
+
+<script>
+	// Show loading indicator during page transitions
+	document.addEventListener('astro:before-preparation', () => {
+		const indicator = document.getElementById('loading-indicator');
+		if (indicator) {
+			indicator.style.display = 'flex';
+		}
+	});
+
+	document.addEventListener('astro:after-swap', () => {
+		const indicator = document.getElementById('loading-indicator');
+		if (indicator) {
+			indicator.style.display = 'none';
+		}
+	});
+</script>
+
+<style>
+	.loading-indicator {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+		z-index: 9999;
+		animation: loading-progress 1s ease-in-out infinite;
+	}
+
+	.loading-spinner {
+		width: 100%;
+		height: 100%;
+		background: inherit;
+		animation: loading-slide 1s ease-in-out infinite;
+	}
+
+	@keyframes loading-progress {
+		0% {
+			transform: translateX(-100%);
+		}
+		50% {
+			transform: translateX(0%);
+		}
+		100% {
+			transform: translateX(100%);
+		}
+	}
+
+	@keyframes loading-slide {
+		0% {
+			opacity: 0.6;
+		}
+		50% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0.6;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.loading-indicator,
+		.loading-spinner {
+			animation: none;
+		}
+	}
+</style>
