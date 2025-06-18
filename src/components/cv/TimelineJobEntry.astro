@@ -1,5 +1,6 @@
 ---
 import SkillCategory from './SkillCategory.astro';
+import Tags from '../Tags.astro';
 
 interface Publication {
 	title: string;
@@ -9,6 +10,7 @@ interface Publication {
 interface Props {
 	title: string;
 	company: string;
+	location: string;
 	startDate: string; // Format: "YYYY-MM" for timeline positioning
 	endDate?: string; // Format: "YYYY-MM" or "Present" for timeline display
 	responsibilities: string[];
@@ -16,15 +18,28 @@ interface Props {
 	publications?: Publication[];
 }
 
-const { title, company, startDate, endDate, responsibilities, skills, publications } = Astro.props;
+const { title, company, location, startDate, endDate, responsibilities, skills, publications } = Astro.props;
 
 // Function to format date for timeline display
 function formatTimelineDate(dateStr: string): string {
-	const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	
+	const monthNames = [
+		'Jan',
+		'Feb',
+		'Mar',
+		'Apr',
+		'May',
+		'Jun',
+		'Jul',
+		'Aug',
+		'Sep',
+		'Oct',
+		'Nov',
+		'Dec'
+	];
+
 	let month: number;
 	let year: string;
-	
+
 	if (dateStr === 'Present') {
 		// Calculate current month/year
 		const now = new Date();
@@ -36,7 +51,7 @@ function formatTimelineDate(dateStr: string): string {
 		month = parseInt(monthStr) - 1; // Convert to 0-based index
 		year = yearStr;
 	}
-	
+
 	const monthName = monthNames[month];
 	const shortYear = year.slice(-2); // Get last 2 digits of year
 	return `${monthName} ${shortYear}`;
@@ -60,10 +75,13 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 	<div class="timeline-content">
 		<!-- Sticky header for small/medium screens only -->
 		<div class="job-header job-header-sticky">
-			<h3>{title}</h3>
-			<div class="job-meta">
-				<span class="company">{company}</span>
-				<span class="period">{dateRange}</span>
+			<div class="job-header-content">
+				<div class="job-title-group">
+					<h3>{title}</h3>
+					<span class="company">{company}</span>
+					<span class="location">{location}</span>
+				</div>
+				<Tags tags={[dateRange]} />
 			</div>
 		</div>
 
@@ -72,6 +90,7 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 			<h3>{title}</h3>
 			<div class="job-meta">
 				<span class="company">{company}</span>
+				<span class="location">{location}</span>
 			</div>
 		</div>
 
@@ -88,7 +107,12 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 					<ul class="publication-list">
 						{publications.map((pub) => (
 							<li>
-								<a href={pub.url} target="_blank" rel="noopener noreferrer" class="btn-link btn-link-external list">
+								<a
+									href={pub.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="btn-link btn-link-external list"
+								>
 									{pub.title}
 								</a>
 							</li>
@@ -177,8 +201,51 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 		margin: -1.5rem -1.5rem 1.5rem -1.5rem;
 		padding: 1rem 1.5rem;
 		z-index: 10;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 		backdrop-filter: blur(8px);
+		transition: box-shadow 0.2s ease-in-out;
+		/* Make it a flex container to center content vertically when visible */
+		align-items: center;
+		min-height: 60px; /* Ensure minimum height for proper centering */
+	}
+
+	/* Content wrapper for proper vertical centering */
+	.job-header-content {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	/* Group for title and company name */
+	.job-title-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.job-title-group h3 {
+		margin: 0;
+		font-size: 1.4rem;
+		color: var(--color-text);
+	}
+
+	.job-title-group .company {
+		font-weight: 600;
+		color: var(--color-text-light);
+		font-size: 0.9rem;
+	}
+
+	.job-title-group .location {
+		font-weight: 400;
+		color: var(--color-text-light);
+		font-size: 0.8rem;
+		opacity: 0.8;
+	}
+
+	/* Shadow applied when sticky header is actually stuck */
+	.job-header-sticky.is-stuck {
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	}
 
 	.job-header h3 {
@@ -189,15 +256,31 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 
 	.job-meta {
 		display: flex;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		gap: 0.5rem;
+		flex-direction: column;
+		gap: 0.25rem;
 		color: var(--color-text-light);
 		font-size: 0.9rem;
 	}
 
 	.company {
 		font-weight: 600;
+	}
+
+	.location {
+		font-weight: 400;
+		opacity: 0.8;
+		font-size: 0.85em;
+	}
+
+	/* Ensure Tags component aligns properly within job-header-content */
+	.job-header-content .tags {
+		margin: 0;
+		align-items: center;
+	}
+
+	.job-header-content .tag {
+		font-size: 0.75rem;
+		padding: 0.2rem 0.6rem;
 	}
 
 	.responsibilities {
@@ -265,7 +348,7 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 		}
 
 		.job-header-sticky {
-			display: block;
+			display: flex;
 		}
 
 		/* Remove timeline line */
@@ -285,12 +368,21 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 			padding: 0.75rem 1rem;
 		}
 
-		.job-header h3 {
+		.job-title-group h3 {
 			font-size: 1.2rem;
 		}
 
-		.job-meta {
+		.job-title-group .company {
 			font-size: 0.85rem;
+		}
+
+		.job-title-group .location {
+			font-size: 0.75rem;
+		}
+
+		.job-header-content .tag {
+			font-size: 0.7rem;
+			padding: 0.15rem 0.5rem;
 		}
 	}
 
@@ -305,7 +397,62 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 
 		.job-header-sticky {
 			background-color: var(--color-background-hover);
+			transition: box-shadow 0.2s ease-in-out;
+		}
+
+		.job-header-sticky.is-stuck {
 			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 		}
 	}
 </style>
+
+<script>
+	// Function to set up sticky shadow detection for all job headers
+	function setupStickyShadows() {
+		const stickyHeaders = document.querySelectorAll('.job-header-sticky');
+
+		stickyHeaders.forEach((header) => {
+			// Create a sentinel element above the sticky header to detect when it becomes stuck
+			const sentinel = document.createElement('div');
+			sentinel.style.height = '1px';
+			sentinel.style.position = 'absolute';
+			sentinel.style.top = '0';
+			sentinel.style.left = '0';
+			sentinel.style.right = '0';
+			sentinel.style.pointerEvents = 'none';
+
+			// Insert the sentinel before the sticky header's parent container
+			const container = header.closest('.timeline-content') as HTMLElement;
+			if (container) {
+				container.style.position = 'relative';
+				container.insertBefore(sentinel, container.firstChild);
+			}
+
+			// Use Intersection Observer to detect when the sentinel goes out of view
+			const observer = new IntersectionObserver(
+				([entry]) => {
+					// When the sentinel is not intersecting (out of view), the header is stuck
+					if (entry.isIntersecting) {
+						header.classList.remove('is-stuck');
+					} else {
+						header.classList.add('is-stuck');
+					}
+				},
+				{
+					// Trigger when the sentinel is at the exact top of the viewport
+					rootMargin: '0px 0px 0px 0px',
+					threshold: 0
+				}
+			);
+
+			observer.observe(sentinel);
+		});
+	}
+
+	// Initialize when DOM is loaded
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', setupStickyShadows);
+	} else {
+		setupStickyShadows();
+	}
+</script>
