@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import GoogleAnalytics from '../components/GoogleAnalytics.astro';
+import LoadingIndicator from '../components/LoadingIndicator.astro';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
 	title?: string;
@@ -22,9 +24,11 @@ const normalizedPathname = pathname.replace(/\/$/, '');
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<GoogleAnalytics />
+		<ClientRouter />
 		<title>{title}</title>
 	</head>
 	<body>
+		<LoadingIndicator />
 		<header class="site-header">
 			<div class="header-container">
 				<nav class="main-nav">
@@ -63,6 +67,13 @@ const normalizedPathname = pathname.replace(/\/$/, '');
 				</div>
 			</div>
 		</footer>
+
+		<script>
+			import { initializeTransitions } from '../scripts/transitionEnhancer';
+
+			// Initialize page transitions
+			initializeTransitions();
+		</script>
 	</body>
 </html>
 

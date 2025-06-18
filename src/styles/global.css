@@ -343,3 +343,48 @@ code {
 		margin-bottom: 0.5rem;
 	}
 }
+
+/* Page Transitions */
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-out {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+/* Simple fade transition - no sliding to prevent text overlap */
+::view-transition-old(root) {
+	animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
+}
+
+::view-transition-new(root) {
+	animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
+}
+
+/* Enhanced transition states */
+.page-transitioning {
+	cursor: wait;
+}
+
+.page-transitioning * {
+	pointer-events: none;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation: none;
+	}
+}
