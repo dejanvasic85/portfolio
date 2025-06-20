@@ -11,6 +11,9 @@ interface Props {
 const { title = 'Dejan Vasic - Software Engineer' } = Astro.props;
 const { pathname } = Astro.url;
 const normalizedPathname = pathname.replace(/\/$/, '');
+
+// Create canonical URL by removing trailing slash and ensuring it's the full URL
+const canonicalURL = new URL(pathname.replace(/\/$/, '') || '/', Astro.site).href;
 ---
 
 <!doctype html>
@@ -19,6 +22,7 @@ const normalizedPathname = pathname.replace(/\/$/, '');
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="canonical" href={canonicalURL} />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

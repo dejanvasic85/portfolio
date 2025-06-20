@@ -7,6 +7,7 @@ import vercel from '@astrojs/vercel';
 
 export default defineConfig({
 	site: 'https://dejan.vasic.com.au',
+	trailingSlash: 'never',
 	adapter: vercel(),
 	integrations: [mdx(), sitemap()],
 	markdown: {
@@ -17,7 +18,12 @@ export default defineConfig({
 				{
 					pre(node) {
 						// Add special class for our tab-size CSS
-						node.properties.className = [...(node.properties.className || []), 'code-block'];
+						const existingClasses = Array.isArray(node.properties.className) 
+							? node.properties.className.filter(c => typeof c === 'string' || typeof c === 'number')
+							: typeof node.properties.className === 'string' || typeof node.properties.className === 'number'
+								? [node.properties.className] 
+								: [];
+						node.properties.className = [...existingClasses, 'code-block'];
 					}
 				}
 			]
