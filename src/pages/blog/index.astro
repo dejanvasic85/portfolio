@@ -10,7 +10,28 @@ const sortedPosts = allPosts.sort((a, b) => {
 
 <Layout title="Blog - Dejan Vasic">
 	<main class="container">
-		<h1>Blog</h1>
+		<div class="blog-header">
+			<h1>Blog</h1>
+			<a href="/rss.xml" class="rss-link" title="Subscribe to RSS feed">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					width="16"
+					height="16"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M12.75 19.5v-.75a7.5 7.5 0 0 0-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+					></path>
+				</svg>
+
+				RSS
+			</a>
+		</div>
 		<p class="intro">Thoughts on software engineering, leadership, and technology.</p>
 		<div class="posts">
 			{
@@ -35,6 +56,40 @@ const sortedPosts = allPosts.sort((a, b) => {
 </Layout>
 
 <style>
+	.blog-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1rem;
+	}
+
+	.blog-header h1 {
+		margin: 0;
+	}
+
+	.rss-link {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--color-text-light);
+		text-decoration: none;
+		font-size: 0.9rem;
+		padding: 0.5rem 1rem;
+		border: 1px solid var(--color-border);
+		border-radius: 6px;
+		transition: all 0.2s ease;
+	}
+
+	.rss-link:hover {
+		color: var(--color-primary);
+		border-color: var(--color-primary);
+		background-color: var(--color-bg-secondary);
+	}
+
+	.rss-link svg {
+		flex-shrink: 0;
+	}
+
 	.intro {
 		color: var(--color-text-light);
 		margin-bottom: 3rem;
