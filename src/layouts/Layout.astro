@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 import LoadingIndicator from '../components/LoadingIndicator.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
@@ -17,7 +18,7 @@ const canonicalURL = new URL(pathname.replace(/\/$/, '') || '/', Astro.site).hre
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="system">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -42,6 +43,7 @@ const canonicalURL = new URL(pathname.replace(/\/$/, '') || '/', Astro.site).hre
 					<a href="/projects" class={normalizedPathname === '/projects' ? 'active' : ''}>Projects</a
 					>
 					<a href="/blog" class={normalizedPathname === '/blog' ? 'active' : ''}>Blog</a>
+					<ThemeToggle client:load />
 				</nav>
 			</div>
 		</header>
