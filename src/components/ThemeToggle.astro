@@ -38,16 +38,16 @@
 	}
 </style>
 
-<script is:inline>
-	console.log('ThemeToggle component loaded');
+<script>
+	document.addEventListener('astro:page-load', () => {
+		const handleToggle = () => {
+			const el = document.documentElement;
+			const currentTheme = el.getAttribute('data-theme');
+			el.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+			// const currentTheme = el.getAttribute('data-theme');
+			// console.log('Current theme:', currentTheme);
+		};
 
-	const handleToggle = () => {
-		const el = document.documentElement;
-		const currentTheme = el.getAttribute('data-theme');
-		el.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
-		// const currentTheme = el.getAttribute('data-theme');
-		// console.log('Current theme:', currentTheme);
-	};
-
-	document.getElementById('themeToggle').addEventListener('click', handleToggle);
+		document.getElementById('themeToggle')?.addEventListener('click', handleToggle);
+	});
 </script>

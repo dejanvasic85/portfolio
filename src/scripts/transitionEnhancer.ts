@@ -12,10 +12,7 @@ export class TransitionEnhancer {
 	 */
 	private init(): void {
 		// Add transition listeners
-		document.addEventListener(
-			'astro:before-preparation',
-			this.handleBeforePreparation.bind(this)
-		);
+		document.addEventListener('astro:before-preparation', this.handleBeforePreparation.bind(this));
 		document.addEventListener('astro:before-swap', this.handleBeforeSwap.bind(this));
 		document.addEventListener('astro:after-swap', this.handleAfterSwap.bind(this));
 	}
