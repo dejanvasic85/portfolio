@@ -96,20 +96,18 @@
 
 @media (prefers-color-scheme: dark) {
 	[data-theme='system'] {
-		:root {
-			--color-background: #282c34;
-			--color-background-hover: #3c424a;
-			--color-text: #fff;
-			--color-text-light: #e2e8f0;
-			--color-border: hsl(213, 12%, 30%);
+		--color-background: #282c34;
+		--color-background-hover: #3c424a;
+		--color-text: #fff;
+		--color-text-light: #e2e8f0;
+		--color-border: hsl(213, 12%, 30%);
 
-			/* More vibrant primary colors for dark mode */
-			--color-primary: #b794f6;
-			--color-primary-dark: #9f7aea;
-			--color-primary-light: rgba(183, 148, 246, 0.1);
+		/* More vibrant primary colors for dark mode */
+		--color-primary: #b794f6;
+		--color-primary-dark: #9f7aea;
+		--color-primary-light: rgba(183, 148, 246, 0.1);
 
-			color-scheme: dark;
-		}
+		color-scheme: dark;
 	}
 }
 
