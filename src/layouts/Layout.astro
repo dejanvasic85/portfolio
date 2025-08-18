@@ -19,7 +19,9 @@ const { pathname } = Astro.url;
 const normalizedPathname = pathname.replace(/\/$/, '');
 
 // Create canonical URL by removing trailing slash and ensuring it's the full URL
-const canonicalURL = new URL(pathname.replace(/\/$/, '') || '/', Astro.site).href;
+// Handle both root path and sub-paths consistently
+const cleanPath = pathname.replace(/\/$/, '') || '/';
+const canonicalURL = new URL(cleanPath, Astro.site).href;
 ---
 
 <!doctype html>
