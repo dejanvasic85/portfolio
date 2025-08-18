@@ -5,7 +5,11 @@ import Tags from '../components/Tags.astro';
 const { frontmatter } = Astro.props;
 ---
 
-<Layout title={frontmatter.title}>
+<Layout 
+	title={frontmatter.title}
+	description={frontmatter.excerpt || `Blog post by Dejan Vasic about ${frontmatter.tags?.join(', ') || 'web development'}`}
+	type="article"
+>
 	<article class="blog-post">
 		<main class="container">
 			<header>

@@ -7,14 +7,22 @@ import { ClientRouter } from 'astro:transitions';
 
 interface Props {
 	title?: string;
+	description?: string;
+	type?: 'website' | 'article';
 }
 
-const { title = 'Dejan Vasic - Software Engineer' } = Astro.props;
+const { 
+	title = 'Dejan Vasic - Software Engineer',
+	description = 'Personal website and blog of Dejan Vasic, Staff Software Engineer specializing in React, TypeScript, Node.js, and cloud infrastructure.',
+	type = 'website'
+} = Astro.props;
 const { pathname } = Astro.url;
 const normalizedPathname = pathname.replace(/\/$/, '');
 
 // Create canonical URL by removing trailing slash and ensuring it's the full URL
-const canonicalURL = new URL(pathname.replace(/\/$/, '') || '/', Astro.site).href;
+// Handle both root path and sub-paths consistently
+const cleanPath = pathname.replace(/\/$/, '') || '/';
+const canonicalURL = new URL(cleanPath, Astro.site).href;
 ---
 
 <!doctype html>
@@ -25,6 +33,21 @@ const canonicalURL = new URL(pathname.replace(/\/$/, '') || '/', Astro.site).hre
 		<link rel="icon" href="/favicon.ico" type="image/x-icon" />
 		<link rel="canonical" href={canonicalURL} />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<meta name="author" content="Dejan Vasic" />
+		
+		<!-- Open Graph meta tags -->
+		<meta property="og:site_name" content="Dejan Vasic" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:type" content={type} />
+		
+		<!-- Twitter Card meta tags -->
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link rel="sitemap" href="/sitemap-index.xml" />
@@ -32,6 +55,24 @@ const canonicalURL = new URL(pathname.replace(/\/$/, '') || '/', Astro.site).hre
 		<GoogleAnalytics />
 		<ClientRouter />
 		<title>{title}</title>
+		
+		<!-- Structured data for site name -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"name": "Dejan Vasic",
+			"alternateName": "Dejan Vasic - Software Engineer",
+			"url": "https://dejan.vasic.com.au",
+			"description": "Personal website and blog of Dejan Vasic, Staff Software Engineer specializing in React, TypeScript, Node.js, and cloud infrastructure.",
+			"author": {
+				"@type": "Person",
+				"name": "Dejan Vasic",
+				"jobTitle": "Staff Software Engineer",
+				"url": "https://dejan.vasic.com.au"
+			}
+		}
+		</script>
 	</head>
 	<body>
 		<LoadingIndicator />
