@@ -12,7 +12,8 @@ const projects = [
 			first development and offline support in the future.`,
 		tags: ['Svelte', 'SvelteKit', 'Postgres', 'Prisma', 'Tailwind', 'Vercel'],
 		projectUrl: 'https://notes.vasic.com.au',
-		sourceCodeUrl: 'https://github.com/dejanvasic85/notes'
+		sourceCodeUrl: 'https://github.com/dejanvasic85/notes',
+		imageUrl: '/images/projects/notes.png'
 	},
 	{
 		title: 'SES Melbourne',
@@ -22,7 +23,18 @@ const projects = [
 			is managed with Sanity CMS, which allows the client to easily update the content.`,
 		tags: ['Nextjs', 'Sanity CMS', 'Tailwind', 'Vercel'],
 		projectUrl: 'https://www.sesmelbourne.com.au/',
-		sourceCodeUrl: 'https://github.com/dejanvasic85/ses-next'
+		sourceCodeUrl: 'https://github.com/dejanvasic85/ses-next',
+		imageUrl: '/images/projects/ses.png'
+	},
+	{
+		title: 'JLC Carpentry & Building Services',
+		description: `A professional website for a Melbourne-based carpentry and building services company. 
+			The site showcases their expertise in decks, pergolas, kitchen & bathroom renovations, and structural modifications. 
+			Built with modern web technologies to provide excellent SEO performance and easy content management for the client.`,
+		tags: ['Nextjs', 'Sanity CMS', 'Tailwind', 'Vercel'],
+		projectUrl: 'https://www.jlccarpentrybuildingservices.com.au/',
+		sourceCodeUrl: 'https://github.com/dejanvasic85/portfolio',
+		imageUrl: '/images/projects/jlc-carpentry.png'
 	},
 	{
 		title: 'My portfolio website',
@@ -31,7 +43,8 @@ const projects = [
 			The blog is powered by MDX, allowing me to write posts in Markdown with React components.`,
 		tags: ['Astro', 'MDX', 'Tailwind', 'Vercel'],
 		projectUrl: 'https://dejan.vasic.com.au',
-		sourceCodeUrl: 'https://github.com/dejanvasic85/portfolio'
+		sourceCodeUrl: 'https://github.com/dejanvasic85/portfolio',
+		imageUrl: '/images/projects/portfolio.png'
 	}
 ];
 ---
@@ -48,6 +61,7 @@ const projects = [
 						tags={project.tags}
 						projectUrl={project.projectUrl}
 						sourceCodeUrl={project.sourceCodeUrl}
+						imageUrl={project.imageUrl}
 					/>
 				))
 			}
@@ -59,9 +73,15 @@ const projects = [
 
 <style>
 	.projects-grid {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
 		gap: 2rem;
 		margin-bottom: 2rem;
+	}
+
+	@media (max-width: 768px) {
+		.projects-grid {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>
