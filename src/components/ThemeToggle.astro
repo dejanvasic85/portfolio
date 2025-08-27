@@ -68,7 +68,7 @@
 		opacity: 0;
 		transform: scale(0.8) rotate(180deg);
 	}
-	
+
 	:global(.js-loaded.dark) .moon {
 		fill: white;
 		stroke: white;
@@ -97,16 +97,21 @@
 
 <script>
 	document.addEventListener('astro:page-load', () => {
+		const localStorageTheme = localStorage?.getItem('theme');
 		const { matches: prefersDark } = window.matchMedia('(prefers-color-scheme: dark)');
+		const initialTheme = localStorageTheme ?? (prefersDark ? 'dark' : 'light');
+		const isInitialDark = initialTheme === 'dark';
 		document.documentElement.classList.add('js-loaded');
-		document.documentElement.classList.toggle('dark', prefersDark);
+		document.documentElement.classList.toggle('dark', isInitialDark);
+		document.documentElement.setAttribute('data-theme', initialTheme);
 
 		const handleToggle = () => {
 			const el = document.documentElement;
 			const currentTheme = el.getAttribute('data-theme');
-			const isDark = currentTheme === 'dark' || (currentTheme === 'system' && prefersDark);
+			const isDark = currentTheme === 'dark' || (currentTheme === 'system' && isInitialDark);
 			el.setAttribute('data-theme', isDark ? 'light' : 'dark');
 			el.classList.toggle('dark', !isDark);
+			localStorage.setItem('theme', isDark ? 'light' : 'dark');
 		};
 
 		const themeToggleElement = document.getElementById('themeToggle');
