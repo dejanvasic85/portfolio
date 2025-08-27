@@ -2,7 +2,17 @@
 import Layout from '../../layouts/Layout.astro';
 import Tags from '../../components/Tags.astro';
 
-const allPosts = await Astro.glob('./**/*.mdx');
+type PostModule = {
+	frontmatter: {
+		title: string;
+		date: string;
+		excerpt: string;
+		tags?: string[];
+	};
+	url: string;
+};
+
+const allPosts = Object.values(import.meta.glob<PostModule>('./**/*.mdx', { eager: true }));
 const sortedPosts = allPosts.sort((a, b) => {
 	return new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf();
 });
