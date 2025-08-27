@@ -11,7 +11,7 @@ interface Props {
 	type?: 'website' | 'article';
 }
 
-const { 
+const {
 	title = 'Dejan Vasic - Software Engineer',
 	description = 'Personal website and blog of Dejan Vasic, Staff Software Engineer specializing in React, TypeScript, Node.js, and cloud infrastructure.',
 	type = 'website'
@@ -35,19 +35,19 @@ const canonicalURL = new URL(cleanPath, Astro.site).href;
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<meta name="author" content="Dejan Vasic" />
-		
+
 		<!-- Open Graph meta tags -->
 		<meta property="og:site_name" content="Dejan Vasic" />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalURL} />
 		<meta property="og:type" content={type} />
-		
+
 		<!-- Twitter Card meta tags -->
 		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		
+
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link rel="sitemap" href="/sitemap-index.xml" />
@@ -55,23 +55,23 @@ const canonicalURL = new URL(cleanPath, Astro.site).href;
 		<GoogleAnalytics />
 		<ClientRouter />
 		<title>{title}</title>
-		
+
 		<!-- Structured data for site name -->
 		<script type="application/ld+json">
-		{
-			"@context": "https://schema.org",
-			"@type": "WebSite",
-			"name": "Dejan Vasic",
-			"alternateName": "Dejan Vasic - Software Engineer",
-			"url": "https://dejan.vasic.com.au",
-			"description": "Personal website and blog of Dejan Vasic, Staff Software Engineer specializing in React, TypeScript, Node.js, and cloud infrastructure.",
-			"author": {
-				"@type": "Person",
+			{
+				"@context": "https://schema.org",
+				"@type": "WebSite",
 				"name": "Dejan Vasic",
-				"jobTitle": "Staff Software Engineer",
-				"url": "https://dejan.vasic.com.au"
+				"alternateName": "Dejan Vasic - Software Engineer",
+				"url": "https://dejan.vasic.com.au",
+				"description": "Personal website and blog of Dejan Vasic, Staff Software Engineer specializing in React, TypeScript, Node.js, and cloud infrastructure.",
+				"author": {
+					"@type": "Person",
+					"name": "Dejan Vasic",
+					"jobTitle": "Staff Software Engineer",
+					"url": "https://dejan.vasic.com.au"
+				}
 			}
-		}
 		</script>
 	</head>
 	<body>
@@ -84,7 +84,7 @@ const canonicalURL = new URL(cleanPath, Astro.site).href;
 					<a href="/projects" class={normalizedPathname === '/projects' ? 'active' : ''}>Projects</a
 					>
 					<a href="/blog" class={normalizedPathname === '/blog' ? 'active' : ''}>Blog</a>
-					<ThemeToggle client:load />
+					<ThemeToggle />
 				</nav>
 			</div>
 		</header>
