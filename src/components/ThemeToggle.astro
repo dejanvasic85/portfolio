@@ -25,11 +25,12 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		cursor: pointer;
 	}
 
 	.sun {
-		fill: currentColor;
-		stroke: currentColor;
+		fill: transparent;
+		stroke: transparent;
 	}
 
 	.moon {
@@ -37,11 +38,16 @@
 		stroke: transparent;
 	}
 
-	:global(.dark) .sun {
+	:global(.js-loaded) .sun {
+		fill: currentColor;
+		stroke: currentColor;
+	}
+
+	:global(.js-loaded.dark) .sun {
 		fill: transparent;
 		stroke: transparent;
 	}
-	:global(.dark) .moon {
+	:global(.js-loaded.dark) .moon {
 		fill: white;
 		stroke: white;
 	}
@@ -50,6 +56,7 @@
 <script>
 	document.addEventListener('astro:page-load', () => {
 		const { matches: prefersDark } = window.matchMedia('(prefers-color-scheme: dark)');
+		document.documentElement.classList.add('js-loaded');
 		document.documentElement.classList.toggle('dark', prefersDark);
 
 		const handleToggle = () => {
