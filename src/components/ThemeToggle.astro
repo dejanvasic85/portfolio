@@ -26,30 +26,72 @@
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
+		transition: transform 0.2s ease;
+	}
+
+	#themeToggle:hover {
+		transform: scale(1.05);
+	}
+
+	#themeToggle:active {
+		transform: scale(0.95);
+	}
+
+	svg {
+		transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.sun {
 		fill: transparent;
 		stroke: transparent;
+		transform-origin: center;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.moon {
 		fill: transparent;
 		stroke: transparent;
+		transform-origin: center;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	:global(.js-loaded) .sun {
 		fill: currentColor;
 		stroke: currentColor;
+		opacity: 1;
+		transform: scale(1) rotate(0deg);
 	}
 
 	:global(.js-loaded.dark) .sun {
 		fill: transparent;
 		stroke: transparent;
+		opacity: 0;
+		transform: scale(0.8) rotate(180deg);
 	}
+	
 	:global(.js-loaded.dark) .moon {
 		fill: white;
 		stroke: white;
+		opacity: 1;
+		transform: scale(1) rotate(0deg);
+	}
+
+	:global(.js-loaded:not(.dark)) .moon {
+		opacity: 0;
+		transform: scale(0.8) rotate(-180deg);
+	}
+
+	@keyframes sunRayRotate {
+		from {
+			transform: scale(1) rotate(0deg);
+		}
+		to {
+			transform: scale(1) rotate(360deg);
+		}
+	}
+
+	:global(.js-loaded:not(.dark)) .sun {
+		animation: sunRayRotate 20s linear infinite;
 	}
 </style>
 
