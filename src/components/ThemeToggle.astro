@@ -20,34 +20,49 @@
 	#themeToggle {
 		border: 0;
 		background: none;
+		min-width: 44px;
+		min-height: 44px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.sun {
 		fill: currentColor;
+		stroke: currentColor;
 	}
 
 	.moon {
-		visibility: hidden;
+		fill: transparent;
+		stroke: transparent;
 	}
 
 	:global(.dark) .sun {
 		fill: transparent;
+		stroke: transparent;
 	}
 	:global(.dark) .moon {
 		fill: white;
+		stroke: white;
 	}
 </style>
 
 <script>
 	document.addEventListener('astro:page-load', () => {
+		const { matches: prefersDark } = window.matchMedia('(prefers-color-scheme: dark)');
+		document.documentElement.classList.toggle('dark', prefersDark);
+
 		const handleToggle = () => {
 			const el = document.documentElement;
 			const currentTheme = el.getAttribute('data-theme');
-			el.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
-			// const currentTheme = el.getAttribute('data-theme');
-			// console.log('Current theme:', currentTheme);
+			const isDark = currentTheme === 'dark' || (currentTheme === 'system' && prefersDark);
+			el.setAttribute('data-theme', isDark ? 'light' : 'dark');
+			el.classList.toggle('dark', !isDark);
 		};
 
-		document.getElementById('themeToggle')?.addEventListener('click', handleToggle);
+		const themeToggleElement = document.getElementById('themeToggle');
+		if (themeToggleElement) {
+			themeToggleElement.addEventListener('click', handleToggle);
+		}
 	});
 </script>
