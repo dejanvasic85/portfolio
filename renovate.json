@@ -9,6 +9,7 @@
 		":dependencyDashboard",
 		"group:allNonMajor"
 	],
+	"automerge": true,
 	"commitMessageAction": "",
 	"labels": ["dependencies"],
 	"prConcurrentLimit": 3,
