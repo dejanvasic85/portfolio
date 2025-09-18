@@ -1,4 +1,3 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
@@ -18,10 +17,13 @@ export default defineConfig({
 				{
 					pre(node) {
 						// Add special class for our tab-size CSS
-						const existingClasses = Array.isArray(node.properties.className) 
-							? node.properties.className.filter(c => typeof c === 'string' || typeof c === 'number')
-							: typeof node.properties.className === 'string' || typeof node.properties.className === 'number'
-								? [node.properties.className] 
+						const existingClasses = Array.isArray(node.properties.className)
+							? node.properties.className.filter(
+									(c) => typeof c === 'string' || typeof c === 'number'
+								)
+							: typeof node.properties.className === 'string' ||
+								  typeof node.properties.className === 'number'
+								? [node.properties.className]
 								: [];
 						node.properties.className = [...existingClasses, 'code-block'];
 					}
