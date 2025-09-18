@@ -37,7 +37,7 @@ jobs:
           check_interval: 10
 
       - name: Run Playwright tests
-        run: npm run test:e2e -w ses-next
+        run: npm run test:e2e
         env:
           PLAYWRIGHT_TEST_BASE_URL: ${{ steps.vercel-deployment.outputs.url }}
           HOME: /root
@@ -47,5 +47,5 @@ jobs:
         if: failure()
         with:
           name: playwright-report
-          path: packages/ses-next/playwright-report/
+          path: playwright-report/
           retention-days: 7
