@@ -14,11 +14,13 @@ const { title, description, projectUrl, sourceCodeUrl, tags, imageUrl } = Astro.
 ---
 
 <div class="project-card">
-	{imageUrl && (
-		<a href={projectUrl} target="_blank" rel="noopener noreferrer" class="project-image">
-			<img src={imageUrl} alt={title} />
-		</a>
-	)}
+	{
+		imageUrl && (
+			<a href={projectUrl} target="_blank" rel="noopener noreferrer" class="project-image">
+				<img src={imageUrl} alt={title} />
+			</a>
+		)
+	}
 	<div class="project-content">
 		<h2>{title}</h2>
 		<p class="description">
@@ -58,7 +60,6 @@ const { title, description, projectUrl, sourceCodeUrl, tags, imageUrl } = Astro.
 		}
 	}
 
-
 	.project-image {
 		display: block;
 		width: 100%;
@@ -72,7 +73,6 @@ const { title, description, projectUrl, sourceCodeUrl, tags, imageUrl } = Astro.
 		height: 100%;
 		object-fit: cover;
 	}
-
 
 	.project-content {
 		padding: 1.5rem;

@@ -68,18 +68,18 @@ toStrictEquals;
 Which ends up looking like this:
 
 ```typescript
-	it('isPositive', () => {
-		const result = isPositive(1);
-		expect(result).toBeRightStrictEqual(1);
-	});
+it('isPositive', () => {
+	const result = isPositive(1);
+	expect(result).toBeRightStrictEqual(1);
+});
 
-	it('isNegative', () => {
-		const result = isPositive(-1);
-		expect(result).toBeLeftStrictEqual('Negative number');
-	});
+it('isNegative', () => {
+	const result = isPositive(-1);
+	expect(result).toBeLeftStrictEqual('Negative number');
+});
 ```
 
-Easy. Vitest has it covered with [custom matchers.](https://vitest.dev/guide/extending-matchers) 
+Easy. Vitest has it covered with [custom matchers.](https://vitest.dev/guide/extending-matchers)
 First we'll need the setup file for vitest config that has the actual matchers:
 
 ```typescript
@@ -106,17 +106,16 @@ vitest.expect.extend({
 		};
 	}
 });
-
 ```
 
-Finally. We then need the the declarations file for Typescript. 
+Finally. We then need the the declarations file for Typescript.
 This file should be able to live anywhere in your src directory. I named it
 
 ```typescript
-vitest.extend.d.ts
+vitest.extend.d.ts;
 ```
- 
- Here's the content:
+
+Here's the content:
 
 ```typescript
 interface CustomMatchers<R = unknown> {
@@ -130,7 +129,6 @@ declare module 'vitest' {
 }
 
 export {};
-
 ```
 
 Hope this helps others keep their code clean with some nicer Either assertions in Typescript!

@@ -95,9 +95,9 @@ time="2019-11-01T21:53:48+11:00" level=info msg="Found user Mister bar"
 Logs are now all our of order. Many log aggregation tools like splunk or sumo allow us to search these
 entries but we need to identify them somehow. Enter Correlation ID.
 
-At this point as a GoLang newbie, I was left scratching my head. Usually, I would solve this problem in 
-.Net using dependency injection to get the current Logger (per request) and using middleware to read the 
-header and set the correlation ID for this logger. Then in all the other controllers and services that 
+At this point as a GoLang newbie, I was left scratching my head. Usually, I would solve this problem in
+.Net using dependency injection to get the current Logger (per request) and using middleware to read the
+header and set the correlation ID for this logger. Then in all the other controllers and services that
 need to log anything, the correlation ID would be logged with it as an additional field.
 
 > With Gorilla mux in golang, I haven't seen dependency injection or at least in the same way to resolve controllers and their dependencies. Wait, there ARE no controllers.
@@ -111,7 +111,7 @@ That's ok. We'll do with what we have.
 - [Logrus](https://github.com/sirupsen/logrus) fields - yes it does use some nifty logrus features
 - Dependency Injection - Might come back to this later. Haven't figured it out yet.
 
-First, middleware will be executed before the handler to read the correlation ID and set it in to the 
+First, middleware will be executed before the handler to read the correlation ID and set it in to the
 context. Let's do that first. _Excuse the naughty magic strings everywhere._
 
 ```go

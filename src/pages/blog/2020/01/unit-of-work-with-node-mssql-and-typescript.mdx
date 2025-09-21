@@ -46,11 +46,11 @@ import authRepository from './authRepository';
 import withUnitOfWork from './unitOfWork';
 
 export const addUser = async (name, email, password) => {
-  const unitOfWork = withUnitOfWork(userRepository, authRepository);
-  await userRepository.createProfile(name, email);
-  await authRepository.createLogin(email, password);
-  unitOfWork.commit();
-}
+	const unitOfWork = withUnitOfWork(userRepository, authRepository);
+	await userRepository.createProfile(name, email);
+	await authRepository.createLogin(email, password);
+	unitOfWork.commit();
+};
 ```
 
 Yes, that would also be a valuable requirement here. Generally a business method would span multiple repositories.
@@ -59,7 +59,7 @@ Firstly, using typescript each repository needs to have a `beginTransaction` met
 
 ```typescript
 export interface Repository {
-  beginTransaction: () => Promise<Transaction>;
+	beginTransaction: () => Promise<Transaction>;
 }
 ```
 
@@ -71,29 +71,31 @@ import { Transaction } from 'mssql';
 import logger from './logger';
 
 const withUnitOfWork = async (...repositories: Repository[]): Promise<UnitOfWork> => {
-  const transactions: Transaction[] = await Promise.all(repositories.map(async r => await r.beginTransaction()));
+	const transactions: Transaction[] = await Promise.all(
+		repositories.map(async (r) => await r.beginTransaction())
+	);
 
-  return {
-    commit: async (): Promise<void> => {
-      try {
-        logger.info(`Commiting transactions [${transactions.length}]`);
-        for (const { commit } of transactions) {
-          await commit();
-        }
-      } catch (err) {
-        logger.error(`An error occurred in SQL Transaction`, err);
-        for (const { rollback } of transactions) {
-          rollback();
-        }
-      }
-    }
-  };
+	return {
+		commit: async (): Promise<void> => {
+			try {
+				logger.info(`Commiting transactions [${transactions.length}]`);
+				for (const { commit } of transactions) {
+					await commit();
+				}
+			} catch (err) {
+				logger.error(`An error occurred in SQL Transaction`, err);
+				for (const { rollback } of transactions) {
+					rollback();
+				}
+			}
+		}
+	};
 };
 
 export default withUnitOfWork;
 ```
 
-So what's happening here is very simple. Each repository has a beginTransaction method which will connect to the 
+So what's happening here is very simple. Each repository has a beginTransaction method which will connect to the
 required database and start a transaction then return it to the unit of work. On commit, each transaction's
 `commit` is called.
 

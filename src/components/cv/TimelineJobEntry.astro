@@ -18,7 +18,8 @@ interface Props {
 	publications?: Publication[];
 }
 
-const { title, company, location, startDate, endDate, responsibilities, skills, publications } = Astro.props;
+const { title, company, location, startDate, endDate, responsibilities, skills, publications } =
+	Astro.props;
 
 // Function to format date for timeline display
 function formatTimelineDate(dateStr: string): string {

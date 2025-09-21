@@ -16,11 +16,13 @@ The migration process:
 ## Running the Migration
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Run the migration script:
+
 ```bash
 npm run migrate-wp
 ```

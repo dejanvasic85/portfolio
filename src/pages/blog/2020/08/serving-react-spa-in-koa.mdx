@@ -40,12 +40,12 @@ import serve from 'koa-static';
 const staticLanding = new Koa();
 staticClient.use(serve(`${__dirname}/../landing-page`));
 
-const SPA_PATH = `${__dirname}/../client/public`
+const SPA_PATH = `${__dirname}/../client/public`;
 const staticSpa = new Koa();
 staticSpa.use(serve(SPA_PATH));
 
 const staticSpaMiddleware = async (ctx, next) => {
-  return await serve(SPA_PATH)(Object.assign(ctx, { path: 'index.html' }), next);
+	return await serve(SPA_PATH)(Object.assign(ctx, { path: 'index.html' }), next);
 };
 
 // API Routes
@@ -60,7 +60,6 @@ app.use(mount('/', staticLanding));
 
 // Catch all route will also go to react /app
 app.use(staticSpaMiddleware);
-
 ```
 
 Comments :point_up describe the order of the route definitions.

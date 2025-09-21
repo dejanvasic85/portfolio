@@ -1,22 +1,22 @@
 ---
 layout: ../../../../layouts/BlogLayout.astro
-title: "Ant Design Upload to S3 Bucket and GraphQL"
+title: 'Ant Design Upload to S3 Bucket and GraphQL'
 date: September 10, 2020
-tags: ["ant-design","aws","graphql","react","s3"]
+tags: ['ant-design', 'aws', 'graphql', 'react', 's3']
 excerpt: "How to use Ant Design's Upload component to upload files to AWS S3 with GraphQL and signed URLs."
 ---
 
-Ant Design's Upload component is packed full of features. When it comes to uploading to an AWS 
+Ant Design's Upload component is packed full of features. When it comes to uploading to an AWS
 S3 bucket using a signed request, there's obvious lack of documentation on how to achieve this.
 
-There's definitely a few approaches available but I found the easiest route is to use the 
+There's definitely a few approaches available but I found the easiest route is to use the
 Signed Request URL form S3.
 
 The flow:
 
 ![](https://dejanvasic.wordpress.com/wp-content/uploads/2020/09/image.png?w=422)
 
-First we need to get a signed URL for the action from the S3 bucket, then upload the file to that 
+First we need to get a signed URL for the action from the S3 bucket, then upload the file to that
 endpoint. Once completed, we should update the affected record in the API / database.
 
 Here's the final component with explanatory comments on how it all hangs together.
@@ -70,7 +70,7 @@ const ProfilePic = ({ id, currentImgUrl, updatePicture }: Props) => {
   };
 
   const handleBeforeUpload = async ({ name, type }): Promise<void> => {
-    
+
     // Headers are required by Amazon S3
     setHeaders({
       'x-amz-acl': 'public-read',
@@ -102,7 +102,7 @@ const ProfilePic = ({ id, currentImgUrl, updatePicture }: Props) => {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
 
-          // Calls the update prop 
+          // Calls the update prop
           await updatePicture({
             variables: { input: { picture: url } },
           });
@@ -136,3 +136,4 @@ const ProfilePic = ({ id, currentImgUrl, updatePicture }: Props) => {
   );
 };
 export default ProfilePic;
+```

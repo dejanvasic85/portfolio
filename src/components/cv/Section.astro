@@ -1,23 +1,23 @@
 ---
 interface Props {
-  title: string;
+	title: string;
 }
 
 const { title } = Astro.props;
 ---
 
 <section class="cv-section">
-  <h2>{title}</h2>
-  <slot />
+	<h2>{title}</h2>
+	<slot />
 </section>
 
 <style>
-  .cv-section {
-    margin-bottom: 3rem;
-  }
+	.cv-section {
+		margin-bottom: 3rem;
+	}
 
-  h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-  }
+	h2 {
+		font-size: 1.8rem;
+		margin-bottom: 1.5rem;
+	}
 </style>

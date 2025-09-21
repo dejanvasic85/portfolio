@@ -86,7 +86,7 @@ public class ResultSetWithCount {
 }
 ```
 
-So this class takes in an interface of ResultSetMapper. You must implement this interface which will understand how 
+So this class takes in an interface of ResultSetMapper. You must implement this interface which will understand how
 to map your ResultSet to a User object! It should take a ResultSet (SQL row) and map each property to the user property.
 
 The nice and efficient part of this class is that it will read the first Result Set and map it to the Total Count
@@ -94,7 +94,7 @@ property only once. The rest of the records will map to your User object.
 
 Also, it keeps the paging aspect out of your domain model. So your user class doesn't need to have a "total count" property.
 
-Once again, I'm sure there might be a nice and easier way to accomplish paging in Java and Postgres particularly using 
+Once again, I'm sure there might be a nice and easier way to accomplish paging in Java and Postgres particularly using
 ORM tooling. Thought I'd share the approach we crafted ourselves.
 
 Happy coding! 🧑‍💻

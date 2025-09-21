@@ -1,4 +1,4 @@
-<button 
+<button
 	id="themeToggle"
 	type="button"
 	role="switch"
@@ -7,7 +7,13 @@
 	aria-describedby="theme-status"
 	data-testid="theme-toggle"
 >
-	<svg width="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" aria-hidden="true">
+	<svg
+		width="24px"
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 24 24"
+		stroke-width="1.5"
+		aria-hidden="true"
+	>
 		<path
 			class="moon"
 			stroke-linecap="round"
@@ -130,11 +136,14 @@
 
 		const themeToggleElement = document.getElementById('themeToggle');
 		const themeStatusElement = document.getElementById('theme-status');
-		
+
 		const updateAccessibilityAttributes = (isDark: boolean) => {
 			if (themeToggleElement) {
 				themeToggleElement.setAttribute('aria-pressed', isDark.toString());
-				themeToggleElement.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+				themeToggleElement.setAttribute(
+					'aria-label',
+					isDark ? 'Switch to light mode' : 'Switch to dark mode'
+				);
 			}
 			if (themeStatusElement) {
 				themeStatusElement.textContent = isDark ? 'Dark theme active' : 'Light theme active';
@@ -150,7 +159,7 @@
 			const isDark = currentTheme === 'dark' || (currentTheme === 'system' && isInitialDark);
 			const newTheme = isDark ? 'light' : 'dark';
 			const newIsDark = !isDark;
-			
+
 			el.setAttribute('data-theme', newTheme);
 			el.classList.toggle('dark', newIsDark);
 			localStorage.setItem('theme', newTheme);
