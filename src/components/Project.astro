@@ -19,7 +19,17 @@ interface Props {
 	};
 }
 
-const { title, heroStatement, description, businessMetrics, testimonial, projectUrl, sourceCodeUrl, tags, images } = Astro.props;
+const {
+	title,
+	heroStatement,
+	description,
+	businessMetrics,
+	testimonial,
+	projectUrl,
+	sourceCodeUrl,
+	tags,
+	images
+} = Astro.props;
 ---
 
 <section class="project-section">
@@ -38,21 +48,19 @@ const { title, heroStatement, description, businessMetrics, testimonial, project
 			<div class="business-metrics">
 				<h3>Business Impact</h3>
 				<ul class="metrics-list">
-					{businessMetrics.map((metric) => (
-						<li class="metric-item">{metric}</li>
-					))}
+					{businessMetrics.map((metric) => <li class="metric-item">{metric}</li>)}
 				</ul>
 			</div>
 
-			{testimonial && (
-				<div class="testimonial">
-					<h3>Client Testimonial</h3>
-					<blockquote class="testimonial-quote">
-						"{testimonial.quote}"
-					</blockquote>
-					<cite class="testimonial-author">— {testimonial.author}</cite>
-				</div>
-			)}
+			{
+				testimonial && (
+					<div class="testimonial">
+						<h3>Client Testimonial</h3>
+						<blockquote class="testimonial-quote">"{testimonial.quote}"</blockquote>
+						<cite class="testimonial-author">— {testimonial.author}</cite>
+					</div>
+				)
+			}
 
 			<div class="tech-stack">
 				<h3>Technology Stack</h3>
@@ -79,11 +87,13 @@ const { title, heroStatement, description, businessMetrics, testimonial, project
 			<div class="image-container desktop-image">
 				<img src={images.desktop} alt={`${title} desktop view`} />
 			</div>
-			{images.mobile && (
-				<div class="image-container mobile-image">
-					<img src={images.mobile} alt={`${title} mobile view`} />
-				</div>
-			)}
+			{
+				images.mobile && (
+					<div class="image-container mobile-image">
+						<img src={images.mobile} alt={`${title} mobile view`} />
+					</div>
+				)
+			}
 		</div>
 	</div>
 </section>
@@ -91,8 +101,13 @@ const { title, heroStatement, description, businessMetrics, testimonial, project
 <style>
 	.project-section {
 		width: 100%;
-		padding: 3rem 0;
-		border-bottom: 1px solid var(--color-border);
+		padding: 2rem;
+		border-bottom: none;
+		background: white;
+		border-radius: 0.75rem;
+		box-shadow:
+			0 4px 6px -1px rgba(0, 0, 0, 0.1),
+			0 2px 4px -1px rgba(0, 0, 0, 0.06);
 	}
 
 	.project-section:last-child {
@@ -100,30 +115,30 @@ const { title, heroStatement, description, businessMetrics, testimonial, project
 	}
 
 	.project-header {
-		text-align: center;
-		margin-bottom: 3rem;
+		margin-bottom: 2rem;
+		text-align: left;
 	}
 
 	.project-title {
-		font-size: 2.5rem;
+		font-size: 1.75rem;
 		font-weight: 700;
 		margin-bottom: 1rem;
 		color: var(--color-text);
 	}
 
 	.hero-statement {
-		font-size: 1.25rem;
+		font-size: 1.125rem;
 		font-weight: 500;
 		color: var(--color-accent);
 		max-width: 800px;
-		margin: 0 auto;
+		margin: 0;
 		line-height: 1.6;
 	}
 
 	.project-main {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 4rem;
+		grid-template-columns: 1fr;
+		gap: 2rem;
 		align-items: start;
 	}
 
@@ -164,7 +179,7 @@ const { title, heroStatement, description, businessMetrics, testimonial, project
 	}
 
 	.metric-item::before {
-		content: "✓";
+		content: '✓';
 		position: absolute;
 		left: 0;
 		color: var(--color-accent);
@@ -210,7 +225,8 @@ const { title, heroStatement, description, businessMetrics, testimonial, project
 	.project-images {
 		position: relative;
 		display: flex;
-		gap: 2rem;
+		flex-direction: column;
+		gap: 1rem;
 		align-items: center;
 		justify-content: center;
 		perspective: 1000px;
@@ -221,23 +237,22 @@ const { title, heroStatement, description, businessMetrics, testimonial, project
 		overflow: hidden;
 		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 		transition: transform 0.3s ease;
+		max-width: 100%;
 	}
 
 	.desktop-image {
-		transform: rotateY(-8deg) rotateX(2deg);
-		max-width: 400px;
+		transform: none;
 		z-index: 2;
 	}
 
 	.mobile-image {
-		transform: rotateY(12deg) rotateX(-2deg);
-		max-width: 200px;
-		margin-left: -2rem;
+		transform: none;
+		margin-left: 0;
 		z-index: 1;
 	}
 
 	.image-container:hover {
-		transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+		transform: scale(1.05);
 	}
 
 	.image-container img {
@@ -257,30 +272,13 @@ const { title, heroStatement, description, businessMetrics, testimonial, project
 		color: var(--color-text);
 	}
 
-	@media (max-width: 1024px) {
-		.project-main {
-			grid-template-columns: 1fr;
-			gap: 2rem;
-		}
-
-		.project-images {
-			order: -1;
-			margin-bottom: 2rem;
-		}
-
-		.desktop-image,
-		.mobile-image {
-			transform: none;
-		}
-
-		.mobile-image {
-			margin-left: 0;
-		}
-	}
-
-	@media (max-width: 768px) {
+	@media (min-width: 769px) {
 		.project-section {
-			padding: 2rem 0;
+			padding: 3rem;
+		}
+
+		.project-header {
+			margin-bottom: 3rem;
 		}
 
 		.project-title {
@@ -288,17 +286,45 @@ const { title, heroStatement, description, businessMetrics, testimonial, project
 		}
 
 		.hero-statement {
-			font-size: 1.125rem;
+			font-size: 1.25rem;
 		}
 
 		.project-images {
-			flex-direction: column;
-			gap: 1rem;
+			flex-direction: row;
+			gap: 2rem;
 		}
 
-		.desktop-image,
+		.desktop-image {
+			max-width: 400px;
+		}
+
 		.mobile-image {
-			max-width: 100%;
+			max-width: 200px;
+		}
+	}
+
+	@media (min-width: 1025px) {
+		.project-main {
+			grid-template-columns: 1fr 1fr;
+			gap: 4rem;
+		}
+
+		.project-images {
+			order: 0;
+			margin-bottom: 0;
+		}
+
+		.desktop-image {
+			transform: rotateY(-8deg) rotateX(2deg);
+		}
+
+		.mobile-image {
+			transform: rotateY(12deg) rotateX(-2deg);
+			margin-left: -2rem;
+		}
+
+		.image-container:hover {
+			transform: rotateY(0deg) rotateX(0deg) scale(1.05);
 		}
 	}
 </style>
