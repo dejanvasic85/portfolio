@@ -46,26 +46,25 @@ const {
 			</div>
 
 			<div class="business-metrics">
-				<h3>Business Impact</h3>
+				<h3>Goals</h3>
 				<ul class="metrics-list">
 					{businessMetrics.map((metric) => <li class="metric-item">{metric}</li>)}
 				</ul>
 			</div>
 
+			<div class="tech-stack">
+				<h3>Technology Stack</h3>
+				<Tags tags={tags} />
+			</div>
+
 			{
 				testimonial && (
 					<div class="testimonial">
-						<h3>Client Testimonial</h3>
 						<blockquote class="testimonial-quote">"{testimonial.quote}"</blockquote>
 						<cite class="testimonial-author">— {testimonial.author}</cite>
 					</div>
 				)
 			}
-
-			<div class="tech-stack">
-				<h3>Technology Stack</h3>
-				<Tags tags={tags} />
-			</div>
 
 			<div class="project-links">
 				<a
@@ -82,19 +81,6 @@ const {
 				>
 			</div>
 		</div>
-
-		<div class="project-images">
-			<div class="image-container desktop-image">
-				<img src={images.desktop} alt={`${title} desktop view`} />
-			</div>
-			{
-				images.mobile && (
-					<div class="image-container mobile-image">
-						<img src={images.mobile} alt={`${title} mobile view`} />
-					</div>
-				)
-			}
-		</div>
 	</div>
 </section>
 
@@ -103,7 +89,7 @@ const {
 		width: 100%;
 		padding: 2rem;
 		border-bottom: none;
-		background: white;
+		background-color: var(--color-background-alt);
 		border-radius: 0.75rem;
 		box-shadow:
 			0 4px 6px -1px rgba(0, 0, 0, 0.1),
@@ -129,7 +115,6 @@ const {
 	.hero-statement {
 		font-size: 1.125rem;
 		font-weight: 500;
-		color: var(--color-accent);
 		max-width: 800px;
 		margin: 0;
 		line-height: 1.6;
@@ -137,7 +122,6 @@ const {
 
 	.project-main {
 		display: grid;
-		grid-template-columns: 1fr;
 		gap: 2rem;
 		align-items: start;
 	}
@@ -182,15 +166,14 @@ const {
 		content: '✓';
 		position: absolute;
 		left: 0;
-		color: var(--color-accent);
+		color: var(--color-secondary);
 		font-weight: bold;
 	}
 
 	.testimonial {
-		background: var(--color-bg-secondary);
 		padding: 1.5rem;
-		border-radius: 0.5rem;
 		border-left: 4px solid var(--color-accent);
+		background-color: var(--color-accent-light);
 	}
 
 	.testimonial h3 {
@@ -222,45 +205,6 @@ const {
 		margin-top: 1rem;
 	}
 
-	.project-images {
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		align-items: center;
-		justify-content: center;
-		perspective: 1000px;
-	}
-
-	.image-container {
-		border-radius: 0.5rem;
-		overflow: hidden;
-		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-		transition: transform 0.3s ease;
-		max-width: 100%;
-	}
-
-	.desktop-image {
-		transform: none;
-		z-index: 2;
-	}
-
-	.mobile-image {
-		transform: none;
-		margin-left: 0;
-		z-index: 1;
-	}
-
-	.image-container:hover {
-		transform: scale(1.05);
-	}
-
-	.image-container img {
-		width: 100%;
-		height: auto;
-		display: block;
-	}
-
 	.secondary {
 		background: transparent;
 		color: var(--color-text-light);
@@ -288,43 +232,18 @@ const {
 		.hero-statement {
 			font-size: 1.25rem;
 		}
-
-		.project-images {
-			flex-direction: row;
-			gap: 2rem;
-		}
-
-		.desktop-image {
-			max-width: 400px;
-		}
-
-		.mobile-image {
-			max-width: 200px;
-		}
 	}
 
 	@media (min-width: 1025px) {
 		.project-main {
-			grid-template-columns: 1fr 1fr;
 			gap: 4rem;
 		}
+	}
 
-		.project-images {
-			order: 0;
-			margin-bottom: 0;
-		}
-
-		.desktop-image {
-			transform: rotateY(-8deg) rotateX(2deg);
-		}
-
-		.mobile-image {
-			transform: rotateY(12deg) rotateX(-2deg);
-			margin-left: -2rem;
-		}
-
-		.image-container:hover {
-			transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+	@media (prefers-color-scheme: dark) {
+		.testimonial {
+			background-color: var(--color-accent);
+			border-radius: 10px;
 		}
 	}
 </style>

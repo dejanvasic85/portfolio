@@ -1,33 +1,8 @@
 export const projects = [
 	{
-		title: 'My Notes',
-		heroStatement:
-			'A privacy-focused note-sharing app that replaced Google Keep for 10+ family users.',
-		description:
-			'A hobby project that allows users to create notes and share them with friends. The goal is to provide a super simple, and privacy focused alternative to Notion, Google Keep and others.',
-		businessMetrics: [
-			'10+ active family users',
-			'Progressive web app (installable on devices)',
-			'100% privacy-focused solution',
-			'Replaced Google Keep for family use'
-		],
-		testimonial: {
-			quote:
-				'This is such an easy app to use, while everything starts off like that and gets really complicated.',
-			author: 'Vesna Tomasetig'
-		},
-		tags: ['Svelte', 'SvelteKit', 'Postgres', 'Prisma', 'Tailwind', 'Vercel'],
-		projectUrl: 'https://notes.vasic.com.au',
-		sourceCodeUrl: 'https://github.com/dejanvasic85/notes',
-		images: {
-			desktop: '/images/projects/notes-desktop.png',
-			mobile: '/images/projects/noets-mobile.png'
-		}
-	},
-	{
 		title: 'SES Melbourne',
 		heroStatement:
-			'Transformed an outdated electrical business website into a lead-generating machine with 7 hot leads per week.',
+			'Transformed an electrical business website into a modern, fast and daily lead generatoring website.',
 		description:
 			'A clean website and blog for a local electrical business in Melbourne, Australia that showcases their services. The client was looking to improve their SEO and online presence, so we focused on making it fast, accessible relevant for local searches.',
 		businessMetrics: [
@@ -41,7 +16,7 @@ export const projects = [
 		testimonial: {
 			quote:
 				'Dejan has been instrumental in helping us set up our website and blog. His expertise in web development and SEO has significantly improved our online presence. The website is easy to navigate, and the blog allows us to share valuable insights with our audience. We highly recommend his services!',
-			author: 'Steve from SES Melbourne'
+			author: 'Karl from SES Melbourne'
 		},
 		tags: ['Nextjs', 'Sanity CMS', 'Tailwind', 'Vercel'],
 		projectUrl: 'https://www.sesmelbourne.com.au/',
@@ -74,6 +49,31 @@ export const projects = [
 		images: {
 			desktop: '/images/projects/jlc-desktop.png',
 			mobile: '/images/projects/jlc-mobile.png'
+		}
+	},
+	{
+		title: 'My Notes',
+		heroStatement:
+			'A privacy-focused note-sharing app that replaced Google Keep for 10+ family users.',
+		description:
+			'A hobby project that allows users to create notes and share them with friends. The goal is to provide a super simple, and privacy focused alternative to Notion, Google Keep and others.',
+		businessMetrics: [
+			'10+ active family users',
+			'Progressive web app (installable on devices)',
+			'100% privacy-focused solution',
+			'Replaced Google Keep for family use'
+		],
+		testimonial: {
+			quote:
+				'This is such an easy app to use, while everything starts off like that and gets really complicated.',
+			author: 'Vesna Tomasetig'
+		},
+		tags: ['Svelte', 'SvelteKit', 'Postgres', 'Prisma', 'Tailwind', 'Vercel'],
+		projectUrl: 'https://notes.vasic.com.au',
+		sourceCodeUrl: 'https://github.com/dejanvasic85/notes',
+		images: {
+			desktop: '/images/projects/notes-desktop.png',
+			mobile: '/images/projects/noets-mobile.png'
 		}
 	},
 	{
