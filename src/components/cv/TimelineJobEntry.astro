@@ -18,7 +18,8 @@ interface Props {
 	publications?: Publication[];
 }
 
-const { title, company, location, startDate, endDate, responsibilities, skills, publications } = Astro.props;
+const { title, company, location, startDate, endDate, responsibilities, skills, publications } =
+	Astro.props;
 
 // Function to format date for timeline display
 function formatTimelineDate(dateStr: string): string {
@@ -388,15 +389,15 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 
 	@media (prefers-color-scheme: dark) {
 		.timeline-content {
-			background-color: var(--color-background-hover);
+			background-color: var(--color-background-alt);
 		}
 
 		.timeline-date {
-			background-color: var(--color-background-hover);
+			background-color: var(--color-background-alt);
 		}
 
 		.job-header-sticky {
-			background-color: var(--color-background-hover);
+			background-color: var(--color-background-alt);
 			transition: box-shadow 0.2s ease-in-out;
 		}
 

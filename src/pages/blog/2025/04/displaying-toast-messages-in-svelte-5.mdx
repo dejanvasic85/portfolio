@@ -6,20 +6,20 @@ tags: ['svelte', 'svelte-kit', 'front-end', 'typescript', 'melt-ui']
 excerpt: "Toast messages are a lovely addition to any interface whether it's your Operating System, mobile or web application."
 ---
 
-Since the Svelte 5 release, we have seen some changes to state management, so I'm going to provide my take on how to 
-implement this feature. Along with Svelte, the two other building blocks I used are Tailwind and Melt UI. 
-Creating functional and accessible components like Toasters is never easy, and I found these two provide a nice 
+Since the Svelte 5 release, we have seen some changes to state management, so I'm going to provide my take on how to
+implement this feature. Along with Svelte, the two other building blocks I used are Tailwind and Melt UI.
+Creating functional and accessible components like Toasters is never easy, and I found these two provide a nice
 balance between not having to re-invent the wheel and allowing custom look and feel. This topic deserves its own blog post.
 
 ## Managing global state
 
-It is important to trigger toast messages from anywhere in the application, so I'm using global state for this. 
+It is important to trigger toast messages from anywhere in the application, so I'm using global state for this.
 Any page or component should be able to publish a message, and the Toast component needs to be able to subscribe to it.
 
 ![Toast messages in Svelte 5](/images/blog/2025/04/toast-messages.png)
 
-To create global state in Svelte 5, we can make use of the class variation. This is where we utilize the $state 
-rune to store an array of messages. A simple addMessage method creates a unique identifier using the nanoid library, 
+To create global state in Svelte 5, we can make use of the class variation. This is where we utilize the $state
+rune to store an array of messages. A simple addMessage method creates a unique identifier using the nanoid library,
 which is useful for Melt UI.
 
 ```typescript
@@ -61,10 +61,10 @@ export function getToastMessages() {
 
 ```
 
-The isShown property is very important here because this is what the Toaster component will use to determine whether 
+The isShown property is very important here because this is what the Toaster component will use to determine whether
 to show the message. It will also be toggled in the component once it has been displayed.
 
-The Toaster component is where everything comes together. It subscribes to global state using the $effect rune and 
+The Toaster component is where everything comes together. It subscribes to global state using the $effect rune and
 combines Melt components with Tailwind classes.
 
 ```svelte
@@ -118,11 +118,11 @@ combines Melt components with Tailwind classes.
 
 ```
 
-The $effect rune is very straightforward. The messages are observed and filtered to find any that haven't been shown yet. 
+The $effect rune is very straightforward. The messages are observed and filtered to find any that haven't been shown yet.
 The Melt helper is then used to add the toast to the UI, and the message's isShown property is set to true to prevent it from appearing again.
 
-The above example uses center positioning with Svelte's slide transitions. These are obvious points of customization, and 
-you can get creative with them. My use cases required just info and error messages, but you're not limited to these types. 
+The above example uses center positioning with Svelte's slide transitions. These are obvious points of customization, and
+you can get creative with them. My use cases required just info and error messages, but you're not limited to these types.
 Simply add your own types and styling 🤷.
 
 The next part is calling the toaster in other pages and components! This is quite easy because we just need to import the

@@ -1,9 +1,9 @@
 {
-  "redirects": [
-    {
-      "source": "/(.*)/",
-      "destination": "/$1",
-      "permanent": true
-    }
-  ]
+	"redirects": [
+		{
+			"source": "/(.*)/",
+			"destination": "/$1",
+			"permanent": true
+		}
+	]
 }

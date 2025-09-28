@@ -1,67 +1,25 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Project from '../components/Project.astro';
-
-const projects = [
-	{
-		title: 'My Notes',
-		description: `A hobby project that allows users to create notes and share them with friends. 
-			The main users are my family. Previously, we used Google Keep, 
-			but I wanted to create something more tailored to our needs and privacy. 
-			It was also my foray into Svelte and SvelteKit! I would love to make use of local 
-			first development and offline support in the future.`,
-		tags: ['Svelte', 'SvelteKit', 'Postgres', 'Prisma', 'Tailwind', 'Vercel'],
-		projectUrl: 'https://notes.vasic.com.au',
-		sourceCodeUrl: 'https://github.com/dejanvasic85/notes',
-		imageUrl: '/images/projects/notes.png'
-	},
-	{
-		title: 'SES Melbourne',
-		description: `A clean website and blog for a local business in Melbourne, Australia 
-			that showcases their services. 
-			The website is built with Next.js using server side rendering to help with SEO. Content
-			is managed with Sanity CMS, which allows the client to easily update the content.`,
-		tags: ['Nextjs', 'Sanity CMS', 'Tailwind', 'Vercel'],
-		projectUrl: 'https://www.sesmelbourne.com.au/',
-		sourceCodeUrl: 'https://github.com/dejanvasic85/ses-next',
-		imageUrl: '/images/projects/ses.png'
-	},
-	{
-		title: 'JLC Carpentry & Building Services',
-		description: `A professional website for a Melbourne-based carpentry and building services company. 
-			The site showcases their expertise in decks, pergolas, kitchen & bathroom renovations, and structural modifications. 
-			Built with modern web technologies to provide excellent SEO performance and easy content management for the client.`,
-		tags: ['Nextjs', 'Sanity CMS', 'Tailwind', 'Vercel'],
-		projectUrl: 'https://www.jlccarpentrybuildingservices.com.au/',
-		sourceCodeUrl: 'https://github.com/dejanvasic85/portfolio',
-		imageUrl: '/images/projects/jlc-carpentry.png'
-	},
-	{
-		title: 'My portfolio website',
-		description: `My personal website and blog where I share my thoughts on software engineering, 
-			technology, and life in general. It is built with Astro and uses Tailwind CSS for styling. 
-			The blog is powered by MDX, allowing me to write posts in Markdown with React components.`,
-		tags: ['Astro', 'MDX', 'Tailwind', 'Vercel'],
-		projectUrl: 'https://dejan.vasic.com.au',
-		sourceCodeUrl: 'https://github.com/dejanvasic85/portfolio',
-		imageUrl: '/images/projects/portfolio.png'
-	}
-];
+import { projects } from '../content/projects';
 ---
 
 <Layout title="Projects - Dejan Vasic">
 	<main class="container">
 		<h1>Projects</h1>
-		<div class="projects-grid">
+		<div class="projects-list">
 			{
 				projects.map((project) => (
 					<Project
 						title={project.title}
+						heroStatement={project.heroStatement}
 						description={project.description}
+						businessMetrics={project.businessMetrics}
+						testimonial={project.testimonial}
 						tags={project.tags}
 						projectUrl={project.projectUrl}
 						sourceCodeUrl={project.sourceCodeUrl}
-						imageUrl={project.imageUrl}
+						images={project.images}
 					/>
 				))
 			}
@@ -72,16 +30,10 @@ const projects = [
 </Layout>
 
 <style>
-	.projects-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 2rem;
+	.projects-list {
+		display: flex;
+		flex-direction: column;
+		gap: 4rem;
 		margin-bottom: 2rem;
-	}
-
-	@media (max-width: 768px) {
-		.projects-grid {
-			grid-template-columns: 1fr;
-		}
 	}
 </style>

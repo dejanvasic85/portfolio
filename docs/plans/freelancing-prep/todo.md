@@ -1,0 +1,4 @@
+- [ ] Improve the content for all the projects in the projects.md file
+- [ ] Research and come up with a new design for the projects page
+- [ ] Redesign the projects page using the new content structure for projects
+- [ ] Create a section on the homepage for "Work with me" that better highlights current projects and includes a call-to-action button to contact me

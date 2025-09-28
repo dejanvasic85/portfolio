@@ -1,4 +1,3 @@
-
 <h1 align="center">Dejan Vasic – Portfolio Website</h1>
 
 <p align="center">
@@ -52,7 +51,6 @@ To run the site locally, follow these steps:
    ```
 
 3. **Preview the site**:
-
    - Open [http://localhost:4321](http://localhost:4321) in your browser.
 
 4. **Format code** (optional):

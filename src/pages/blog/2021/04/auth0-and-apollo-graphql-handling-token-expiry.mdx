@@ -150,9 +150,9 @@ export const getAuthToken = async ({ getTokenSilently }) => {
 };
 ```
 
-As mentioned at the start of this post, the `getTokenSilently` is the method we 
-need to invoke from Auth0 to get a new jwt token. But we only want to get a new 
-one if the cached one has expired. And this is quite simple by using the jwt-decode 
+As mentioned at the start of this post, the `getTokenSilently` is the method we
+need to invoke from Auth0 to get a new jwt token. But we only want to get a new
+one if the cached one has expired. And this is quite simple by using the jwt-decode
 library and storing the token expiry date when we receive a new one.
 
 Happy coding with Apollo GraphQL...
