@@ -38,6 +38,27 @@ const {
 		<p class="hero-statement">{heroStatement}</p>
 	</div>
 
+	{
+		images.desktop && (
+			<div class="project-screenshots">
+				<div class="screenshots-container">
+					<img
+						src={images.desktop}
+						alt={`${title} desktop screenshot`}
+						class="screenshot desktop-screenshot"
+					/>
+					{images.mobile && (
+						<img
+							src={images.mobile}
+							alt={`${title} mobile screenshot`}
+							class="screenshot mobile-screenshot"
+						/>
+					)}
+				</div>
+			</div>
+		)
+	}
+
 	<div class="project-main">
 		<div class="project-content">
 			<div class="project-description">
@@ -45,41 +66,46 @@ const {
 				<p>{description}</p>
 			</div>
 
-			<div class="business-metrics">
-				<h3>Goals</h3>
-				<ul class="metrics-list">
-					{businessMetrics.map((metric) => <li class="metric-item">{metric}</li>)}
-				</ul>
-			</div>
-
+			{
+				businessMetrics.length > 0 && (
+					<div>
+						<h3>Goals</h3>
+						<ul class="metrics-list">
+							{businessMetrics.map((metric) => (
+								<li class="metric-item">{metric}</li>
+							))}
+						</ul>
+					</div>
+				)
+			}
 			<div class="tech-stack">
 				<h3>Technology Stack</h3>
 				<Tags tags={tags} />
 			</div>
+		</div>
 
-			{
-				testimonial && (
-					<div class="testimonial">
-						<blockquote class="testimonial-quote">"{testimonial.quote}"</blockquote>
-						<cite class="testimonial-author">— {testimonial.author}</cite>
-					</div>
-				)
-			}
+		{
+			testimonial && (
+				<div class="testimonial">
+					<blockquote class="testimonial-quote">"{testimonial.quote}"</blockquote>
+					<cite class="testimonial-author">— {testimonial.author}</cite>
+				</div>
+			)
+		}
 
-			<div class="project-links">
-				<a
-					href={projectUrl}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="btn-link btn-link-external">View Project</a
-				>
-				<a
-					href={sourceCodeUrl}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="btn-link btn-link-external secondary">Source Code</a
-				>
-			</div>
+		<div class="project-links">
+			<a
+				href={projectUrl}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="btn-link btn-link-external">View Project</a
+			>
+			<a
+				href={sourceCodeUrl}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="btn-link btn-link-external secondary">Source Code</a
+			>
 		</div>
 	</div>
 </section>
@@ -118,6 +144,42 @@ const {
 		max-width: 800px;
 		margin: 0;
 		line-height: 1.6;
+	}
+
+	.project-screenshots {
+		margin-bottom: 3rem;
+	}
+
+	.screenshots-container {
+		position: relative;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.screenshot {
+		border-radius: 8px;
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+		transition: transform 0.3s ease;
+	}
+
+	.desktop-screenshot {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	.mobile-screenshot {
+		position: relative;
+		top: 0;
+		right: 0;
+		width: 150px;
+		margin: 1rem auto 0;
+		display: block;
+		z-index: 2;
+	}
+
+	.screenshots-container {
+		text-align: center;
 	}
 
 	.project-main {
@@ -231,6 +293,22 @@ const {
 
 		.hero-statement {
 			font-size: 1.25rem;
+		}
+
+		.desktop-screenshot {
+			width: 85%;
+		}
+
+		.mobile-screenshot {
+			position: absolute;
+			top: 30px;
+			right: -20px;
+			width: 190px;
+			margin: 0;
+		}
+
+		.screenshots-container {
+			text-align: left;
 		}
 	}
 

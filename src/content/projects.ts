@@ -2,7 +2,7 @@ export const projects = [
 	{
 		title: 'SES Melbourne',
 		heroStatement:
-			'Transformed an electrical business website into a modern, fast and daily lead generatoring website.',
+			'Transforming an electrical business website into a modern, fast and daily lead generating website.',
 		description:
 			'A clean website and blog for a local electrical business in Melbourne, Australia that showcases their services. The client was looking to improve their SEO and online presence, so we focused on making it fast, accessible relevant for local searches.',
 		businessMetrics: [
@@ -29,7 +29,7 @@ export const projects = [
 	{
 		title: 'JLC Carpentry & Building Services',
 		heroStatement:
-			'Professional website for Melbourne-based carpentry business with video showcase and SEO optimization.',
+			'Professional website for Melbourne-based carpentry business with videos and SEO optimization.',
 		description:
 			'A professional website for a Melbourne-based carpentry and building services company. The site showcases their expertise in decks, pergolas, kitchen & bathroom renovations, and structural modifications. The website was designed from ground up with a contemporary look and feel.',
 		businessMetrics: [
@@ -82,17 +82,13 @@ export const projects = [
 			'Professional online presence showcasing technical expertise and thought leadership.',
 		description:
 			'My personal website and blog where I share my thoughts on software engineering, technology, and life in general. It is built with Astro and uses Tailwind CSS for styling. The blog is powered by MDX, allowing me to write posts in Markdown with React components.',
-		businessMetrics: [
-			'Professional online presence',
-			'Showcase of technical writing skills',
-			'Platform for thought leadership'
-		],
+		businessMetrics: [],
 		testimonial: null,
 		tags: ['Astro', 'MDX', 'Tailwind', 'Vercel'],
 		projectUrl: 'https://dejan.vasic.com.au',
 		sourceCodeUrl: 'https://github.com/dejanvasic85/portfolio',
 		images: {
-			desktop: '/images/projects/portfolio.png',
+			desktop: null,
 			mobile: null
 		}
 	}
