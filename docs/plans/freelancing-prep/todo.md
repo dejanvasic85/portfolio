@@ -6,9 +6,8 @@
 ## Contact Form Implementation Plan
 
 ### Placement Strategy
-- [ ] Add "Contact me" section on homepage with brief contact form
+- [ ] Add "Contact me" section on homepage with a link to contact page
 - [ ] Create dedicated contact page (`/contact`) with full form
-- [ ] Add "Contact" link to main navigation
 
 ### Technical Implementation
 - [ ] Create API route `src/pages/api/contact.ts` for form submission
