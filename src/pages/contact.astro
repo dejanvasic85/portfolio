@@ -1,43 +1,37 @@
 ---
+export const prerender = false;
+
 import Layout from '../layouts/Layout.astro';
-import { actions } from 'astro:actions';
+import { actions, isInputError } from 'astro:actions';
 
 const result = Astro.getActionResult(actions.contact);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 ---
 
 <Layout title="Contact - Dejan Vasic">
 	<main class="container">
 		<h1>Get in Touch</h1>
 		<p class="intro">
-			Have a project in mind or want to discuss how I can help? Fill out the form below and I'll get back to you as soon as possible.
+			Have a project in mind or want to discuss how I can help? Fill out the form below and I'll get
+			back to you as soon as possible.
 		</p>
 
 		<form method="POST" action={actions.contact}>
 			<div class="form-group">
 				<label for="name">Name *</label>
-				<input
-					type="text"
-					id="name"
-					name="name"
-					required
-					autocomplete="name"
-				/>
+				<input type="text" id="name" name="name" autocomplete="name" transition:persist />
+				{inputErrors.name && <p class="field-error">{inputErrors.name}</p>}
 			</div>
 
 			<div class="form-group">
 				<label for="email">Email *</label>
-				<input
-					type="email"
-					id="email"
-					name="email"
-					required
-					autocomplete="email"
-				/>
+				<input type="text" id="email" name="email" autocomplete="email" transition:persist />
+				{inputErrors.email && <p class="field-error">{inputErrors.email}</p>}
 			</div>
 
 			<div class="form-group">
 				<label for="projectType">Project Type</label>
-				<select id="projectType" name="projectType">
+				<select id="projectType" name="projectType" transition:persist>
 					<option value="">Select a type...</option>
 					<option value="web-development">Web Development</option>
 					<option value="consulting">Consulting</option>
@@ -52,27 +46,18 @@ const result = Astro.getActionResult(actions.contact);
 					id="message"
 					name="message"
 					rows="6"
-					required
 					placeholder="Tell me about your project..."
-				></textarea>
+					transition:persist></textarea>
+				{inputErrors.message && <p class="field-error">{inputErrors.message}</p>}
 			</div>
 
-			{result?.error && (
-				<div class="error-message">
-					<p>Please fix the following errors:</p>
-					<ul>
-						{result.error.fields.name && <li>{result.error.fields.name}</li>}
-						{result.error.fields.email && <li>{result.error.fields.email}</li>}
-						{result.error.fields.message && <li>{result.error.fields.message}</li>}
-					</ul>
-				</div>
-			)}
-
-			{result?.data?.success && (
-				<div class="success-message">
-					<p>{result.data.message}</p>
-				</div>
-			)}
+			{
+				result?.data?.success && (
+					<div class="success-message">
+						<p>{result.data.message}</p>
+					</div>
+				)
+			}
 
 			<button type="submit" class="btn-primary">Send Message</button>
 		</form>
@@ -160,6 +145,12 @@ const result = Astro.getActionResult(actions.contact);
 
 	.error-message ul {
 		margin: 0.5rem 0 0 1.5rem;
+	}
+
+	.field-error {
+		color: #c33;
+		font-size: 0.9rem;
+		margin-top: 0.25rem;
 	}
 
 	.success-message {

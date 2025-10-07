@@ -7,6 +7,7 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
 	site: 'https://dejan.vasic.com.au',
 	trailingSlash: 'never',
+	output: 'hybrid',
 	adapter: vercel(),
 	integrations: [mdx(), sitemap()],
 	markdown: {
