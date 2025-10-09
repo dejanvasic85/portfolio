@@ -1,6 +1,6 @@
 import { defineAction } from 'astro:actions';
 import { z } from 'astro:schema';
-import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from 'astro:env/server';
+import { sendEmail } from '../lib/email';
 
 const required = (field: string) =>
 	z
@@ -25,8 +25,7 @@ export const server = {
 			// For now, just log the data
 			console.log('Contact form submission:', input);
 
-			// Simulate processing
-			await new Promise((resolve) => setTimeout(resolve, 500));
+			await sendEmail({ to: input.email });
 
 			return {
 				success: true,
