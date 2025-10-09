@@ -21,16 +21,23 @@ export const server = {
 			)
 		}),
 		async handler(input) {
-			// TODO: Integrate AWS SES for sending emails
-			// For now, just log the data
-			console.log('Contact form submission:', input);
+			try {
+				// Send email with all contact form details
+				await sendEmail({
+					name: input.name,
+					email: input.email,
+					projectType: input.projectType,
+					message: input.message
+				});
 
-			await sendEmail({ to: input.email });
-
-			return {
-				success: true,
-				message: "Thank you for reaching out! I'll get back to you soon."
-			};
+				return {
+					success: true,
+					message: "Thank you for reaching out! I'll get back to you soon."
+				};
+			} catch (error) {
+				console.error('Contact form error:', error);
+				throw new Error('Failed to send your message. Please try again later.');
+			}
 		}
 	})
 };

@@ -1,3 +1,4 @@
+import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 import {
 	AWS_ACCESS_KEY_ID,
 	AWS_REGION,
@@ -7,11 +8,152 @@ import {
 } from 'astro:env/server';
 
 type EmailParams = {
-	to: string;
+	name: string;
+	email: string;
+	projectType?: string;
+	message: string;
 };
 
-export async function sendEmail({ to }: EmailParams) {
-	// TODO: Send email using AWS SES
-	console.log(`Todo: `, to, AWS_ACCESS_KEY_ID);
-	await new Promise((resolve) => setTimeout(resolve, 500));
+// Initialize SES client
+const sesClient = new SESClient({
+	region: AWS_REGION,
+	credentials: {
+		accessKeyId: AWS_ACCESS_KEY_ID,
+		secretAccessKey: AWS_SECRET_ACCESS_KEY
+	}
+});
+
+/**
+ * Safely escape HTML to prevent XSS attacks
+ */
+function escapeHtml(text: string): string {
+	const map: Record<string, string> = {
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		"'": '&#039;'
+	};
+	return text.replace(/[&<>"']/g, (char) => map[char] || char);
+}
+
+/**
+ * Generate email HTML template with safe replacements
+ */
+function generateEmailTemplate(params: EmailParams): string {
+	const { name, email, projectType, message } = params;
+
+	// Safely escape all user inputs
+	const safeName = escapeHtml(name);
+	const safeEmail = escapeHtml(email);
+	const safeProjectType = projectType ? escapeHtml(projectType) : 'Not specified';
+	const safeMessage = escapeHtml(message).replace(/\n/g, '<br>');
+
+	return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>New Contact Form Submission</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+	<div style="background-color: #f4f4f4; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+		<h1 style="color: #0066cc; margin-top: 0;">New Contact Form Submission</h1>
+		<p style="color: #666; margin-bottom: 0;">You have received a new message from your portfolio contact form.</p>
+	</div>
+
+	<div style="background-color: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 20px;">
+		<h2 style="color: #333; margin-top: 0; border-bottom: 2px solid #0066cc; padding-bottom: 10px;">Contact Details</h2>
+
+		<div style="margin-bottom: 15px;">
+			<strong style="color: #555;">Name:</strong>
+			<p style="margin: 5px 0; padding: 10px; background-color: #f9f9f9; border-radius: 4px;">${safeName}</p>
+		</div>
+
+		<div style="margin-bottom: 15px;">
+			<strong style="color: #555;">Email:</strong>
+			<p style="margin: 5px 0; padding: 10px; background-color: #f9f9f9; border-radius: 4px;">
+				<a href="mailto:${safeEmail}" style="color: #0066cc; text-decoration: none;">${safeEmail}</a>
+			</p>
+		</div>
+
+		<div style="margin-bottom: 15px;">
+			<strong style="color: #555;">Project Type:</strong>
+			<p style="margin: 5px 0; padding: 10px; background-color: #f9f9f9; border-radius: 4px;">${safeProjectType}</p>
+		</div>
+
+		<div style="margin-bottom: 15px;">
+			<strong style="color: #555;">Message:</strong>
+			<p style="margin: 5px 0; padding: 10px; background-color: #f9f9f9; border-radius: 4px; white-space: pre-wrap;">${safeMessage}</p>
+		</div>
+	</div>
+
+	<div style="margin-top: 20px; padding: 15px; background-color: #f4f4f4; border-radius: 8px; font-size: 12px; color: #666; text-align: center;">
+		<p style="margin: 0;">This email was sent from your portfolio contact form.</p>
+	</div>
+</body>
+</html>
+	`.trim();
+}
+
+/**
+ * Generate plain text version of the email
+ */
+function generatePlainTextEmail(params: EmailParams): string {
+	const { name, email, projectType, message } = params;
+
+	return `
+New Contact Form Submission
+============================
+
+Name: ${name}
+Email: ${email}
+Project Type: ${projectType || 'Not specified'}
+
+Message:
+${message}
+
+---
+This email was sent from your portfolio contact form.
+	`.trim();
+}
+
+/**
+ * Send email using AWS SES
+ */
+export async function sendEmail(params: EmailParams): Promise<void> {
+	const htmlBody = generateEmailTemplate(params);
+	const textBody = generatePlainTextEmail(params);
+
+	const command = new SendEmailCommand({
+		Source: EMAIL_FROM,
+		Destination: {
+			ToAddresses: [EMAIL_TO]
+		},
+		Message: {
+			Subject: {
+				Data: `New Contact Form Submission from ${params.name}`,
+				Charset: 'UTF-8'
+			},
+			Body: {
+				Html: {
+					Data: htmlBody,
+					Charset: 'UTF-8'
+				},
+				Text: {
+					Data: textBody,
+					Charset: 'UTF-8'
+				}
+			}
+		}
+	});
+
+	try {
+		await sesClient.send(command);
+		console.log('Email sent successfully to:', EMAIL_TO);
+	} catch (error) {
+		console.error('Error sending email:', error);
+		throw new Error('Failed to send email. Please try again later.');
+	}
 }
