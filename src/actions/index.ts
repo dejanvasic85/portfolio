@@ -1,5 +1,6 @@
 import { defineAction } from 'astro:actions';
 import { z } from 'astro:schema';
+import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from 'astro:env/server';
 
 const required = (field: string) =>
 	z
