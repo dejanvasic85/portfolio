@@ -1,26 +1,23 @@
 import { defineAction } from 'astro:actions';
 import { z } from 'astro:schema';
 
+const required = (field: string) =>
+	z
+		.string()
+		.nullable()
+		.transform((val) => val ?? '')
+		.pipe(z.string().min(1, `${field} is required`));
+
 export const server = {
 	contact: defineAction({
 		accept: 'form',
 		input: z.object({
-			name: z
-				.string()
-				.nullable()
-				.transform((val) => val ?? '')
-				.pipe(z.string().min(1, 'Name is required')),
-			email: z
-				.string()
-				.nullable()
-				.transform((val) => val ?? '')
-				.pipe(z.string().min(1, 'Email is required').email('Please enter a valid email address')),
+			name: required('Name'),
+			email: required('Email').pipe(z.string().email('Please enter a valid email address')),
 			projectType: z.string().optional(),
-			message: z
-				.string()
-				.nullable()
-				.transform((val) => val ?? '')
-				.pipe(z.string().min(10, 'Message must be at least 10 characters'))
+			message: required('Message').pipe(
+				z.string().min(10, 'Message must be at least 10 characters')
+			)
 		}),
 		async handler(input) {
 			// TODO: Integrate AWS SES for sending emails
