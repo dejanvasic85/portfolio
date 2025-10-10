@@ -12,7 +12,10 @@ import Layout from '../layouts/Layout.astro';
 		</div>
 
 		<div class="content">
-			<p>Hi, I'm Dejan Vasic. and I love building stuff for the web.</p>
+			<p>
+				Hi, I'm Dejan Vasic. and I love building stuff for the web with a focus on quality, security
+				and performance.
+			</p>
 
 			<p>My expertise includes (but not limited to):</p>
 			<ul>
@@ -28,6 +31,13 @@ import Layout from '../layouts/Layout.astro';
 				<li>Running after the little ones 👶</li>
 				<li>Playing music 🎹</li>
 			</ul>
+		</div>
+
+		<div class="contact-box">
+			<p>
+				Have a project in mind? I'm available for freelance work, consulting, and long-term contracts.
+			</p>
+			<a href="/contact" class="btn-link">Get in Touch</a>
 		</div>
 
 		<nav class="page-nav">
@@ -71,6 +81,33 @@ import Layout from '../layouts/Layout.astro';
 		}
 	}
 
+	.contact-box {
+		background: linear-gradient(135deg, var(--color-primary-light), var(--color-background));
+		border: 1px solid var(--color-primary);
+		border-radius: var(--radius-lg);
+		padding: 2rem;
+		margin: 2rem 0;
+		box-shadow: var(--shadow-card);
+		transition: all 0.3s ease;
+	}
+
+	.contact-box:hover {
+		box-shadow: var(--shadow-card-hover);
+		transform: translateY(-2px);
+	}
+
+	.contact-box h2 {
+		color: var(--color-primary-dark);
+		margin-bottom: 0.75rem;
+		font-size: 1.75rem;
+	}
+
+	.contact-box p {
+		color: var(--color-text-light);
+		margin-bottom: 1.5rem;
+		line-height: 1.6;
+	}
+
 	.page-nav {
 		display: flex;
 		gap: 2rem;
@@ -84,5 +121,10 @@ import Layout from '../layouts/Layout.astro';
 		.hero {
 			margin-bottom: var(--space-lg);
 		}
+	}
+
+	[data-theme='dark'] .contact-box {
+		background: linear-gradient(135deg, var(--color-primary-light), rgba(183, 148, 246, 0.05));
+		border-color: var(--color-primary);
 	}
 </style>
