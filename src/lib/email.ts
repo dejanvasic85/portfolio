@@ -123,10 +123,18 @@ This email was sent from your portfolio contact form.
  * Send email using AWS SES
  */
 export async function sendEmail(params: EmailParams): Promise<void> {
+	console.log('\n=== Starting Email Send Process ===');
+	console.log('Form data received:', {
+		name: params.name,
+		email: params.email,
+		projectType: params.projectType || 'Not specified',
+		messageLength: params.message.length
+	});
+
 	const htmlBody = generateEmailTemplate(params);
 	const textBody = generatePlainTextEmail(params);
 
-	const command = new SendEmailCommand({
+	const emailCommand = {
 		Source: EMAIL_FROM,
 		Destination: {
 			ToAddresses: [EMAIL_TO]
@@ -147,13 +155,57 @@ export async function sendEmail(params: EmailParams): Promise<void> {
 				}
 			}
 		}
+	};
+
+	console.log('SES Command:', {
+		Source: emailCommand.Source,
+		Destination: emailCommand.Destination,
+		Subject: emailCommand.Message.Subject.Data
 	});
 
+	const command = new SendEmailCommand(emailCommand);
+
 	try {
-		await sesClient.send(command);
-		console.log('Email sent successfully to:', EMAIL_TO);
-	} catch (error) {
-		console.error('Error sending email:', error);
-		throw new Error('Failed to send email. Please try again later.');
+		console.log('Sending email via AWS SES...');
+		const result = await sesClient.send(command);
+		console.log('✅ Email sent successfully!');
+		console.log('SES Response:', {
+			MessageId: result.MessageId,
+			$metadata: {
+				httpStatusCode: result.$metadata.httpStatusCode,
+				requestId: result.$metadata.requestId
+			}
+		});
+		console.log('Email delivered to:', EMAIL_TO);
+		console.log('=== Email Send Complete ===\n');
+	} catch (error: any) {
+		console.error('\n❌ =========================');
+		console.error('ERROR SENDING EMAIL');
+		console.error('=========================');
+		console.error('Error type:', error.name);
+		console.error('Error message:', error.message);
+		console.error('Error code:', error.Code || error.$metadata?.httpStatusCode);
+
+		if (error.$metadata) {
+			console.error('AWS Metadata:', {
+				httpStatusCode: error.$metadata.httpStatusCode,
+				requestId: error.$metadata.requestId,
+				attempts: error.$metadata.attempts
+			});
+		}
+
+		// Log specific AWS SES error details
+		if (error.name === 'MessageRejected') {
+			console.error('⚠️  MESSAGE REJECTED - Check if email addresses are verified in AWS SES');
+		} else if (error.name === 'MailFromDomainNotVerifiedException') {
+			console.error('⚠️  FROM address not verified in AWS SES');
+		} else if (error.name === 'ConfigurationSetDoesNotExistException') {
+			console.error('⚠️  Configuration set issue');
+		}
+
+		console.error('Full error object:', JSON.stringify(error, null, 2));
+		console.error('=========================\n');
+
+		throw new Error(`Failed to send email: ${error.message || 'Unknown error'}`);
 	}
 }
