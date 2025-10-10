@@ -135,12 +135,12 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 	}
 
 	.error-message {
-		background: #fee;
-		border: 1px solid #fcc;
+		background: var(--color-error-bg);
+		border: 1px solid var(--color-error-border);
 		border-radius: 4px;
 		padding: 1rem;
 		margin-bottom: 1rem;
-		color: #c33;
+		color: var(--color-error);
 	}
 
 	.error-message ul {
@@ -148,18 +148,18 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 	}
 
 	.field-error {
-		color: #c33;
+		color: var(--color-error);
 		font-size: 0.9rem;
 		margin-top: 0.25rem;
 	}
 
 	.success-message {
-		background: #efe;
-		border: 1px solid #cfc;
+		background: var(--color-success-bg);
+		border: 1px solid var(--color-success-border);
 		border-radius: 4px;
 		padding: 1rem;
 		margin-bottom: 1rem;
-		color: #3c3;
+		color: var(--color-success);
 	}
 
 	.success-message p {
