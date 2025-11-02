@@ -102,7 +102,23 @@ This handles transient failures gracefully without user intervention—retrying 
 
 ## The Results
 
-After implementation, I achieved zero race conditions with no more 404 errors. I was able to remove all `waitForResponse()` workarounds from the tests, and users can keep editing while operations queue automatically. The best part is that no component changes were required, and it works across all features—notes, friends, and any future additions—with built-in retry resilience.
+After implementation, I achieved zero race conditions with no more 404 errors. The Playwright tests that previously required explicit waits like this:
+
+```typescript
+const createNotePromise = page.waitForResponse(
+  (response) =>
+    response.url().includes('/api/notes') &&
+    response.request().method() === 'POST' &&
+    response.status() < 400
+);
+
+await createButton.click();
+await createNotePromise; // Wait for POST to complete
+
+await page.getByRole('button', { name: 'blue' }).click();
+```
+
+Now work without any waits at all—just like a real power user flying through operations. The queue handles the sequencing automatically. Users can keep editing while operations queue in the background, and the best part is that no component changes were required. It works across all features—notes, friends, and any future additions—with built-in retry resilience.
 
 ## Conclusion
 
