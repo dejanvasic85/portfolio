@@ -1,0 +1,113 @@
+---
+layout: ../../../../layouts/BlogLayout.astro
+title: 'Solving Optimistic Update Race Conditions in SvelteKit'
+date: November 2, 2025
+tags: ['svelte', 'sveltekit', 'typescript', 'optimistic updates']
+excerpt: 'How I fixed race conditions in my notes app by implementing a request queue at the network layer instead of managing state-level complexity.'
+---
+
+[Optimistic updates](https://www.epicreact.dev/use-optimistic-to-make-your-app-feel-instant-zvyuv) are a UX pattern where you update the UI immediately when a user takes an action, before waiting for the server to confirm. This makes the app feel instant and responsive. The trick is rolling back the change if the server request fails.
+
+Building a notes application with SvelteKit, I ran into a classic problem with optimistic updates. When users created a note and immediately started interacting with it—changing colors, editing the title—the PATCH requests would sometimes reach the server before the POST request completed, resulting in 404 errors. The symptom first appeared in my Playwright tests, which required explicit `waitForResponse()` calls to prevent failures. This was a clear sign that the production code needed fixing, not the tests.
+
+Now, I could have reached for a library like [TanStack Query](https://tanstack.com/query) which handles optimistic updates, request deduplication, caching, and retry logic out of the box. But this felt like a good opportunity to experiment and understand how these mechanisms work under the hood. Sometimes the best way to appreciate what libraries do for us is to implement a simplified version ourselves.
+
+## The Initial Approach: State-Level Solution
+
+My first instinct was to implement a **pending operations tracker in the state management layer**. The approach seemed straightforward:
+- Track which notes are being created
+- Disable UI inputs or queue operations until creation completes
+- Show "Creating..." loading states
+
+While this would work, we are actually moving away from instant feedback and a seamless user experience. So it's actually going completely against the principle of optimistic updates. What if we could combine the best of both worlds?
+
+## The Better Solution: Request-Level Queueing
+
+After some consideration, I pivoted to implementing a **sequential request queue in the [`browserFetch`](https://github.com/dejanvasic85/notes/blob/main/src/lib/browserFetch.ts) wrapper**. This proved to be the superior approach because it solves the problem globally at the network layer. By queuing all requests, I automatically prevent race conditions across the entire application without any component-level changes.
+
+### Evaluating the Tradeoffs
+
+I considered two queuing strategies: a sequential queue where all requests wait in line, and a resource-based queue where only same-resource requests wait. Given my application characteristics—fast API responses (~100-200ms), single-focus user behavior, and a preference for simplicity—the sequential queue was the clear winner.
+
+### Promise Chain Architecture
+
+The key insight was using **promise chaining** rather than an array-based queue. This is important because promises in an array run immediately in parallel, but chaining them ensures sequential execution:
+
+```typescript
+let queueTail: Promise<unknown> = Promise.resolve();
+
+const thisRequest = queueTail.then(() =>
+  fetchWithRetry(() =>
+    fetch(input, {
+      ...init,
+      headers: {
+        'Content-Type': 'application/json',
+        ...init?.headers
+      }
+    })
+  ).then(async (resp) => {
+    if (!resp.ok) {
+      const rawText = await resp.text();
+      return fail(rawText);
+    }
+    // Handle response...
+  })
+);
+```
+
+Each request adds itself to the chain by calling `.then()` on the queue tail, ensuring sequential execution while preserving individual results for each caller.
+
+### Smart Error Handling: Conditional Queue Clearing
+
+I implemented a `clearQueueOnError` option that provides context-aware error handling:
+
+```typescript
+// Critical operation - clear queue if it fails
+tryFetch('/api/notes', { method: 'POST' }, { clearQueueOnError: true });
+
+// Normal operation - continue processing queue
+tryFetch('/api/notes/123', { method: 'PATCH' });
+```
+
+The reasoning is simple: if note creation fails, there's no point updating a note that doesn't exist—clear the queue. But if a color update fails, the next title update should still process—continue the queue. Since I already had proper rollback (optimistic updates reversed in state) and user notification (toast messages), this approach gives users clear feedback without silently losing their edits.
+
+### Built-in Retry Logic
+
+I added automatic retry functionality for resilience:
+
+```typescript
+async function fetchWithRetry(func: () => Promise<Response>, retryCount = 0) {
+  try {
+    const response = await func();
+
+    // Retry server errors (500+), not client errors (400-499)
+    if (!response.ok && response.status >= 500 && retryCount < maxRetries) {
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      return fetchWithRetry(func, retryCount + 1);
+    }
+
+    return response;
+  } catch (err) {
+    // Retry network errors
+    if (retryCount < maxRetries) {
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      return fetchWithRetry(func, retryCount + 1);
+    }
+    throw err;
+  }
+}
+```
+
+This handles transient failures gracefully without user intervention—retrying server errors and network issues while failing fast on client errors that won't succeed on retry.
+
+## The Results
+
+After implementation, I achieved zero race conditions with no more 404 errors. I was able to remove all `waitForResponse()` workarounds from the tests, and users can keep editing while operations queue automatically. The best part is that no component changes were required, and it works across all features—notes, friends, and any future additions—with built-in retry resilience.
+
+## Conclusion
+
+The beauty of this solution is its simplicity. By solving the problem at the right architectural layer—network requests, not state management—I achieved a global fix with minimal code changes and maximum maintainability.
+
+That said, I'm likely just scratching the surface compared to what libraries like TanStack Query, SWR, or RTK Query offer. These libraries handle more complex scenarios like request deduplication, background refetching, cache invalidation strategies, offline support, and sophisticated retry logic with exponential backoff. For production applications with complex data-fetching requirements, using a battle-tested library is probably the smarter choice.
+
+But understanding the concepts—promise chaining, request queueing, error handling strategies—makes you better at using those libraries and debugging when things go wrong. Sometimes the best learning comes from building a simplified version yourself before reaching for the abstraction.
