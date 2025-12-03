@@ -25,6 +25,7 @@ const { frontmatter } = Astro.props;
 					}
 				</div>
 				<h1>{frontmatter.title}</h1>
+				<p class="author">By Dejan Vasic</p>
 				{frontmatter.excerpt && <p class="excerpt">{frontmatter.excerpt}</p>}
 			</header>
 
@@ -54,6 +55,13 @@ const { frontmatter } = Astro.props;
 
 	.tag-container {
 		margin-top: 1rem;
+	}
+
+	.author {
+		color: var(--color-text-light);
+		font-size: 1rem;
+		margin: 0.5rem 0 1rem;
+		font-style: italic;
 	}
 
 	.excerpt {
