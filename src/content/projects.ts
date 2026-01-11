@@ -1,5 +1,27 @@
 export const projects = [
 	{
+		title: 'Williamstown SC',
+		heroStatement:
+			'Modern website for a local soccer club in Melbourne with fixture management and news updates.',
+		description:
+			'A professional website for Williamstown Soccer Club in Melbourne, Victoria. The site is designed to showcase the club, provide fixture information, news updates, and engage with the local soccer community. Built with modern web technologies for optimal performance and user experience.',
+		businessMetrics: [
+			'Clean, modern design representing the club brand',
+			'Fixture and news management system',
+			'Mobile-responsive design for on-the-go access',
+			'Fast performance with Next.js and Sanity CMS',
+			'SEO optimized for local searches'
+		],
+		testimonial: null,
+		tags: ['Nextjs', 'Sanity CMS', 'TypeScript', 'Vercel'],
+		projectUrl: 'https://williamstownsc.vercel.app/',
+		sourceCodeUrl: 'https://github.com/dejanvasic85/williamstownsc',
+		images: {
+			desktop: '/images/projects/williamstown-desktop.png',
+			mobile: '/images/projects/williamstown-mobile.png'
+		}
+	},
+	{
 		title: 'SES Melbourne',
 		heroStatement:
 			'Transforming an electrical business website into a modern, fast and daily lead generating website.',
