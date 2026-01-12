@@ -14,7 +14,7 @@ interface Props {
 	projectUrl?: string;
 	sourceCodeUrl?: string;
 	images: {
-		desktop: string;
+		desktop: string | null;
 		mobile: string | null;
 	};
 }
@@ -147,7 +147,7 @@ const {
 	}
 
 	.project-screenshots {
-		margin-bottom: 3rem;
+		margin-bottom: 5rem;
 	}
 
 	.screenshots-container {
