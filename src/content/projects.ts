@@ -1,10 +1,10 @@
 export const projects = [
 	{
-		title: 'Williamstown SC',
+		title: 'Williamstown SC (in progress)',
 		heroStatement:
-			'Modern website for a local soccer club in Melbourne with fixture management and news updates.',
+			'Modern website for a local soccer club in Melbourne with fixture management and news updates. Launching 🚀 early 2026.',
 		description:
-			'A professional website for Williamstown Soccer Club in Melbourne, Victoria. The site is designed to showcase the club, provide fixture information, news updates, and engage with the local soccer community. Built with modern web technologies for optimal performance and user experience.',
+			'A professional website for Williamstown Soccer Club in Melbourne, Victoria. The site is designed to showcase the club, provide fixture information, news updates, and engage with the local soccer community. Replaced an outdated and difficult to maintain Wordpress website.',
 		businessMetrics: [
 			'Clean, modern design representing the club brand',
 			'Content including news management system',
