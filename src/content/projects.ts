@@ -7,8 +7,9 @@ export const projects = [
 			'A professional website for Williamstown Soccer Club in Melbourne, Victoria. The site is designed to showcase the club, provide fixture information, news updates, and engage with the local soccer community. Built with modern web technologies for optimal performance and user experience.',
 		businessMetrics: [
 			'Clean, modern design representing the club brand',
-			'Fixture and news management system',
-			'Mobile-responsive design for on-the-go access',
+			'Content including news management system',
+			'Mobile-responsive design for on-the-go access.',
+			'Progressive web app for offline access',
 			'Fast performance with Next.js and Sanity CMS',
 			'SEO optimized for local searches'
 		],
