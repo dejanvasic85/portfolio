@@ -18,7 +18,7 @@
 		"@astrojs/vercel": "^9.0.0",
 		"@aws-sdk/client-ses": "^3.907.0",
 		"astro": "^5.7.6",
-		"shiki": "^3.2.2"
+		"shiki": "^4.0.0"
 	},
 	"devDependencies": {
 		"@playwright/test": "1.58.2",
