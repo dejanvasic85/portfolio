@@ -17,7 +17,7 @@
 		"@astrojs/sitemap": "^3.3.1",
 		"@astrojs/vercel": "^9.0.0",
 		"@aws-sdk/client-ses": "^3.907.0",
-		"astro": "^5.7.6",
+		"astro": "^6.0.0",
 		"shiki": "^4.0.0"
 	},
 	"devDependencies": {
