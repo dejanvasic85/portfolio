@@ -30,8 +30,15 @@ const { tags } = Astro.props;
 
 	@media (prefers-color-scheme: dark) {
 		.tag {
-			background-color: var(--color-secondary);
-			color: var(--color-secondary-light);
+			background-color: var(--color-secondary-dark);
+			color: var(--color-secondary);
+			border: 1px solid rgba(126, 207, 154, 0.3);
 		}
+	}
+
+	:global([data-theme='dark']) .tag {
+		background-color: var(--color-secondary-dark);
+		color: var(--color-secondary);
+		border: 1px solid rgba(126, 207, 154, 0.3);
 	}
 </style>
