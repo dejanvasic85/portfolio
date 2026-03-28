@@ -114,6 +114,7 @@
 	--color-primary-dark: #4a85a8;
 	--color-primary-light: rgba(90, 154, 191, 0.1);
 	--color-secondary: #7ecf9a;
+	--color-secondary-dark: #1e3a2a;
 	--color-accent: #d4b95f;
 	--color-accent-light: rgba(212, 185, 95, 0.1);
 
@@ -142,6 +143,7 @@
 		--color-primary-dark: #4a85a8;
 		--color-primary-light: rgba(90, 154, 191, 0.1);
 		--color-secondary: #7ecf9a;
+		--color-secondary-dark: #1e3a2a;
 		--color-accent: #d4b95f;
 		--color-accent-light: rgba(212, 185, 95, 0.1);
 
