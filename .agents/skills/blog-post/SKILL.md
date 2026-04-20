@@ -1,3 +1,10 @@
+---
+name: blog-post
+description: "Create a new blog post MDX file in the correct dated directory with proper frontmatter. Use when writing a new blog post, publishing a technical article, sharing an opinion piece, or documenting a solution."
+argument-hint: "Topic or working title for the post (e.g. 'using Zod with SvelteKit forms')"
+user-invocable: true
+---
+
 # New Blog Post
 
 Create a new blog post MDX file for this portfolio.
