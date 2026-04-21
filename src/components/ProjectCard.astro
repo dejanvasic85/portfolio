@@ -10,23 +10,22 @@ const { slug, title, heroStatement, image } = Astro.props;
 ---
 
 <article class="project-card">
-	<a href={`/projects/${slug}`} class="card-link">
-		<div class="card-image">
-			{
-				image ? (
-					<img src={image} alt={`${title} preview`} />
-				) : (
-					<div class="card-image-placeholder">
-						<span>{title[0]}</span>
-					</div>
-				)
-			}
-		</div>
-		<div class="card-body">
-			<h2 class="card-title">{title}</h2>
-			<p class="hero-statement">{heroStatement}</p>
-		</div>
-	</a>
+	<div class="card-image">
+		{
+			image ? (
+				<img src={image} alt={`${title} preview`} />
+			) : (
+				<div class="card-image-placeholder">
+					<span>{title[0]}</span>
+				</div>
+			)
+		}
+	</div>
+	<div class="card-body">
+		<h2 class="card-title">{title}</h2>
+		<p class="hero-statement">{heroStatement}</p>
+		<a href={`/projects/${slug}`} class="btn-link small">View details →</a>
+	</div>
 </article>
 
 <style>
@@ -35,26 +34,8 @@ const { slug, title, heroStatement, image } = Astro.props;
 		border-radius: var(--radius-md);
 		background-color: var(--color-background-alt);
 		overflow: hidden;
-		transition:
-			border-color 0.2s ease,
-			box-shadow 0.2s ease;
-	}
-
-	.project-card:hover {
-		border-color: var(--color-primary);
-		box-shadow: var(--shadow-card-hover);
-	}
-
-	.card-link {
 		display: flex;
 		flex-direction: column;
-		height: 100%;
-		text-decoration: none;
-		color: inherit;
-	}
-
-	.card-link:hover {
-		text-decoration: none;
 	}
 
 	.card-image {
@@ -62,6 +43,7 @@ const { slug, title, heroStatement, image } = Astro.props;
 		aspect-ratio: 16 / 9;
 		overflow: hidden;
 		background-color: var(--color-background-hover);
+		flex-shrink: 0;
 	}
 
 	.card-image img {
@@ -70,11 +52,6 @@ const { slug, title, heroStatement, image } = Astro.props;
 		object-fit: cover;
 		object-position: top;
 		display: block;
-		transition: transform 0.3s ease;
-	}
-
-	.project-card:hover .card-image img {
-		transform: scale(1.03);
 	}
 
 	.card-image-placeholder {
@@ -93,18 +70,16 @@ const { slug, title, heroStatement, image } = Astro.props;
 	.card-body {
 		padding: 1.25rem;
 		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
 	}
 
 	.card-title {
 		font-size: 1.1rem;
 		font-weight: 600;
 		color: var(--color-text);
-		margin-bottom: 0.4rem;
-		transition: color 0.2s ease;
-	}
-
-	.project-card:hover .card-title {
-		color: var(--color-primary);
+		margin: 0;
 	}
 
 	.hero-statement {
@@ -112,5 +87,6 @@ const { slug, title, heroStatement, image } = Astro.props;
 		font-size: 0.875rem;
 		line-height: 1.5;
 		margin: 0;
+		flex: 1;
 	}
 </style>
