@@ -14,5 +14,10 @@
 	"labels": ["dependencies"],
 	"prConcurrentLimit": 3,
 	"semanticCommitType": "deps",
-	"packageRules": []
+	"packageRules": [
+		{
+			"matchPackageNames": ["astro", "@astrojs/**"],
+			"groupName": "Astro packages"
+		}
+	]
 }
