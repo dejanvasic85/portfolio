@@ -81,7 +81,7 @@ const canonicalURL = new URL(cleanPath, Astro.site).href;
 				<nav class="main-nav">
 					<a href="/" class={normalizedPathname === '' ? 'active' : ''}>Home</a>
 					<a href="/cv" class={normalizedPathname === '/cv' ? 'active' : ''}>CV</a>
-					<a href="/projects" class={normalizedPathname === '/projects' ? 'active' : ''}>Projects</a
+					<a href="/projects" class={normalizedPathname.startsWith('/projects') ? 'active' : ''}>Projects</a
 					>
 					<a href="/blog" class={normalizedPathname === '/blog' ? 'active' : ''}>Blog</a>
 					<ThemeToggle />

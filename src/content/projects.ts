@@ -1,5 +1,6 @@
 export const projects = [
 	{
+		slug: 'williamstown-sc',
 		title: 'Williamstown SC',
 		heroStatement:
 			'Modern website for a local soccer club in Melbourne with fixture management, news updates, and sponsorship showcase.',
@@ -27,6 +28,7 @@ export const projects = [
 		}
 	},
 	{
+		slug: 'ses-melbourne',
 		title: 'SES Melbourne',
 		heroStatement:
 			'Transforming an electrical business website into a modern, fast and daily lead generating website.',
@@ -54,6 +56,7 @@ export const projects = [
 		}
 	},
 	{
+		slug: 'jlc-carpentry',
 		title: 'JLC Carpentry & Building Services',
 		heroStatement:
 			'Professional website for Melbourne-based carpentry business with videos and SEO optimization.',
@@ -79,6 +82,7 @@ export const projects = [
 		}
 	},
 	{
+		slug: 'my-notes',
 		title: 'My Notes',
 		heroStatement:
 			'A privacy-focused note-sharing app that replaced Google Keep for 10+ family users.',
@@ -104,6 +108,7 @@ export const projects = [
 		}
 	},
 	{
+		slug: 'my-portfolio',
 		title: 'My Portfolio Website',
 		heroStatement:
 			'Professional online presence showcasing technical expertise and thought leadership.',

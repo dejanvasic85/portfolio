@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { projects } from '../../content/projects';
+---
+
+<Layout title="Projects - Dejan Vasic">
+	<main class="container">
+		<h1>Dejan Vasic's projects</h1>
+		<p class="intro">A selection of client and personal projects I've built.</p>
+		<div class="projects-list">
+			{
+				projects.map((project) => (
+					<ProjectCard
+						slug={project.slug}
+						title={project.title}
+						heroStatement={project.heroStatement}
+						image={project.images.desktop}
+					/>
+				))
+			}
+		</div>
+
+		<a href="/" class="btn-link" style="margin-top: 2rem;">← Back to Home</a>
+	</main>
+</Layout>
+
+<style>
+	.intro {
+		color: var(--color-text-light);
+		margin-bottom: 3rem;
+		font-size: 1.2rem;
+		font-weight: 400;
+	}
+
+	.projects-list {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+		margin-bottom: 3rem;
+	}
+
+	@media (min-width: 600px) {
+		.projects-list {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+</style>
