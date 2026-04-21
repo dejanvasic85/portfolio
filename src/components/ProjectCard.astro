@@ -24,7 +24,7 @@ const { slug, title, heroStatement, image } = Astro.props;
 	<div class="card-body">
 		<h2 class="card-title">{title}</h2>
 		<p class="hero-statement">{heroStatement}</p>
-		<a href={`/projects/${slug}`} class="btn-link small">View details →</a>
+		<a href={`/projects/${slug}`} class="details-link">View details →</a>
 	</div>
 </article>
 
@@ -88,5 +88,11 @@ const { slug, title, heroStatement, image } = Astro.props;
 		line-height: 1.5;
 		margin: 0;
 		flex: 1;
+	}
+
+	.details-link {
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: var(--color-primary);
 	}
 </style>
