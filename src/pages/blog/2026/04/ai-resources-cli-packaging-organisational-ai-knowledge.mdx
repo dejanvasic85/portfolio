@@ -23,6 +23,24 @@ npx @org/ai-resources add --preset devops --scope project --copy --yes
 
 The `catalog/` directory has four resource types:
 
+```
+catalog/
+├── agents/
+│   └── code-reviewer.md
+├── instructions/
+│   └── organization/
+│       └── organization.instructions.md
+├── presets/
+│   └── devops.json
+├── schemas/
+│   └── preset.schema.json
+└── skills/
+    ├── pnpm-migration/
+    │   └── SKILL.md
+    └── security-review/
+        └── SKILL.md
+```
+
 - **Skills**: reusable agent capabilities (`SKILL.md` files)
 - **Instructions**: org conventions and context (`*.instructions.md` files)
 - **Agents**: agent configuration markdown files
@@ -34,7 +52,22 @@ Each type is validated against JSON schemas, so nothing is free-form.
 
 Individual skills are useful. Presets are where it gets interesting.
 
-Instead of an engineer manually assembling the right resources for a devops context, they install one preset and get a curated bundle that represents how the org does that kind of work with agents. Update the preset in one place, and the change distributes through normal publishing workflows. No manual syncing.
+Instead of an engineer manually assembling the right resources for a devops context, they install one preset and get a curated bundle that represents how the org does that kind of work with agents. Here's what a preset looks like:
+
+```json
+{
+  "name": "devops",
+  "description": "Resources for DevOps workflows: infrastructure, CI/CD, and deployment practices",
+  "resources": [
+    { "type": "skill", "name": "security-review" },
+    { "type": "skill", "name": "pnpm-migration" },
+    { "type": "instruction", "name": "organization" },
+    { "type": "agent", "name": "code-reviewer" }
+  ]
+}
+```
+
+One install, four resources, all curated for the context. Update the preset in one place and the change distributes through normal publishing workflows. No manual syncing across repos.
 
 ## This is platform work, not prompt wrangling
 
