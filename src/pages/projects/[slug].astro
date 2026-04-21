@@ -3,14 +3,12 @@ import Layout from '../../layouts/Layout.astro';
 import Project from '../../components/Project.astro';
 import { projects } from '../../content/projects';
 
-export function getStaticPaths() {
-	return projects.map((project) => ({
-		params: { slug: project.slug },
-		props: { project }
-	}));
-}
+const { slug } = Astro.params;
+const project = projects.find((p) => p.slug === slug);
 
-const { project } = Astro.props;
+if (!project) {
+	return Astro.redirect('/projects');
+}
 ---
 
 <Layout title={`${project.title} - Dejan Vasic`} description={project.heroStatement}>

@@ -1,24 +1,30 @@
 ---
-import Tags from './Tags.astro';
-
 interface Props {
 	slug: string;
 	title: string;
 	heroStatement: string;
-	tags: string[];
+	image: string | null;
 }
 
-const { slug, title, heroStatement, tags } = Astro.props;
+const { slug, title, heroStatement, image } = Astro.props;
 ---
 
 <article class="project-card">
 	<a href={`/projects/${slug}`} class="card-link">
+		<div class="card-image">
+			{
+				image ? (
+					<img src={image} alt={`${title} preview`} />
+				) : (
+					<div class="card-image-placeholder">
+						<span>{title[0]}</span>
+					</div>
+				)
+			}
+		</div>
 		<div class="card-body">
 			<h2 class="card-title">{title}</h2>
 			<p class="hero-statement">{heroStatement}</p>
-		</div>
-		<div class="card-footer">
-			<Tags tags={tags} />
 		</div>
 	</a>
 </article>
@@ -28,6 +34,7 @@ const { slug, title, heroStatement, tags } = Astro.props;
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-md);
 		background-color: var(--color-background-alt);
+		overflow: hidden;
 		transition:
 			border-color 0.2s ease,
 			box-shadow 0.2s ease;
@@ -42,7 +49,6 @@ const { slug, title, heroStatement, tags } = Astro.props;
 		display: flex;
 		flex-direction: column;
 		height: 100%;
-		padding: 1.5rem;
 		text-decoration: none;
 		color: inherit;
 	}
@@ -51,16 +57,49 @@ const { slug, title, heroStatement, tags } = Astro.props;
 		text-decoration: none;
 	}
 
+	.card-image {
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		overflow: hidden;
+		background-color: var(--color-background-hover);
+	}
+
+	.card-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: top;
+		display: block;
+		transition: transform 0.3s ease;
+	}
+
+	.project-card:hover .card-image img {
+		transform: scale(1.03);
+	}
+
+	.card-image-placeholder {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: linear-gradient(135deg, var(--color-primary-light), var(--color-background-hover));
+		font-size: 3rem;
+		font-weight: 700;
+		color: var(--color-primary);
+		opacity: 0.6;
+	}
+
 	.card-body {
+		padding: 1.25rem;
 		flex: 1;
-		margin-bottom: 1rem;
 	}
 
 	.card-title {
-		font-size: 1.25rem;
+		font-size: 1.1rem;
 		font-weight: 600;
 		color: var(--color-text);
-		margin-bottom: 0.5rem;
+		margin-bottom: 0.4rem;
 		transition: color 0.2s ease;
 	}
 
@@ -70,12 +109,8 @@ const { slug, title, heroStatement, tags } = Astro.props;
 
 	.hero-statement {
 		color: var(--color-text-light);
-		font-size: 0.95rem;
-		line-height: 1.6;
+		font-size: 0.875rem;
+		line-height: 1.5;
 		margin: 0;
-	}
-
-	.card-footer {
-		margin-top: auto;
 	}
 </style>
