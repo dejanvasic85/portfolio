@@ -1,0 +1,82 @@
+---
+layout: ../../../../layouts/BlogLayout.astro
+title: 'Packaging Organisational AI Knowledge with an Internal Skills CLI'
+date: April 21, 2026
+tags: ['ai', 'developer tooling', 'internal developer platform', 'cli', 'platform engineering']
+excerpt: 'As teams start using AI agents seriously, their useful context ends up everywhere. We built an internal CLI to treat those resources like proper versioned software assets.'
+---
+
+There's a phase every engineering team goes through when they start taking AI agents seriously. Someone writes a useful prompt. Someone else copies it into a different repo. A third person writes a slightly better version from scratch because they didn't know the first one existed. Before long you have a dozen variations of the same thing scattered across wikis, markdown files, and Slack DMs.
+
+That's agent setup sprawl. The fix is the same one we've applied to lint configs, scaffolding tools, and golden paths: packaging, distribution, and lifecycle management.
+
+## Organisation wide AI resource tooling
+
+I took the inspiration from [skills.sh](https://skills.sh) to build a catalog of shareable skills, agent configurations, and presets that bundle both. It lives in a repository that any engineer in the org can contribute to, and it's installable via a CLI. Let's take a look.
+
+```bash
+npx @org/ai-resources list
+npx @org/ai-resources add --preset devops --scope project --copy --yes
+```
+
+## What's in the catalog
+
+The `catalog/` directory has four resource types:
+
+```
+catalog/
+├── agents/
+│   └── code-reviewer.md
+├── instructions/
+│   └── organization/
+│       └── organization.instructions.md
+├── presets/
+│   └── devops.json
+├── schemas/
+│   └── preset.schema.json
+└── skills/
+    ├── pnpm-migration/
+    │   └── SKILL.md
+    └── security-review/
+        └── SKILL.md
+```
+
+- **Skills**: reusable agent capabilities (`SKILL.md` files)
+- **Instructions**: org conventions and context (`*.instructions.md` files)
+- **Agents**: agent configuration markdown files
+- **Presets**: JSON manifests that bundle multiple resources for a domain or team
+
+Each type is validated against JSON schemas, so nothing is free-form.
+
+## Why presets matter
+
+Individual skills are useful. Presets are where it gets interesting.
+
+Instead of an engineer manually assembling the right resources for a devops context, they install one preset and get a curated bundle that represents how the org does that kind of work with agents. Here's what a preset looks like:
+
+```json
+{
+  "name": "devops",
+  "description": "Resources for DevOps workflows: infrastructure, CI/CD, and deployment practices",
+  "resources": [
+    { "type": "skill", "name": "security-review" },
+    { "type": "skill", "name": "pnpm-migration" },
+    { "type": "instruction", "name": "organization" },
+    { "type": "agent", "name": "code-reviewer" }
+  ]
+}
+```
+
+One install, four resources, all curated for the context. Update the preset in one place and the change distributes through normal publishing workflows. No manual syncing across repos.
+
+## This is platform work, not prompt wrangling
+
+The implementation is TypeScript, published through GitHub Packages, with CI running type checks, linting, tests, and a build on every PR. Releases are managed through Changesets.
+
+That level of rigour matters because it signals intent. It's not a folder someone threw prompts into. It's internal infrastructure with a version history and quality gates, which is what makes shared tooling actually get adopted.
+
+## The payoff
+
+The real win isn't convenience. It's that good agent behaviour becomes portable. The team that figured out the right context for code review doesn't keep that knowledge to themselves. It becomes a named resource any team can install, versioned and updated centrally.
+
+Standardisation is slow to set up and fast to pay back. This is just that, applied to AI context.
