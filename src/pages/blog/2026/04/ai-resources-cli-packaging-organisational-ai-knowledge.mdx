@@ -6,111 +6,44 @@ tags: ['ai', 'developer tooling', 'internal developer platform', 'cli', 'platfor
 excerpt: 'As teams start using AI agents seriously, their useful context ends up everywhere. We built an internal CLI to treat those resources like proper versioned software assets.'
 ---
 
-There's a phase every engineering team goes through when they start taking AI agents seriously. At first, someone writes a useful prompt somewhere. Then someone else copies it into a different repo. Then a third person writes a slightly better version from scratch because they didn't know the first one existed. Before long you have a dozen variations of "how to do code review with an AI agent" scattered across wikis, markdown files, and Slack DMs.
+There's a phase every engineering team goes through when they start taking AI agents seriously. Someone writes a useful prompt. Someone else copies it into a different repo. A third person writes a slightly better version from scratch because they didn't know the first one existed. Before long you have a dozen variations of the same thing scattered across wikis, markdown files, and Slack DMs.
 
-That's agent setup sprawl, and it's annoying in the same way that inconsistent lint configs were annoying before tooling standardised them, except with AI context, the inconsistency actually changes how your agents behave across teams.
-
-## The problem is familiar, even if the payload is new
-
-The engineering problem here isn't really "AI." It's packaging, distribution, discoverability, and lifecycle management. That's a problem we've solved before with libraries, lint rules, scaffolding tools, and internal CLIs. The payload this time just happens to be skills, instructions, and agent configurations rather than npm packages or Terraform modules.
-
-At Open Universities Australia, we started asking the obvious question: what if we treated AI resources the same way we treat other shared developer assets?
+That's agent setup sprawl. The fix is the same one we've applied to lint configs, scaffolding tools, and golden paths: packaging, distribution, and lifecycle management.
 
 ## Enter `ai-resources`
 
-`ai-resources` is OUA's internal CLI and catalog for managing installable AI agent resources. The short description from the repo itself says it well: it's "a catalog of AI resources for agents at OUA and a CLI for installing them."
-
-The inspiration came from Vercel's `npx skills` ecosystem, which treats agent capabilities as installable, versioned units. We wanted that same model but as an internal layer, not a public marketplace, but an opinionated catalog for how OUA teams work.
-
-The CLI is published as `@open-universities-australia/ai-resources` and you can run it with `npx`:
+`ai-resources` is an internal CLI and catalog for managing installable AI agent resources. Inspired by Vercel's `npx skills` ecosystem, the idea is simple: treat agent context like a versioned package you can discover and install, not a file you copy around.
 
 ```bash
-npx @open-universities-australia/ai-resources list
+npx @org/ai-resources list
+npx @org/ai-resources add --preset devops --scope project --copy --yes
 ```
 
 ## What's in the catalog
 
-The repository has a structured `catalog/` directory with four resource types:
+The `catalog/` directory has four resource types:
 
-- **Skills**: reusable agent capabilities, stored as `SKILL.md` files under `catalog/skills/`
-- **Instructions**: organisational context and conventions as `*.instructions.md` files
+- **Skills**: reusable agent capabilities (`SKILL.md` files)
+- **Instructions**: org conventions and context (`*.instructions.md` files)
 - **Agents**: agent configuration markdown files
-- **Presets**: JSON manifests that bundle multiple resources together for a domain or use case
+- **Presets**: JSON manifests that bundle multiple resources for a domain or team
 
-Each type is validated against JSON schemas in `catalog/schemas/`, so resources aren't just free-form markdown. They have a defined shape.
+Each type is validated against JSON schemas, so nothing is free-form.
 
-## The CLI in practice
+## Why presets matter
 
-The three main workflows are list, add, and remove.
+Individual skills are useful. Presets are where it gets interesting.
 
-**Discovering what's available:**
+Instead of an engineer manually assembling the right resources for a devops context, they install one preset and get a curated bundle that represents how the org does that kind of work with agents. Update the preset in one place, and the change distributes through normal publishing workflows. No manual syncing.
 
-```bash
-npx @open-universities-australia/ai-resources list
-npx @open-universities-australia/ai-resources list --type skills
-npx @open-universities-australia/ai-resources list --type presets
-```
+## This is platform work, not prompt wrangling
 
-**Installing into a project:**
+The implementation is TypeScript, published through GitHub Packages, with CI running type checks, linting, tests, and a build on every PR. Releases are managed through Changesets.
 
-```bash
-npx @open-universities-australia/ai-resources add --skill pnpm-migration --scope project --copy --yes
-npx @open-universities-australia/ai-resources add --instruction organization --scope project --copy --yes
-npx @open-universities-australia/ai-resources add --preset devops --scope project --copy --yes
-```
+That level of rigour matters because it signals intent. It's not a folder someone threw prompts into. It's internal infrastructure with a version history and quality gates, which is what makes shared tooling actually get adopted.
 
-**Removing when you no longer need them:**
+## The payoff
 
-```bash
-npx @open-universities-australia/ai-resources remove --skill pnpm-migration --yes
-npx @open-universities-australia/ai-resources remove --preset devops --yes
-```
+The real win isn't convenience. It's that good agent behaviour becomes portable. The team that figured out the right context for code review doesn't keep that knowledge to themselves. It becomes a named resource any team can install, versioned and updated centrally.
 
-The `--scope` flag lets you install project-level or globally. `--target-agent` supports different agent targets like `copilot` and `opencode`. The `--copy` flag copies the resource files directly, and `--yes` skips confirmation prompts.
-
-What I like about this interface is that it mirrors the mental model engineers already have from package managers. Discover, install, remove. Familiar enough to not require a manual.
-
-## Why presets are the interesting bit
-
-Individual skills and instructions are useful, but presets are where the model gets genuinely powerful.
-
-A preset bundles multiple resources into a higher-level package for a domain or team. Instead of an engineer manually picking which skills a devops-focused agent should have, they can run:
-
-```bash
-npx @open-universities-australia/ai-resources add --preset devops --scope project --copy --yes
-```
-
-And get a curated set of resources that represents how OUA does devops with agents. That's the difference between giving someone a bag of LEGO and giving them the instructions for the specific thing you want to build.
-
-Presets also make it possible to update an opinionated bundle in one place and distribute the change across teams through normal publishing workflows, rather than hoping everyone manually stays in sync.
-
-## This is proper engineering, not a folder of prompts
-
-The implementation is TypeScript, published through GitHub Packages, with CI running format checks, type checks, linting, tests, and a build on every PR. Releases are managed through Changesets, so there's a proper changelog and version history.
-
-Consumers configure it like any scoped internal package:
-
-```ini
-@open-universities-australia:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_PACKAGES_TOKEN}
-```
-
-That matters because it signals intent. This isn't a side project someone threw together. It's internal infrastructure with a release lifecycle, quality gates, and a distribution model. That's the level of maturity that makes shared tooling actually get adopted.
-
-## The real leverage
-
-Convenience is a nice side effect, but it's not the main point. The real value is that good agent behaviour becomes portable.
-
-Without something like this, the team that figured out how to give their code-review agent the right context for OUA's conventions keeps that knowledge to themselves. With it, that same context becomes a named resource that any team can install, and that gets updated centrally when conventions change.
-
-That's the same leverage we got from shared lint configs, from design systems, from golden path templates. Standardisation is slow to set up and fast to pay back.
-
-## What's still to figure out
-
-I'm likely just scratching the surface on where this kind of tooling can go. The interesting open questions are around discovery: how do engineers find out what's available and what's recommended for their context? And versioning gets complex when shared resources evolve but projects have pinned copies.
-
-There's also the question of how much standardisation is actually the right amount. Not everything should be centralised, and the catalog has to earn its place by being genuinely useful rather than becoming another internal system that people route around.
-
-But the foundation is solid: treat agent resources like code assets, version them, distribute them through familiar tooling, and make the good stuff easy to find.
-
-That's not a novel idea. It's just finally time to apply it here.
+Standardisation is slow to set up and fast to pay back. This is just that, applied to AI context.
