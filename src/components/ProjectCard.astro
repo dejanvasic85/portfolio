@@ -12,37 +12,70 @@ const { slug, title, heroStatement, tags } = Astro.props;
 ---
 
 <article class="project-card">
-	<h2>
-		<a href={`/projects/${slug}`}>{title}</a>
-	</h2>
-	<p class="hero-statement">{heroStatement}</p>
-	<Tags tags={tags} />
-	<a href={`/projects/${slug}`} class="btn-link small">View project →</a>
+	<a href={`/projects/${slug}`} class="card-link">
+		<div class="card-body">
+			<h2 class="card-title">{title}</h2>
+			<p class="hero-statement">{heroStatement}</p>
+		</div>
+		<div class="card-footer">
+			<Tags tags={tags} />
+		</div>
+	</a>
 </article>
 
 <style>
 	.project-card {
-		padding-bottom: 2rem;
-		border-bottom: 1px solid var(--color-border);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		background-color: var(--color-background-alt);
+		transition:
+			border-color 0.2s ease,
+			box-shadow 0.2s ease;
 	}
 
-	.project-card h2 {
-		font-size: 1.5rem;
-		margin-bottom: 0.5rem;
+	.project-card:hover {
+		border-color: var(--color-primary);
+		box-shadow: var(--shadow-card-hover);
 	}
 
-	.project-card h2 a {
-		color: var(--color-text);
+	.card-link {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		padding: 1.5rem;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.card-link:hover {
 		text-decoration: none;
 	}
 
-	.project-card h2 a:hover {
+	.card-body {
+		flex: 1;
+		margin-bottom: 1rem;
+	}
+
+	.card-title {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: var(--color-text);
+		margin-bottom: 0.5rem;
+		transition: color 0.2s ease;
+	}
+
+	.project-card:hover .card-title {
 		color: var(--color-primary);
 	}
 
 	.hero-statement {
 		color: var(--color-text-light);
+		font-size: 0.95rem;
 		line-height: 1.6;
-		margin-bottom: 1rem;
+		margin: 0;
+	}
+
+	.card-footer {
+		margin-top: auto;
 	}
 </style>
