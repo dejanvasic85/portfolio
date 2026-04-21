@@ -8,7 +8,7 @@ excerpt: 'As teams start using AI agents seriously, their useful context ends up
 
 There's a phase every engineering team goes through when they start taking AI agents seriously. At first, someone writes a useful prompt somewhere. Then someone else copies it into a different repo. Then a third person writes a slightly better version from scratch because they didn't know the first one existed. Before long you have a dozen variations of "how to do code review with an AI agent" scattered across wikis, markdown files, and Slack DMs.
 
-That's agent setup sprawl, and it's annoying in the same way that inconsistent lint configs were annoying before tooling standardised them — except with AI context, the inconsistency actually changes how your agents behave across teams.
+That's agent setup sprawl, and it's annoying in the same way that inconsistent lint configs were annoying before tooling standardised them, except with AI context, the inconsistency actually changes how your agents behave across teams.
 
 ## The problem is familiar, even if the payload is new
 
@@ -18,9 +18,9 @@ At Open Universities Australia, we started asking the obvious question: what if 
 
 ## Enter `ai-resources`
 
-`ai-resources` is OUA's internal CLI and catalog for managing installable AI agent resources. The short description from the repo itself says it well — it's "a catalog of AI resources for agents at OUA and a CLI for installing them."
+`ai-resources` is OUA's internal CLI and catalog for managing installable AI agent resources. The short description from the repo itself says it well: it's "a catalog of AI resources for agents at OUA and a CLI for installing them."
 
-The inspiration came from Vercel's `npx skills` ecosystem, which treats agent capabilities as installable, versioned units. We wanted that same model but as an internal layer — not a public marketplace, but an opinionated catalog for how OUA teams work.
+The inspiration came from Vercel's `npx skills` ecosystem, which treats agent capabilities as installable, versioned units. We wanted that same model but as an internal layer, not a public marketplace, but an opinionated catalog for how OUA teams work.
 
 The CLI is published as `@open-universities-australia/ai-resources` and you can run it with `npx`:
 
@@ -32,10 +32,10 @@ npx @open-universities-australia/ai-resources list
 
 The repository has a structured `catalog/` directory with four resource types:
 
-- **Skills** — reusable agent capabilities, stored as `SKILL.md` files under `catalog/skills/`
-- **Instructions** — organisational context and conventions as `*.instructions.md` files
-- **Agents** — agent configuration markdown files
-- **Presets** — JSON manifests that bundle multiple resources together for a domain or use case
+- **Skills**: reusable agent capabilities, stored as `SKILL.md` files under `catalog/skills/`
+- **Instructions**: organisational context and conventions as `*.instructions.md` files
+- **Agents**: agent configuration markdown files
+- **Presets**: JSON manifests that bundle multiple resources together for a domain or use case
 
 Each type is validated against JSON schemas in `catalog/schemas/`, so resources aren't just free-form markdown. They have a defined shape.
 
@@ -107,7 +107,7 @@ That's the same leverage we got from shared lint configs, from design systems, f
 
 ## What's still to figure out
 
-I'm likely just scratching the surface on where this kind of tooling can go. The interesting open questions are around discovery — how do engineers find out what's available and what's recommended for their context? And versioning gets complex when shared resources evolve but projects have pinned copies.
+I'm likely just scratching the surface on where this kind of tooling can go. The interesting open questions are around discovery: how do engineers find out what's available and what's recommended for their context? And versioning gets complex when shared resources evolve but projects have pinned copies.
 
 There's also the question of how much standardisation is actually the right amount. Not everything should be centralised, and the catalog has to earn its place by being genuinely useful rather than becoming another internal system that people route around.
 

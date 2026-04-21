@@ -70,8 +70,9 @@ Write in **Dejan's voice** — here's what that means in practice:
 **What to avoid:**
 - Excessive emojis (one or two max, only if they feel natural)
 - Generic advice that applies to everything ("always write clean code")
-- Padding — if a section doesn't add value, cut it
+- Padding: if a section doesn't add value, cut it
 - Passive voice where active works fine
+- Em-dashes (—): NEVER use them. Use a colon, comma, or rewrite the sentence instead.
 
 **Length:** Match the complexity of the topic. A quick tip can be 300 words. A deep architectural post can be 800+. Don't pad, don't truncate.
 
