@@ -1,0 +1,32 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Project from '../../components/Project.astro';
+import { projects } from '../../content/projects';
+
+export function getStaticPaths() {
+	return projects.map((project) => ({
+		params: { slug: project.slug },
+		props: { project }
+	}));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout title={`${project.title} - Dejan Vasic`} description={project.heroStatement}>
+	<main class="container">
+		<Project
+			title={project.title}
+			heroStatement={project.heroStatement}
+			description={project.description}
+			businessMetrics={project.businessMetrics}
+			testimonial={project.testimonial}
+			tags={project.tags}
+			projectUrl={project.projectUrl}
+			sourceCodeUrl={project.sourceCodeUrl}
+			images={project.images}
+		/>
+
+		<a href="/projects" class="btn-link" style="margin-top: 2rem;">← Back to Projects</a>
+	</main>
+</Layout>

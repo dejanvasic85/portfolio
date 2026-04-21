@@ -1,0 +1,48 @@
+---
+import Tags from './Tags.astro';
+
+interface Props {
+	slug: string;
+	title: string;
+	heroStatement: string;
+	tags: string[];
+}
+
+const { slug, title, heroStatement, tags } = Astro.props;
+---
+
+<article class="project-card">
+	<h2>
+		<a href={`/projects/${slug}`}>{title}</a>
+	</h2>
+	<p class="hero-statement">{heroStatement}</p>
+	<Tags tags={tags} />
+	<a href={`/projects/${slug}`} class="btn-link small">View project →</a>
+</article>
+
+<style>
+	.project-card {
+		padding-bottom: 2rem;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.project-card h2 {
+		font-size: 1.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.project-card h2 a {
+		color: var(--color-text);
+		text-decoration: none;
+	}
+
+	.project-card h2 a:hover {
+		color: var(--color-primary);
+	}
+
+	.hero-statement {
+		color: var(--color-text-light);
+		line-height: 1.6;
+		margin-bottom: 1rem;
+	}
+</style>
