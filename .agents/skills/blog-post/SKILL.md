@@ -73,6 +73,7 @@ Write in **Dejan's voice** — here's what that means in practice:
 - Padding: if a section doesn't add value, cut it
 - Passive voice where active works fine
 - Em-dashes (—): NEVER use them. Use a colon, comma, or rewrite the sentence instead.
+- Cliché section headings and phrases: never use "Enter X" to introduce a tool or concept, never use "Let's dive in", "In conclusion", "In summary", "It's worth noting", or similar filler. Introduce tools and concepts naturally in the flow of the writing.
 
 **Length:** Match the complexity of the topic. A quick tip can be 300 words. A deep architectural post can be 800+. Don't pad, don't truncate.
 

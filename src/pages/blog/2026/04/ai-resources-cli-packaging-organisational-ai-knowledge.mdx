@@ -10,9 +10,9 @@ There's a phase every engineering team goes through when they start taking AI ag
 
 That's agent setup sprawl. The fix is the same one we've applied to lint configs, scaffolding tools, and golden paths: packaging, distribution, and lifecycle management.
 
-## Enter `ai-resources`
+## Organisation wide AI resource tooling
 
-`ai-resources` is an internal CLI and catalog for managing installable AI agent resources. Inspired by Vercel's `npx skills` ecosystem, the idea is simple: treat agent context like a versioned package you can discover and install, not a file you copy around.
+I took the inspiration from [skills.sh](https://skills.sh) to build a catalog of shareable skills, agent configurations, and presets that bundle both. It lives in a repository that any engineer in the org can contribute to, and it's installable via a CLI. Let's take a look.
 
 ```bash
 npx @org/ai-resources list
