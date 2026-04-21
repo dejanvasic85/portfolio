@@ -21,6 +21,10 @@ interface Props {
 const { title, company, location, startDate, endDate, responsibilities, skills, publications } =
 	Astro.props;
 
+const initialCount = 3;
+const visibleItems = responsibilities.slice(0, initialCount);
+const hiddenItems = responsibilities.slice(initialCount);
+
 // Function to format date for timeline display
 function formatTimelineDate(dateStr: string): string {
 	const monthNames = [
@@ -95,9 +99,18 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 			</div>
 		</div>
 
-		<ul class="responsibilities">
-			{responsibilities.map((responsibility) => <li>{responsibility}</li>)}
+		<ul class={`responsibilities${hiddenItems.length > 0 ? ' responsibilities-partial' : ''}`}>
+			{visibleItems.map((responsibility) => <li>{responsibility}</li>)}
 		</ul>
+
+		{hiddenItems.length > 0 && (
+			<details class="responsibilities-more">
+				<summary class="read-more-toggle">Show {hiddenItems.length} more</summary>
+				<ul class="responsibilities responsibilities-hidden">
+					{hiddenItems.map((responsibility) => <li>{responsibility}</li>)}
+				</ul>
+			</details>
+		)}
 
 		{skills && <SkillCategory title="Skills" skills={skills} />}
 
@@ -112,7 +125,7 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 									href={pub.url}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="btn-link btn-link-external list"
+									class="publication-link"
 								>
 									{pub.title}
 								</a>
@@ -294,6 +307,51 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 		line-height: 1.5;
 	}
 
+	.responsibilities-partial {
+		margin-bottom: 0.5rem;
+	}
+
+	.responsibilities-more {
+		margin-bottom: 1.5rem;
+	}
+
+	.read-more-toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		cursor: pointer;
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: var(--color-primary);
+		list-style: none;
+		user-select: none;
+		padding: 0.25rem 0;
+		transition: color 0.2s ease;
+	}
+
+	.read-more-toggle::-webkit-details-marker {
+		display: none;
+	}
+
+	.read-more-toggle::before {
+		content: '▶';
+		font-size: 0.6rem;
+		transition: transform 0.2s ease;
+		display: inline-block;
+	}
+
+	.responsibilities-more[open] .read-more-toggle::before {
+		transform: rotate(90deg);
+	}
+
+	.read-more-toggle:hover {
+		color: var(--color-secondary);
+	}
+
+	.responsibilities-hidden {
+		margin-top: 0.5rem;
+	}
+
 	.publications {
 		margin-top: 1.5rem;
 		padding-top: 1.5rem;
@@ -316,6 +374,27 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 
 	.publication-list li {
 		margin-bottom: 0;
+	}
+
+	.publication-link {
+		color: var(--color-primary);
+		text-decoration: none;
+		font-size: 0.9rem;
+	}
+
+	.publication-link::after {
+		content: ' ↗';
+		font-size: 0.75rem;
+		opacity: 0.7;
+		transition: opacity 0.2s ease;
+	}
+
+	.publication-link:hover {
+		text-decoration: underline;
+	}
+
+	.publication-link:hover::after {
+		opacity: 1;
 	}
 
 	/* Timeline line connecting dots */
