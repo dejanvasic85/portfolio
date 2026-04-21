@@ -125,7 +125,7 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 									href={pub.url}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="btn-link btn-link-external list"
+									class="publication-link"
 								>
 									{pub.title}
 								</a>
@@ -374,6 +374,27 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 
 	.publication-list li {
 		margin-bottom: 0;
+	}
+
+	.publication-link {
+		color: var(--color-primary);
+		text-decoration: none;
+		font-size: 0.9rem;
+	}
+
+	.publication-link::after {
+		content: ' ↗';
+		font-size: 0.75rem;
+		opacity: 0.7;
+		transition: opacity 0.2s ease;
+	}
+
+	.publication-link:hover {
+		text-decoration: underline;
+	}
+
+	.publication-link:hover::after {
+		opacity: 1;
 	}
 
 	/* Timeline line connecting dots */
