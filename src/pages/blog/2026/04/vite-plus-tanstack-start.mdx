@@ -6,21 +6,19 @@ tags: ['tanstack', 'vite+', 'cloudflare', 'nextjs', 'vercel', 'github actions']
 excerpt: 'I tested a new stack from scratch and compared it to my Next.js and Vercel baseline. It works, but I had to build parts of the deployment DX myself.'
 ---
 
-I wanted to stress test a stack that is totally new to me and answer one thing fast: can this become my default project template, or is it another weekend experiment that dies in a branch?
+Vercel and Nextjs still seems to have the best experience for getting from zero to production. I keep hearing their prices are high with Cloudflare being a great alternative. Nextjs isn't available on Cloudflare though [yet](https://syntax.fm/show/995/next-js-vendor-lock-in-no-more), unless I go with OpenNext but I heard it's nothing but pain. So I opted for Tanstack Start! With all the AI tools available, nobody gets excited anymore but I do! I couldn't wait to learn something new along the way.
 
-My baseline is Next.js on Vercel. That combo is still the gold standard for "push code, get preview, move on with life."
+Here's what I'm going with:
 
-This time I went with Vite+, TanStack Start, and Cloudflare Workers.
+- Vite+,
+- TanStack Start
+- Cloudflare Workers
 
 Short version: I got it working, it is genuinely fast, and I trust it enough to reuse. But it is not as instant as Vercel out of the box.
 
 ## What I actually wanted to prove
 
-I was not trying to crown a winner.
-
-I wanted a practical answer: can I go from zero to production deploy plus PR previews, without hand-holding every release?
-
-If yes, this becomes a starter. If no, I file it under "cool idea" and move on.
+I wanted a practical answer: can I go from zero to production deploy plus PR previews, without hand-holding every release? This is what Vercel excels at. You just point to your Github repository and you get instant deployments for every branch.
 
 ## What worked well quickly
 
@@ -35,11 +33,9 @@ Vite+ was the biggest practical win for day-to-day flow. I standardized everythi
 - `vp test`
 - `vp build`
 
-That one decision removed a lot of "works on my machine" nonsense.
+That one decision removed a lot of "works on my machine" nonsense. 5 stars for Vite+!
 
 ## What I had to build manually
-
-This is where the Vercel comparison gets real.
 
 To get a Vercel-style preview flow, I had to build the whole lifecycle myself in GitHub Actions.
 
@@ -71,16 +67,12 @@ That does not make the Cloudflare route worse. It just moves responsibility back
 
 ## Where Void fits in
 
-I am paying close attention to Void.
-
-An opinionated Cloudflare-first framework on top of Vite+ is exactly what could close this DX gap. Right now it is not ready, so I treated this as a ground-up build.
+I am paying close attention to [Void](https://void.cloud/). An opinionated Cloudflare-first framework on top of Vite+ is exactly what could close this DX gap. Right now it is not ready, so I treated this as a ground-up build.
 
 If Void bakes in the patterns I had to wire by hand, this setup gets a lot closer to the "just ship it" experience people expect from Vercel.
 
-## Final take
+## Final thoughts
 
-This experiment did exactly what I needed.
-
-The repo is template-ready for me now: reliable production deploys, automatic previews, and cleanup that does not leak resources.
+This experiment did exactly what I needed and now I have a template ready for any project. It has reliable production deploys, automatic previews, and cleanup that does not leak resources.
 
 I am not replacing Next.js and Vercel everywhere tomorrow. But I now have a Cloudflare-native starter I can trust, and that is a solid result for a first serious run at this stack.
