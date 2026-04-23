@@ -1,0 +1,86 @@
+---
+layout: ../../../../layouts/BlogLayout.astro
+title: 'Vite+ TanStack Start on Cloudflare: Fast, but Not Vercel Fast'
+date: April 23, 2026
+tags: ['tanstack', 'vite+', 'cloudflare', 'nextjs', 'vercel', 'github actions']
+excerpt: 'I tested a new stack from scratch and compared it to my Next.js and Vercel baseline. It works, but I had to build parts of the deployment DX myself.'
+---
+
+I wanted to stress test a stack that is totally new to me and answer one thing fast: can this become my default project template, or is it another weekend experiment that dies in a branch?
+
+My baseline is Next.js on Vercel. That combo is still the gold standard for "push code, get preview, move on with life."
+
+This time I went with Vite+, TanStack Start, and Cloudflare Workers.
+
+Short version: I got it working, it is genuinely fast, and I trust it enough to reuse. But it is not as instant as Vercel out of the box.
+
+## What I actually wanted to prove
+
+I was not trying to crown a winner.
+
+I wanted a practical answer: can I go from zero to production deploy plus PR previews, without hand-holding every release?
+
+If yes, this becomes a starter. If no, I file it under "cool idea" and move on.
+
+## What worked well quickly
+
+Cloudflare deploy speed is excellent.
+
+TanStack Start on Workers feels great once build output and runtime are aligned.
+
+Vite+ was the biggest practical win for day-to-day flow. I standardized everything on `vp` locally and in CI:
+
+- `vp dev`
+- `vp check`
+- `vp test`
+- `vp build`
+
+That one decision removed a lot of "works on my machine" nonsense.
+
+## What I had to build manually
+
+This is where the Vercel comparison gets real.
+
+To get a Vercel-style preview flow, I had to build the whole lifecycle myself in GitHub Actions.
+
+I had to implement and tune all of this:
+
+- Separate workflows for production deploy, preview deploy, and preview cleanup
+- Deterministic worker naming from PR number plus branch slug
+- Worker name sanitization and length limits for Cloudflare constraints
+- An extra fix for trailing hyphens in generated names
+- Concurrency control to avoid race conditions in preview deploys
+- Parsing Wrangler output to capture preview URLs
+- PR comment upsert logic so reviewers always see one current preview link
+- Cleanup on PR close to delete preview workers and avoid leftovers
+
+I also switched cleanup to `vp dlx wrangler delete ... --force`, so teardown did not depend on full dependency install state.
+
+None of this is hard in isolation. Together, it is still real platform plumbing that Vercel gives you by default.
+
+## Vite+ and Cloudflare vs Next.js and Vercel
+
+My honest take right now:
+
+- Next.js and Vercel still win on instant deployment UX
+- Vite+ plus TanStack plus Cloudflare is very workable today, but more DIY
+- If you want control over infra behavior, this stack is rewarding
+- If you want almost no setup for previews and deploys, Vercel is still ahead
+
+That does not make the Cloudflare route worse. It just moves responsibility back to you, especially for preview lifecycle and workflow reliability.
+
+## Where Void fits in
+
+I am paying close attention to Void.
+
+An opinionated Cloudflare-first framework on top of Vite+ is exactly what could close this DX gap. Right now it is not ready, so I treated this as a ground-up build.
+
+If Void bakes in the patterns I had to wire by hand, this setup gets a lot closer to the "just ship it" experience people expect from Vercel.
+
+## Final take
+
+This experiment did exactly what I needed.
+
+The repo is template-ready for me now: reliable production deploys, automatic previews, and cleanup that does not leak resources.
+
+I am not replacing Next.js and Vercel everywhere tomorrow. But I now have a Cloudflare-native starter I can trust, and that is a solid result for a first serious run at this stack.
