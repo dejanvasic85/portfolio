@@ -30,6 +30,11 @@
 - **Shiki**: Syntax highlighting for code blocks.
 - **@astrojs/sitemap**: Automatic sitemap generation.
 
+## Runtime Requirements
+
+- **Node.js**: `24.14.0` (or any `24.x` version compatible with the project's `engines` field).
+- **pnpm**: `10.33.2` (managed via `packageManager` in `package.json`).
+
 ## Why I Built This
 
 This site is my digital home to share my professional journey, projects, and technical insights. It serves as a living CV, a blog for my thoughts on software engineering, and a showcase for selected work. Building it with Astro allowed me to explore modern static site generation and best practices for performance and maintainability.
@@ -41,13 +46,13 @@ To run the site locally, follow these steps:
 1. **Install dependencies**:
 
    ```bash
-   npm install
+   pnpm install
    ```
 
 2. **Run the development server**:
 
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
 3. **Preview the site**:
@@ -56,7 +61,7 @@ To run the site locally, follow these steps:
 4. **Format code** (optional):
 
    ```bash
-   npm run format
+   pnpm format
    ```
 
 ## Deploying
