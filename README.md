@@ -34,6 +34,7 @@
 
 - **Node.js**: `24.14.0` (or any `24.x` version compatible with the project's `engines` field).
 - **pnpm**: `10.33.2` (managed via `packageManager` in `package.json`).
+- **mise**: Recommended for local tool version management via `.mise.toml`.
 
 ## Why I Built This
 
@@ -43,22 +44,28 @@ This site is my digital home to share my professional journey, projects, and tec
 
 To run the site locally, follow these steps:
 
-1. **Install dependencies**:
+1. **Install tool versions with mise** (recommended):
+
+   ```bash
+   mise install
+   ```
+
+2. **Install dependencies**:
 
    ```bash
    pnpm install
    ```
 
-2. **Run the development server**:
+3. **Run the development server**:
 
    ```bash
    pnpm dev
    ```
 
-3. **Preview the site**:
+4. **Preview the site**:
    - Open [http://localhost:4321](http://localhost:4321) in your browser.
 
-4. **Format code** (optional):
+5. **Format code** (optional):
 
    ```bash
    pnpm format
