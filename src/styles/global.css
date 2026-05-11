@@ -299,7 +299,6 @@ li {
 }
 
 .btn-link:hover {
-	transform: translateY(-2px);
 	box-shadow: 0 4px 12px rgba(59, 111, 160, 0.3);
 	background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
 	color: white;
@@ -318,7 +317,6 @@ li {
 
 .btn-link-external:hover::after {
 	opacity: 1;
-	transform: translateX(2px) translateY(-2px);
 }
 
 /* Small variant for compact spaces */
