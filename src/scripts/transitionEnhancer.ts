@@ -78,19 +78,6 @@ export class TransitionEnhancer {
 	 * Initialize interactive elements like hover effects and smooth scrolling
 	 */
 	private initializeInteractiveElements(): void {
-		// Add hover effects to project cards
-		const projectCards = document.querySelectorAll('.project-card');
-		projectCards.forEach((card) => {
-			const htmlCard = card as HTMLElement;
-			htmlCard.addEventListener('mouseenter', () => {
-				htmlCard.style.transform = 'translateY(-4px)';
-			});
-
-			htmlCard.addEventListener('mouseleave', () => {
-				htmlCard.style.transform = 'translateY(0)';
-			});
-		});
-
 		// Add smooth scrolling to anchor links
 		const anchorLinks = document.querySelectorAll('a[href^="#"]');
 		anchorLinks.forEach((link) => {
