@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@astrojs/mdx':
         specifier: ^6.0.0
-        version: 6.0.2(astro@6.4.4(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1))
+        version: 6.0.3(astro@6.4.6(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1))
       '@astrojs/rss':
         specifier: ^4.0.12
         version: 4.0.18
@@ -19,13 +19,13 @@ importers:
         version: 3.7.3
       '@astrojs/vercel':
         specifier: ^10.0.0
-        version: 10.0.8(@aws-sdk/credential-provider-web-identity@3.972.49)(astro@6.4.4(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1))(rollup@4.61.1)
+        version: 10.0.8(@aws-sdk/credential-provider-web-identity@3.972.49)(astro@6.4.6(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1))(rollup@4.61.1)
       '@aws-sdk/client-ses':
         specifier: ^3.907.0
         version: 3.1063.0
       astro:
         specifier: ^6.0.0
-        version: 6.4.4(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1)
+        version: 6.4.6(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1)
       shiki:
         specifier: ^4.0.0
         version: 4.2.0
@@ -54,11 +54,11 @@ packages:
   '@astrojs/markdown-remark@7.2.0':
     resolution: {integrity: sha512-+YxmVQu1Bd+MFfSzjq1rOJvD9+nIOJzz5YIIhdIH01RrxRkKbyKoEgyIqP3yv51MhzMDgd79QaPv+kCVPT8vHw==}
 
-  '@astrojs/mdx@6.0.2':
-    resolution: {integrity: sha512-DF1/C4lSICTspyABQ1FhCLICMOCA7jiqY23RHbdqlr27HkltGVPhJbnLwQE2YItWL7sD8O1ApjgBOUccsKkMOA==}
+  '@astrojs/mdx@6.0.3':
+    resolution: {integrity: sha512-+4P3ZvwsRAqAbBgY+uZMewFo3ficlIBPZfu/Luk+v4ia/ZOuFhpsw7r+7672uT2Fc1UPdp7yW0eU5egvSq0wbw==}
     engines: {node: '>=22.12.0'}
     peerDependencies:
-      '@astrojs/markdown-satteri': 0.2.2
+      '@astrojs/markdown-satteri': 0.3.0
       astro: ^6.4.0
     peerDependenciesMeta:
       '@astrojs/markdown-satteri':
@@ -197,8 +197,8 @@ packages:
     resolution: {integrity: sha512-zccHj2z2oCCO4yrDiRSlFOxWerGqRiysP7a5jPK6uoI9URKAquwY42Dd/iUP8JWHxEzdRe4TlbvZCo8z1/mhrw==}
     engines: {node: '>= 20.12.0'}
 
-  '@emnapi/runtime@1.10.0':
-    resolution: {integrity: sha512-ewvYlk86xUoGI0zQRNq/mC+16R1QeDlKQy21Ki3oSYXNgLb45GV1P6A0M+/s6nyCuNDqe5VpaY84BzXGwVbwFA==}
+  '@emnapi/runtime@1.11.0':
+    resolution: {integrity: sha512-55coeOFKHv1ywEcUXJtWU5f+Jr/W5tZDvZig8DLKSwUN1JpROQ4rk/SNOQiFWmaR/VKF4zuFyW1B8JduOSv6Pg==}
 
   '@esbuild/aix-ppc64@0.27.7':
     resolution: {integrity: sha512-EKX3Qwmhz1eMdEJokhALr0YiD0lhQNwDqkPYyPhiSwKrh7/4KRjQc04sZ8db+5DVVnZ1LmbNDI1uAMPEUBnQPg==}
@@ -889,8 +889,8 @@ packages:
     resolution: {integrity: sha512-LElXdjswlqjWrPpJFg1Fx4wpkOCxj1TDHlSV4PlaRxHGWko024xICaa97ZkMfs6DRKlCguiAI+rbXv5GWwXIkg==}
     hasBin: true
 
-  astro@6.4.4:
-    resolution: {integrity: sha512-hVe8tq3lqt/Dr0UyB//yUmQSlHMTU8scTiF/vQddQVahLE4TTaSdH5H0nb7OvRcwo0UmlAO8DWYar4jNaS7H+A==}
+  astro@6.4.6:
+    resolution: {integrity: sha512-48OBTBKR9ctbf+DQxpOuxGl8ebfn59zTuNQMBzptmG/Mi/H8IdfMSbJgGuX1I/4U6g9yazG1p4BHlf4+2hWU4Q==}
     engines: {node: '>=22.12.0', npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -1774,8 +1774,8 @@ packages:
     resolution: {integrity: sha512-6R3J5M4AcbtLUdZmRv2SygeVaM7IhrLXu9BmnOGmmACak8fiUtOsYNWUS4uK7upbmHIBbLBeFeI//477BKLBzA==}
     engines: {node: '>=11.0.0'}
 
-  semver@7.8.2:
-    resolution: {integrity: sha512-c8jsqUZm3omBOI66G90z1Dyw5z622G8oLG+omfsHBJf3CWQTlOcwOjvOG6wtiNfW6anKm/eA39LMwMtMez2TiQ==}
+  semver@7.8.4:
+    resolution: {integrity: sha512-rUCObTnP32Q08R2uuIrt7r9PlEonuTmtuXYcW6s5kjdlj3xbnwe+21yXptAUYcMAABLkYYTtnmzb3w3EDZfueA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -2142,13 +2142,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@6.0.2(astro@6.4.4(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1))':
+  '@astrojs/mdx@6.0.3(astro@6.4.6(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1))':
     dependencies:
       '@astrojs/internal-helpers': 0.10.0
       '@astrojs/markdown-remark': 7.2.0
       '@mdx-js/mdx': 3.1.1
       acorn: 8.16.0
-      astro: 6.4.4(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1)
+      astro: 6.4.6(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1)
       es-module-lexer: 2.1.0
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.5
@@ -2186,14 +2186,14 @@ snapshots:
       is-wsl: 3.1.1
       which-pm-runs: 1.1.0
 
-  '@astrojs/vercel@10.0.8(@aws-sdk/credential-provider-web-identity@3.972.49)(astro@6.4.4(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1))(rollup@4.61.1)':
+  '@astrojs/vercel@10.0.8(@aws-sdk/credential-provider-web-identity@3.972.49)(astro@6.4.6(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1))(rollup@4.61.1)':
     dependencies:
       '@astrojs/internal-helpers': 0.10.0
       '@vercel/analytics': 1.6.1
       '@vercel/functions': 3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49)
       '@vercel/nft': 1.10.2(rollup@4.61.1)
       '@vercel/routing-utils': 5.3.3
-      astro: 6.4.4(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1)
+      astro: 6.4.6(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1)
       esbuild: 0.27.7
       tinyglobby: 0.2.17
     transitivePeerDependencies:
@@ -2424,7 +2424,7 @@ snapshots:
       fast-wrap-ansi: 0.2.2
       sisteransi: 1.0.5
 
-  '@emnapi/runtime@1.10.0':
+  '@emnapi/runtime@1.11.0':
     dependencies:
       tslib: 2.8.1
     optional: true
@@ -2592,7 +2592,7 @@ snapshots:
 
   '@img/sharp-wasm32@0.34.5':
     dependencies:
-      '@emnapi/runtime': 1.10.0
+      '@emnapi/runtime': 1.11.0
     optional: true
 
   '@img/sharp-win32-arm64@0.34.5':
@@ -2617,7 +2617,7 @@ snapshots:
       https-proxy-agent: 7.0.6
       node-fetch: 2.7.0
       nopt: 8.1.0
-      semver: 7.8.2
+      semver: 7.8.4
       tar: 7.5.16
     transitivePeerDependencies:
       - encoding
@@ -2957,7 +2957,7 @@ snapshots:
 
   astring@1.9.0: {}
 
-  astro@6.4.4(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1):
+  astro@6.4.6(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.49))(rollup@4.61.1):
     dependencies:
       '@astrojs/compiler': 4.0.0
       '@astrojs/internal-helpers': 0.10.0
@@ -2997,7 +2997,7 @@ snapshots:
       piccolore: 0.1.3
       picomatch: 4.0.4
       rehype: 13.0.2
-      semver: 7.8.2
+      semver: 7.8.4
       shiki: 4.2.0
       smol-toml: 1.6.1
       svgo: 4.0.1
@@ -4362,13 +4362,13 @@ snapshots:
 
   sax@1.6.0: {}
 
-  semver@7.8.2: {}
+  semver@7.8.4: {}
 
   sharp@0.34.5:
     dependencies:
       '@img/colour': 1.1.0
       detect-libc: 2.1.2
-      semver: 7.8.2
+      semver: 7.8.4
     optionalDependencies:
       '@img/sharp-darwin-arm64': 0.34.5
       '@img/sharp-darwin-x64': 0.34.5
