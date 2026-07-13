@@ -2,7 +2,7 @@
 	"name": "portfolio",
 	"type": "module",
 	"version": "0.0.1",
-	"packageManager": "pnpm@11.5.2",
+	"packageManager": "pnpm@11.6.0",
 	"engines": {
 		"node": ">=24.14.0 <25"
 	},
@@ -20,13 +20,13 @@
 		"@astrojs/rss": "4.0.19",
 		"@astrojs/sitemap": "3.7.3",
 		"@astrojs/vercel": "11.0.2",
-		"@aws-sdk/client-ses": "3.1063.0",
+		"@aws-sdk/client-ses": "3.1068.0",
 		"astro": "7.0.7",
 		"shiki": "4.2.0"
 	},
 	"devDependencies": {
 		"@playwright/test": "1.61.1",
-		"prettier": "3.8.3",
+		"prettier": "3.8.4",
 		"prettier-plugin-astro": "0.14.1"
 	}
 }
