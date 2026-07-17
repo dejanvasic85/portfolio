@@ -21,8 +21,8 @@ importers:
         specifier: 11.0.3
         version: 11.0.3(@aws-sdk/credential-provider-web-identity@3.972.65)(astro@7.0.9(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.65))(rollup@4.61.1))(rollup@4.61.1)
       '@aws-sdk/client-ses':
-        specifier: 3.1088.0
-        version: 3.1088.0
+        specifier: 3.1089.0
+        version: 3.1089.0
       astro:
         specifier: 7.0.9
         version: 7.0.9(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@24.13.1)(@vercel/functions@3.6.2(@aws-sdk/credential-provider-web-identity@3.972.65))(rollup@4.61.1)
@@ -148,8 +148,8 @@ packages:
     peerDependencies:
       astro: ^7.0.0
 
-  '@aws-sdk/client-ses@3.1088.0':
-    resolution: {integrity: sha512-WPEA24BdNeAWQV9EQW8ouyDiFXQUUGRnkZodvBc5srxYi2JPP6uvg2vHmbQLPiJTbh69N7LWaIOF6akFlnvASw==}
+  '@aws-sdk/client-ses@3.1089.0':
+    resolution: {integrity: sha512-fPcnrUf+x/jYlSygZ/idKhULEZWyZlcHQtZe31x8DS19WxL5BjhBXr473Jf7K6jk8VlQO6sn8nzjCEHnD5Q/yw==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.975.3':
@@ -164,16 +164,16 @@ packages:
     resolution: {integrity: sha512-8jAjgStl5Ytq4+HF3X/9f+EmRinaRbGRRtQGktlPfBRVx73H+R1y48vIeXerQtYGFaUqkEp3fT6jP854rVO2yQ==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/credential-provider-ini@3.973.3':
-    resolution: {integrity: sha512-WpuqYX4gGkx++fCTSWE8+41JzkZVcrI50SH48Ml4CsG1pyuHKyMmpw/FixBHDrmjoQ553PmeCLa/fZIcst+WyA==}
+  '@aws-sdk/credential-provider-ini@3.973.4':
+    resolution: {integrity: sha512-e6ZvVsj90aRALf1kHP+J4iqC1496ZpVgqI/+u0LJ5HL7q7ATauGy4gdDvRCP13L1pN/fMiZLah162PGIYkbUVQ==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/credential-provider-login@3.972.65':
-    resolution: {integrity: sha512-xr9rgjYEdmC2Tpg2lwt9o+nOEaK9Qpd+dBjzrVCuWWyQfvhO91Ezu0Hh9ts2VUxOZxmS/k5T9msa34e4R1bnrQ==}
+  '@aws-sdk/credential-provider-login@3.972.66':
+    resolution: {integrity: sha512-g2fsqm87r/nKthLZ0VkkDBElkGg0PvSa8d97HQ6EilMbJTZ6hxa8FxkSZyJfgPfFdZn0TTmkOffQmTSUcAHIng==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/credential-provider-node@3.972.69':
-    resolution: {integrity: sha512-wbJGGesd0Tl18bmUcbj1xJ+e7CpuRJ6PIpMywLFuUttGy615lua87cJ0EA8pFpY/QgPuUXbnupWBtSPJ9tyZhg==}
+  '@aws-sdk/credential-provider-node@3.972.70':
+    resolution: {integrity: sha512-3xzvkGdykBunxqh8WudmUpSyLWvIhfI6aBQo1b5rb3mDO5mNLadK+0hiI0qBQBMVynJbfLO+Ajy9dztMwy9O8w==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/credential-provider-process@3.972.59':
@@ -874,56 +874,28 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@shikijs/core@4.2.0':
-    resolution: {integrity: sha512-Hc87Ab1Ld/vEbZRCbwx344I5v+4RU8CVToUTRkqXL1+TjbuOp9U5Xa0M23V4GEWHxVn+yO5otb+HkQVm3ptWQQ==}
-    engines: {node: '>=20'}
-
   '@shikijs/core@4.3.1':
     resolution: {integrity: sha512-ANMDxuaPsNMdDC1m4vfvhlDmJweMwkE5XitTwrq2rWHx5jM+dlm4MmHt2PP6t0uejfR77SuhrhJ0zEijIF/uhA==}
-    engines: {node: '>=20'}
-
-  '@shikijs/engine-javascript@4.2.0':
-    resolution: {integrity: sha512-fjETeq1k5ffyXqRgS6+3hpvqseLalp1kjNfRbXpUgWR8FpZ1CmQfiNHovc5lncYjt/Vg5JK/WJEmLahjwMa0og==}
     engines: {node: '>=20'}
 
   '@shikijs/engine-javascript@4.3.1':
     resolution: {integrity: sha512-JBItcnPuYq7jVJdZo/vMj94r+szT7XEjHFX+mvFDGSEIbVAXAGyHAHzhbWzpGOwYidCZrErJLLgn2PVeiokHnQ==}
     engines: {node: '>=20'}
 
-  '@shikijs/engine-oniguruma@4.2.0':
-    resolution: {integrity: sha512-hTorK1dffPkpbMUk6Z+828PgRo7d07HbnizoP0hNPFjhxMHctj0Px/qoHeGMYafc6ju+u9iMldN4JbVzNQM++g==}
-    engines: {node: '>=20'}
-
   '@shikijs/engine-oniguruma@4.3.1':
     resolution: {integrity: sha512-OXyNMzg0pews+msMj4cHeqT4xiYKKvbnn6VbdAXxfoFl3SSx4fJTc8FadECuc5/H9p3BzhNAoAUXKwAu9rWYhg==}
-    engines: {node: '>=20'}
-
-  '@shikijs/langs@4.2.0':
-    resolution: {integrity: sha512-bwrVRlJ0wUhZxAbVdvBbv2TTC9yLsh4C/IO5Ofz0T8MQntgDvyVnkbjw9vi50r1kx7RCIJdnJnjZAwmAsXFLZQ==}
     engines: {node: '>=20'}
 
   '@shikijs/langs@4.3.1':
     resolution: {integrity: sha512-m0l9nsDqgBHvbZbk7A0/kXz/impK3uB/c6rAn6Gpg/uPtdZRQ+alsN/17MU5thb68XTj/4DxkZAotrM0GGSpDQ==}
     engines: {node: '>=20'}
 
-  '@shikijs/primitive@4.2.0':
-    resolution: {integrity: sha512-NOq+DtUkVBJtZMVXL5A0vI0Xk8nvDYaXetFHSJFlOqjDZIVhIPRYFdGkSoElDqNuegikcc3A76SNUa8dTqtAYA==}
-    engines: {node: '>=20'}
-
   '@shikijs/primitive@4.3.1':
     resolution: {integrity: sha512-CXQRQOYy1leqQ8ceTeJdmXv/bsUY++6QyLpXJ94LZAAYj5X2SKRdc5ipguv4NPyGVKItB2PPwUpRNe0Sjh5S1A==}
     engines: {node: '>=20'}
 
-  '@shikijs/themes@4.2.0':
-    resolution: {integrity: sha512-RX8IHYeLv8Cu2W6ruc3RxUqWn0IYCqSrMBzi/uRGAmfyDNOnNO5BF/Px7o97n4XTpmFTo5GbRaazuOWj+2ak2w==}
-    engines: {node: '>=20'}
-
   '@shikijs/themes@4.3.1':
     resolution: {integrity: sha512-dgpoJ4WqNi2yTmizQHBJ5zcX6j2lE6icN/0yt4l1kkf16jrY/pwPLoTb1ETsWMz0OBLf9ZNvwmxft+cH+N9qSA==}
-    engines: {node: '>=20'}
-
-  '@shikijs/types@4.2.0':
-    resolution: {integrity: sha512-VT/MKtlpOhEPZloSH3Pb9WCZEBDoQVMa9jedp5UAwmJOar1DVc9DRODAxmYPW9M93IK4ryuqRejFfmlvlVDemw==}
     engines: {node: '>=20'}
 
   '@shikijs/types@4.3.1':
@@ -2073,10 +2045,6 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  shiki@4.2.0:
-    resolution: {integrity: sha512-hjNax6o/ylDy9lefQEaSDtzaT3iVNtZ3WmpQnbuQNoG4xvnSKf2kSKbihZVO4JRG1TTMejs7CmNRYlWgAL66pQ==}
-    engines: {node: '>=20'}
-
   shiki@4.3.1:
     resolution: {integrity: sha512-oR+qDVi2OjX1tmDpyv+3KviX01KzO6Af+0NNnKnsp9491UEGz2YpxTuJboS/6VhYpTdqzmuJBuiTlrAWWJAssw==}
     engines: {node: '>=20'}
@@ -2453,7 +2421,7 @@ snapshots:
       js-yaml: 4.2.0
       picomatch: 4.0.4
       retext-smartypants: 6.2.0
-      shiki: 4.2.0
+      shiki: 4.3.1
       smol-toml: 1.6.1
       unified: 11.0.5
 
@@ -2555,10 +2523,10 @@ snapshots:
       - vue
       - vue-router
 
-  '@aws-sdk/client-ses@3.1088.0':
+  '@aws-sdk/client-ses@3.1089.0':
     dependencies:
       '@aws-sdk/core': 3.975.3
-      '@aws-sdk/credential-provider-node': 3.972.69
+      '@aws-sdk/credential-provider-node': 3.972.70
       '@aws-sdk/types': 3.974.2
       '@smithy/core': 3.29.4
       '@smithy/fetch-http-handler': 5.6.6
@@ -2595,12 +2563,12 @@ snapshots:
       '@smithy/types': 4.16.1
       tslib: 2.8.1
 
-  '@aws-sdk/credential-provider-ini@3.973.3':
+  '@aws-sdk/credential-provider-ini@3.973.4':
     dependencies:
       '@aws-sdk/core': 3.975.3
       '@aws-sdk/credential-provider-env': 3.972.59
       '@aws-sdk/credential-provider-http': 3.972.61
-      '@aws-sdk/credential-provider-login': 3.972.65
+      '@aws-sdk/credential-provider-login': 3.972.66
       '@aws-sdk/credential-provider-process': 3.972.59
       '@aws-sdk/credential-provider-sso': 3.973.3
       '@aws-sdk/credential-provider-web-identity': 3.972.65
@@ -2611,7 +2579,7 @@ snapshots:
       '@smithy/types': 4.16.1
       tslib: 2.8.1
 
-  '@aws-sdk/credential-provider-login@3.972.65':
+  '@aws-sdk/credential-provider-login@3.972.66':
     dependencies:
       '@aws-sdk/core': 3.975.3
       '@aws-sdk/nested-clients': 3.997.33
@@ -2620,11 +2588,11 @@ snapshots:
       '@smithy/types': 4.16.1
       tslib: 2.8.1
 
-  '@aws-sdk/credential-provider-node@3.972.69':
+  '@aws-sdk/credential-provider-node@3.972.70':
     dependencies:
       '@aws-sdk/credential-provider-env': 3.972.59
       '@aws-sdk/credential-provider-http': 3.972.61
-      '@aws-sdk/credential-provider-ini': 3.973.3
+      '@aws-sdk/credential-provider-ini': 3.973.4
       '@aws-sdk/credential-provider-process': 3.972.59
       '@aws-sdk/credential-provider-sso': 3.973.3
       '@aws-sdk/credential-provider-web-identity': 3.972.65
@@ -3162,14 +3130,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.61.1':
     optional: true
 
-  '@shikijs/core@4.2.0':
-    dependencies:
-      '@shikijs/primitive': 4.2.0
-      '@shikijs/types': 4.2.0
-      '@shikijs/vscode-textmate': 10.0.2
-      '@types/hast': 3.0.4
-      hast-util-to-html: 9.0.5
-
   '@shikijs/core@4.3.1':
     dependencies:
       '@shikijs/primitive': 4.3.1
@@ -3178,41 +3138,20 @@ snapshots:
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.5
 
-  '@shikijs/engine-javascript@4.2.0':
-    dependencies:
-      '@shikijs/types': 4.2.0
-      '@shikijs/vscode-textmate': 10.0.2
-      oniguruma-to-es: 4.3.6
-
   '@shikijs/engine-javascript@4.3.1':
     dependencies:
       '@shikijs/types': 4.3.1
       '@shikijs/vscode-textmate': 10.0.2
       oniguruma-to-es: 4.3.6
 
-  '@shikijs/engine-oniguruma@4.2.0':
-    dependencies:
-      '@shikijs/types': 4.2.0
-      '@shikijs/vscode-textmate': 10.0.2
-
   '@shikijs/engine-oniguruma@4.3.1':
     dependencies:
       '@shikijs/types': 4.3.1
       '@shikijs/vscode-textmate': 10.0.2
 
-  '@shikijs/langs@4.2.0':
-    dependencies:
-      '@shikijs/types': 4.2.0
-
   '@shikijs/langs@4.3.1':
     dependencies:
       '@shikijs/types': 4.3.1
-
-  '@shikijs/primitive@4.2.0':
-    dependencies:
-      '@shikijs/types': 4.2.0
-      '@shikijs/vscode-textmate': 10.0.2
-      '@types/hast': 3.0.4
 
   '@shikijs/primitive@4.3.1':
     dependencies:
@@ -3220,18 +3159,9 @@ snapshots:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
 
-  '@shikijs/themes@4.2.0':
-    dependencies:
-      '@shikijs/types': 4.2.0
-
   '@shikijs/themes@4.3.1':
     dependencies:
       '@shikijs/types': 4.3.1
-
-  '@shikijs/types@4.2.0':
-    dependencies:
-      '@shikijs/vscode-textmate': 10.0.2
-      '@types/hast': 3.0.4
 
   '@shikijs/types@4.3.1':
     dependencies:
@@ -4907,17 +4837,6 @@ snapshots:
       shebang-regex: 3.0.0
 
   shebang-regex@3.0.0: {}
-
-  shiki@4.2.0:
-    dependencies:
-      '@shikijs/core': 4.2.0
-      '@shikijs/engine-javascript': 4.2.0
-      '@shikijs/engine-oniguruma': 4.2.0
-      '@shikijs/langs': 4.2.0
-      '@shikijs/themes': 4.2.0
-      '@shikijs/types': 4.2.0
-      '@shikijs/vscode-textmate': 10.0.2
-      '@types/hast': 3.0.4
 
   shiki@4.3.1:
     dependencies:
