@@ -1,3 +1,12 @@
+import williamstownDesktop from '../assets/projects/williamstown-desktop.png';
+import williamstownMobile from '../assets/projects/williamstown-mobile.png';
+import sesmelbourneDesktop from '../assets/projects/sesmelbourne-desktop.png';
+import sesmelbourneMobile from '../assets/projects/sesmelbourne-mobile.png';
+import jlcDesktop from '../assets/projects/jlc-desktop.png';
+import jlcMobile from '../assets/projects/jlc-mobile.png';
+import notesDesktop from '../assets/projects/notes-desktop.png';
+import notesMobile from '../assets/projects/noets-mobile.png';
+
 export const projects = [
 	{
 		slug: 'williamstown-sc',
@@ -23,8 +32,8 @@ export const projects = [
 		projectUrl: 'https://www.williamstownsc.com',
 		sourceCodeUrl: 'https://github.com/dejanvasic85/williamstownsc',
 		images: {
-			desktop: '/images/projects/williamstown-desktop.png',
-			mobile: '/images/projects/williamstown-mobile.png'
+			desktop: williamstownDesktop,
+			mobile: williamstownMobile
 		}
 	},
 	{
@@ -51,8 +60,8 @@ export const projects = [
 		projectUrl: 'https://www.sesmelbourne.com.au/',
 		sourceCodeUrl: 'https://github.com/dejanvasic85/ses-next',
 		images: {
-			desktop: '/images/projects/sesmelbourne-desktop.png',
-			mobile: '/images/projects/sesmelbourne-mobile.png'
+			desktop: sesmelbourneDesktop,
+			mobile: sesmelbourneMobile
 		}
 	},
 	{
@@ -77,8 +86,8 @@ export const projects = [
 		projectUrl: 'https://www.jlccarpentrybuildingservices.com.au/',
 		sourceCodeUrl: 'https://github.com/dejanvasic85/portfolio',
 		images: {
-			desktop: '/images/projects/jlc-desktop.png',
-			mobile: '/images/projects/jlc-mobile.png'
+			desktop: jlcDesktop,
+			mobile: jlcMobile
 		}
 	},
 	{
@@ -103,8 +112,8 @@ export const projects = [
 		projectUrl: 'https://notes.vasic.com.au',
 		sourceCodeUrl: 'https://github.com/dejanvasic85/notes',
 		images: {
-			desktop: '/images/projects/notes-desktop.png',
-			mobile: '/images/projects/noets-mobile.png'
+			desktop: notesDesktop,
+			mobile: notesMobile
 		}
 	},
 	{

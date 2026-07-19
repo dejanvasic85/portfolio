@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
 	slug: string;
 	title: string;
 	heroStatement: string;
-	image: string | null;
+	image: ImageMetadata | null;
 }
 
 const { slug, title, heroStatement, image } = Astro.props;
@@ -13,7 +15,7 @@ const { slug, title, heroStatement, image } = Astro.props;
 	<div class="card-image">
 		{
 			image ? (
-				<img src={image} alt={`${title} preview`} />
+				<Image src={image} alt={`${title} preview`} width={480} height={270} loading="lazy" />
 			) : (
 				<div class="card-image-placeholder">
 					<span>{title[0]}</span>
