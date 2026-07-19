@@ -7,7 +7,7 @@ export default defineConfig({
 	site: 'https://dejan.vasic.com.au',
 	trailingSlash: 'never',
 	output: 'server',
-	adapter: vercel(),
+	adapter: vercel({ imageService: true }),
 	integrations: [mdx(), sitemap()],
 	env: {
 		validateSecrets: true,

@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import Tags from './Tags.astro';
 
 interface Props {
@@ -14,8 +15,8 @@ interface Props {
 	projectUrl?: string;
 	sourceCodeUrl?: string;
 	images: {
-		desktop: string | null;
-		mobile: string | null;
+		desktop: ImageMetadata | null;
+		mobile: ImageMetadata | null;
 	};
 }
 
@@ -42,16 +43,22 @@ const {
 		images.desktop && (
 			<div class="project-screenshots">
 				<div class="screenshots-container">
-					<img
+					<Image
 						src={images.desktop}
 						alt={`${title} desktop screenshot`}
 						class="screenshot desktop-screenshot"
+						widths={[400, 800, 1200]}
+						sizes="(max-width: 768px) 100vw, 800px"
+						loading="lazy"
 					/>
 					{images.mobile && (
-						<img
+						<Image
 							src={images.mobile}
 							alt={`${title} mobile screenshot`}
 							class="screenshot mobile-screenshot"
+							width={380}
+							densities={[1, 2]}
+							loading="lazy"
 						/>
 					)}
 				</div>
