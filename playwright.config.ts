@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 const baseURL =
 	process.env.PLAYWRIGHT_TEST_BASE_URL ||
-	(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:4321');
+	(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3366');
 
 export default defineConfig({
 	testDir: './tests',
@@ -26,7 +26,7 @@ export default defineConfig({
 		? undefined
 		: {
 				command: 'pnpm dev',
-				url: 'http://localhost:4321',
+				url: 'http://localhost:3366',
 				reuseExistingServer: !process.env.CI
 			}
 });

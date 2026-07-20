@@ -8,6 +8,7 @@ export default defineConfig({
 	trailingSlash: 'never',
 	output: 'server',
 	adapter: vercel({ imageService: true }),
+	server: { port: 3366 },
 	integrations: [mdx(), sitemap()],
 	env: {
 		validateSecrets: true,

@@ -63,7 +63,7 @@ To run the site locally, follow these steps:
    ```
 
 4. **Preview the site**:
-   - Open [http://localhost:4321](http://localhost:4321) in your browser.
+   - Open [http://localhost:3366](http://localhost:3366) in your browser.
 
 5. **Format code** (optional):
 
