@@ -124,9 +124,7 @@ const {
 		border-bottom: none;
 		background-color: var(--color-background-alt);
 		border-radius: var(--radius-lg);
-		box-shadow:
-			0 4px 6px -1px rgba(0, 0, 0, 0.1),
-			0 2px 4px -1px rgba(0, 0, 0, 0.06);
+		box-shadow: var(--shadow-card);
 	}
 
 	.project-section:last-child {
@@ -165,7 +163,7 @@ const {
 
 	.screenshot {
 		border-radius: var(--radius-md);
-		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+		box-shadow: var(--shadow-lg);
 		transition: transform 0.3s ease;
 	}
 
@@ -274,7 +272,7 @@ const {
 	}
 
 	.secondary:hover {
-		background: var(--color-bg-secondary);
+		background: var(--color-background-hover);
 		color: var(--color-text);
 	}
 

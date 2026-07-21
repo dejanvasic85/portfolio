@@ -35,9 +35,10 @@ import Layout from '../layouts/Layout.astro';
 
 		<div class="contact-box">
 			<p>
-				Have a project in mind? I'm available for freelance work, consulting, and long-term contracts.
+				Have a project in mind? I'm available for freelance work, consulting, and long-term
+				contracts.
 			</p>
-			<a href="/contact" class="btn-link">Get in Touch</a>
+			<a href="/contact" class="btn-link primary">Get in Touch</a>
 		</div>
 
 		<nav class="page-nav">
@@ -54,16 +55,8 @@ import Layout from '../layouts/Layout.astro';
 		margin-bottom: 0.5rem;
 	}
 
-	h2 {
-		font-size: 1.5rem;
-		color: var(--color-text-light);
-		margin-bottom: 2rem;
-		font-weight: 500;
-	}
-
 	.content {
-		line-height: 1.6;
-		margin-bottom: 2rem;
+		margin-bottom: var(--space-lg);
 	}
 
 	.hero {
@@ -77,33 +70,26 @@ import Layout from '../layouts/Layout.astro';
 			width: 150px;
 			height: 150px;
 			border-radius: 50%;
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			box-shadow: var(--shadow-md);
 		}
 	}
 
 	.contact-box {
-		padding: 2rem 0;
-		margin: 2rem 0;
-	}
-
-	.contact-box h2 {
-		color: var(--color-primary-dark);
-		margin-bottom: 0.75rem;
-		font-size: 1.75rem;
+		padding: var(--space-xl) 0;
+		margin: var(--space-md) 0;
 	}
 
 	.contact-box p {
 		color: var(--color-text-light);
 		margin-bottom: 1.5rem;
-		line-height: 1.6;
 	}
 
 	.page-nav {
 		display: flex;
-		gap: 2rem;
-		margin-top: 3rem;
+		gap: 1.5rem;
+		margin-top: var(--space-xl);
 		border-top: 1px solid var(--color-border);
-		padding-top: 2rem;
+		padding-top: var(--space-lg);
 		flex-wrap: wrap;
 	}
 
@@ -112,5 +98,4 @@ import Layout from '../layouts/Layout.astro';
 			margin-bottom: var(--space-lg);
 		}
 	}
-
 </style>
