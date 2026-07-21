@@ -118,16 +118,16 @@ const sortedPosts = allPosts.sort((a, b) => {
 	.post-card {
 		padding: var(--space-lg);
 		margin: 0 calc(var(--space-lg) * -1);
-		border-left: 2px solid transparent;
+		border: 1px solid transparent;
 		border-radius: var(--radius-md);
 		transition:
 			border-color 0.15s ease,
-			background-color 0.15s ease;
+			box-shadow 0.15s ease;
 	}
 
 	.post-card:hover {
-		border-left-color: var(--color-primary);
-		background-color: var(--color-background-hover);
+		border-color: var(--color-primary);
+		box-shadow: var(--shadow-card-hover);
 	}
 
 	.post-meta {
