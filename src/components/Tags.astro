@@ -7,7 +7,13 @@ const { tags } = Astro.props;
 ---
 
 <ul class="tags">
-	{tags.map((t) => <li class="tag">{t}</li>)}
+	{
+		tags.map((t) => (
+			<li class="tag">
+				<span class="tag-label">{t}</span>
+			</li>
+		))
+	}
 </ul>
 
 <style>
@@ -31,7 +37,6 @@ const { tags } = Astro.props;
 		border: 1px solid var(--color-border);
 		font-family: var(--font-mono);
 		font-size: 0.75rem;
-		white-space: nowrap;
 	}
 
 	.tag::before {
@@ -41,5 +46,18 @@ const { tags } = Astro.props;
 		flex-shrink: 0;
 		border-radius: 50%;
 		background-color: currentColor;
+	}
+
+	.tag-label {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		/* Flex items default to min-width: auto (their full content width),
+		   which would make max-width powerless here — reset it first. */
+		min-width: 0;
+		/* Absolute cap (not %) so it truncates regardless of how the flex
+		   ancestors size themselves — comfortably above real tag/date
+		   content, just long enough to catch pathological input. */
+		max-width: 32ch;
 	}
 </style>
