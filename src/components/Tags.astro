@@ -22,6 +22,7 @@ const { tags } = Astro.props;
 	.tag {
 		display: inline-flex;
 		align-items: center;
+		flex-shrink: 0;
 		gap: 0.4rem;
 		background-color: var(--color-secondary-light);
 		color: var(--color-secondary);
@@ -30,6 +31,7 @@ const { tags } = Astro.props;
 		border: 1px solid var(--color-border);
 		font-family: var(--font-mono);
 		font-size: 0.75rem;
+		white-space: nowrap;
 	}
 
 	.tag::before {
