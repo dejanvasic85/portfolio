@@ -21,6 +21,8 @@ interface Props {
 const { title, company, location, startDate, endDate, responsibilities, skills, publications } =
 	Astro.props;
 
+const isCurrent = !endDate || endDate === 'Present';
+
 const initialCount = 3;
 const visibleItems = responsibilities.slice(0, initialCount);
 const hiddenItems = responsibilities.slice(initialCount);
@@ -68,7 +70,7 @@ const endDisplay = endDate ? formatTimelineDate(endDate) : formatTimelineDate('P
 const dateRange = `${startDisplay} - ${endDisplay}`;
 ---
 
-<div class="timeline-item">
+<div class={`timeline-item${isCurrent ? ' is-current' : ''}`}>
 	<!-- Timeline marker - only visible on larger screens -->
 	<div class="timeline-marker">
 		<div class="timeline-dot"></div>
@@ -103,14 +105,18 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 			{visibleItems.map((responsibility) => <li>{responsibility}</li>)}
 		</ul>
 
-		{hiddenItems.length > 0 && (
-			<details class="responsibilities-more">
-				<summary class="read-more-toggle">Show {hiddenItems.length} more</summary>
-				<ul class="responsibilities responsibilities-hidden">
-					{hiddenItems.map((responsibility) => <li>{responsibility}</li>)}
-				</ul>
-			</details>
-		)}
+		{
+			hiddenItems.length > 0 && (
+				<details class="responsibilities-more">
+					<summary class="read-more-toggle">Show {hiddenItems.length} more</summary>
+					<ul class="responsibilities responsibilities-hidden">
+						{hiddenItems.map((responsibility) => (
+							<li>{responsibility}</li>
+						))}
+					</ul>
+				</details>
+			)
+		}
 
 		{skills && <SkillCategory title="Skills" skills={skills} />}
 
@@ -142,7 +148,7 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 	.timeline-item {
 		position: relative;
 		display: flex;
-		margin-bottom: 3rem;
+		margin-bottom: var(--space-xl);
 		padding-left: 0;
 	}
 
@@ -156,14 +162,18 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 	}
 
 	.timeline-dot {
-		width: 16px;
-		height: 16px;
-		background-color: var(--color-secondary);
+		width: 14px;
+		height: 14px;
+		background-color: var(--color-background);
 		border-radius: 50%;
-		border: 3px solid var(--color-background);
-		box-shadow: 0 0 0 3px var(--color-secondary);
+		border: 2px solid var(--color-primary);
 		z-index: 2;
 		margin-bottom: 0.5rem;
+	}
+
+	.is-current .timeline-dot {
+		border-color: var(--color-accent);
+		box-shadow: 0 0 0 3px var(--color-accent-light);
 	}
 
 	.timeline-date {
@@ -179,12 +189,17 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 	}
 
 	.timeline-range {
+		font-family: var(--font-mono);
 		font-size: 0.75rem;
-		font-weight: 600;
-		color: var(--color-secondary);
+		font-weight: 500;
+		color: var(--color-text-light);
 		text-transform: uppercase;
-		letter-spacing: 0.5px;
+		letter-spacing: 0.05em;
 		white-space: nowrap;
+	}
+
+	.is-current .timeline-range {
+		color: var(--color-accent);
 	}
 
 	.timeline-content {
@@ -404,9 +419,9 @@ const dateRange = `${startDisplay} - ${endDisplay}`;
 		top: 20px;
 		left: 50%;
 		transform: translateX(-50%);
-		width: 2px;
-		height: calc(100% + 3rem);
-		background: linear-gradient(to bottom, var(--color-secondary) 0%, var(--color-secondary) 100%);
+		width: 1px;
+		height: calc(100% + var(--space-xl));
+		background: var(--color-border);
 		z-index: 1;
 	}
 
