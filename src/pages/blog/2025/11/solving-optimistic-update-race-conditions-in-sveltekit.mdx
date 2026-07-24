@@ -15,6 +15,7 @@ Now, I could have reached for a library like [TanStack Query](https://tanstack.c
 ## The Initial Approach: State-Level Solution
 
 My first instinct was to implement a **pending operations tracker in the state management layer**. The approach seemed straightforward:
+
 - Track which notes are being created
 - Disable UI inputs or queue operations until creation completes
 - Show "Creating..." loading states
@@ -37,21 +38,21 @@ The key insight was using **promise chaining** rather than an array-based queue.
 let queueTail: Promise<unknown> = Promise.resolve();
 
 const thisRequest = queueTail.then(() =>
-  fetchWithRetry(() =>
-    fetch(input, {
-      ...init,
-      headers: {
-        'Content-Type': 'application/json',
-        ...init?.headers
-      }
-    })
-  ).then(async (resp) => {
-    if (!resp.ok) {
-      const rawText = await resp.text();
-      return fail(rawText);
-    }
-    // Handle response...
-  })
+	fetchWithRetry(() =>
+		fetch(input, {
+			...init,
+			headers: {
+				'Content-Type': 'application/json',
+				...init?.headers
+			}
+		})
+	).then(async (resp) => {
+		if (!resp.ok) {
+			const rawText = await resp.text();
+			return fail(rawText);
+		}
+		// Handle response...
+	})
 );
 ```
 
@@ -77,24 +78,24 @@ I added automatic retry functionality for resilience:
 
 ```typescript
 async function fetchWithRetry(func: () => Promise<Response>, retryCount = 0) {
-  try {
-    const response = await func();
+	try {
+		const response = await func();
 
-    // Retry server errors (500+), not client errors (400-499)
-    if (!response.ok && response.status >= 500 && retryCount < maxRetries) {
-      await new Promise((resolve) => setTimeout(resolve, 200));
-      return fetchWithRetry(func, retryCount + 1);
-    }
+		// Retry server errors (500+), not client errors (400-499)
+		if (!response.ok && response.status >= 500 && retryCount < maxRetries) {
+			await new Promise((resolve) => setTimeout(resolve, 200));
+			return fetchWithRetry(func, retryCount + 1);
+		}
 
-    return response;
-  } catch (err) {
-    // Retry network errors
-    if (retryCount < maxRetries) {
-      await new Promise((resolve) => setTimeout(resolve, 200));
-      return fetchWithRetry(func, retryCount + 1);
-    }
-    throw err;
-  }
+		return response;
+	} catch (err) {
+		// Retry network errors
+		if (retryCount < maxRetries) {
+			await new Promise((resolve) => setTimeout(resolve, 200));
+			return fetchWithRetry(func, retryCount + 1);
+		}
+		throw err;
+	}
 }
 ```
 
@@ -106,10 +107,10 @@ After implementation, I achieved zero race conditions with no more 404 errors. T
 
 ```typescript
 const createNotePromise = page.waitForResponse(
-  (response) =>
-    response.url().includes('/api/notes') &&
-    response.request().method() === 'POST' &&
-    response.status() < 400
+	(response) =>
+		response.url().includes('/api/notes') &&
+		response.request().method() === 'POST' &&
+		response.status() < 400
 );
 
 await createButton.click();
