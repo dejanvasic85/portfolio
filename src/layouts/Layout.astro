@@ -88,8 +88,10 @@ const canonicalURL = new URL(cleanPath, Astro.site).href;
 						>Projects</a
 					>
 					<a href="/blog" class={normalizedPathname.startsWith('/blog') ? 'active' : ''}>Blog</a>
-					<ThemeToggle />
 				</nav>
+				<div class="theme-toggle-slot">
+					<ThemeToggle />
+				</div>
 			</div>
 		</header>
 
@@ -130,9 +132,17 @@ const canonicalURL = new URL(cleanPath, Astro.site).href;
 <!-- All styles are now in global.css -->
 <style>
 	.main-nav {
+		grid-area: nav;
 		display: flex;
 		gap: 1.5rem;
 		height: 44px;
+		align-items: center;
+		justify-content: flex-end;
+	}
+
+	.theme-toggle-slot {
+		grid-area: toggle;
+		display: flex;
 		align-items: center;
 	}
 
@@ -222,7 +232,14 @@ const canonicalURL = new URL(cleanPath, Astro.site).href;
 			flex-wrap: wrap;
 		}
 
-		.header-container,
+		.header-container {
+			grid-template-columns: 1fr auto;
+			grid-template-areas:
+				'wordmark toggle'
+				'nav nav';
+			row-gap: 0.75rem;
+		}
+
 		.footer-container {
 			flex-direction: column;
 			gap: 0.75rem;

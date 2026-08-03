@@ -265,12 +265,14 @@ li {
 	max-width: 800px;
 	margin: 0 auto;
 	padding: 0 var(--space-lg);
-	display: flex;
-	justify-content: space-between;
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	grid-template-areas: 'wordmark nav toggle';
 	align-items: center;
 }
 
 .wordmark {
+	grid-area: wordmark;
 	font-family: var(--font-heading);
 	font-weight: 600;
 	font-size: 0.95rem;
