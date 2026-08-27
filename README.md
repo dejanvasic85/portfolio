@@ -1,7 +1,7 @@
 <h1 align="center">Dejan Vasic – Portfolio Website</h1>
 
 <p align="center">
-  A personal portfolio and blog built with Astro, showcasing my work, experience, and thoughts on software engineering.
+  A personal portfolio and blog built with Astro. It showcases my work, experience, and thoughts on software engineering.
 </p>
 
 <p align="center">
@@ -37,7 +37,7 @@
 
 ## Why I Built This
 
-This site is my digital home to share my professional journey, projects, and technical insights. It serves as a living CV, a blog for my thoughts on software engineering, and a showcase for selected work. Building it with Astro allowed me to explore modern static site generation and best practices for performance and maintainability.
+This site is my home on the web. It works as a living CV, a blog for my thoughts on software engineering, and a showcase of selected work. I built it with Astro to learn modern static site generation and to put good performance and maintainability practices into use.
 
 ## Developing and Running Locally
 
