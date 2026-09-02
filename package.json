@@ -20,7 +20,7 @@
 		"@astrojs/rss": "4.0.19",
 		"@astrojs/sitemap": "3.7.4",
 		"@astrojs/vercel": "11.0.9",
-		"@aws-sdk/client-ses": "3.1122.0",
+		"@aws-sdk/client-ses": "3.1124.0",
 		"@fontsource-variable/ibm-plex-sans": "5.3.0",
 		"@fontsource/ibm-plex-mono": "5.3.0",
 		"astro": "7.2.10",
