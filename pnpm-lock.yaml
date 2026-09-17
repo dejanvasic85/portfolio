@@ -168,7 +168,7 @@ importers:
     dependencies:
       '@astrojs/mdx':
         specifier: 8.0.1
-        version: 8.0.1(@astrojs/markdown-satteri@0.4.1)(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76)))
+        version: 8.0.1(@astrojs/markdown-satteri@0.4.1)(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76)))
       '@astrojs/rss':
         specifier: 4.0.19
         version: 4.0.19
@@ -177,7 +177,7 @@ importers:
         version: 3.7.4
       '@astrojs/vercel':
         specifier: 11.0.10
-        version: 11.0.10(@aws-sdk/credential-provider-web-identity@3.972.76)(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76)))(rollup@4.61.1)(supports-color@7.2.0)
+        version: 11.0.10(@aws-sdk/credential-provider-web-identity@3.972.76)(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76)))(rollup@4.61.1)(supports-color@7.2.0)
       '@aws-sdk/client-ses':
         specifier: 3.1133.0
         version: 3.1133.0
@@ -188,8 +188,8 @@ importers:
         specifier: 5.3.0
         version: 5.3.0
       astro:
-        specifier: 7.3.2
-        version: 7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76))
+        specifier: 7.3.3
+        version: 7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76))
       shiki:
         specifier: 4.4.3
         version: 4.4.3
@@ -1252,8 +1252,8 @@ packages:
     resolution: {integrity: sha512-COROpnaoap1E2F000S62r6A60uHZnmlvomhfyT2DlTcrY1OrBKn2UhH7qn5wTC9zMvD0AY7csdPSNwKP+7WiQw==}
     engines: {node: '>= 0.4'}
 
-  astro@7.3.2:
-    resolution: {integrity: sha512-ysTcdpGP61XZpHoMRYC/CK19DQ94qkBvzXMtXEo0gEqPNkmOU/Tv++CtWmzaI4nF2Ck8RXFdiWvdlTWa2oOr9w==}
+  astro@7.3.3:
+    resolution: {integrity: sha512-NF08hk3edFkVmr9avf9HW/rQyf6NrpbVDyYj2cVN3JfijDhfJYh1ivWVTY5PUd5+rRZn/Vtu4iaeyNlP0Iv6mg==}
     engines: {node: '>=22.12.0', npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
     peerDependencies:
@@ -1343,8 +1343,8 @@ packages:
   crossws@0.3.5:
     resolution: {integrity: sha512-ojKiDvcmByhwa8YYqbQI/hg7MEU0NC03+pSdEq4ZUnZR9xXpwk7E43SMNGkn+JxJGPFtNvQ48+vV2p+P1ml5PA==}
 
-  css-select@5.2.2:
-    resolution: {integrity: sha512-TizTzUddG/xYLA3NXodFM0fSbNizXjOKhqiQQwvhlspadZokn1KDy0NZFS0wuEubIYAV5/c1/lAr0TaaFXEXzw==}
+  css-select@6.0.0:
+    resolution: {integrity: sha512-rZZVSLle8v0+EY8QAkDWrKhpgt6SA5OtHsgBnsj6ZaLb5dmDVOWUDtQitd9ydxxvEjhewNudS6eTVU7uOyzvXw==}
 
   css-tree@2.2.1:
     resolution: {integrity: sha512-OA0mILzGc1kCOCSJerOeqDxDQ4HOh+G8NbOJFOTgOCzpw7fCBubk0fEyxp8AgOL/jvLgYA/uV0cMbe43ElF1JA==}
@@ -1354,8 +1354,8 @@ packages:
     resolution: {integrity: sha512-X7sjQzceUhu1u7Y/ylrRZFU2FS6LRiFVp6rKLPg23y3x3c3DOKAwuXGDp+PAGjh6CSnCjYeAul8pcT8bAl+lSA==}
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
 
-  css-what@6.2.2:
-    resolution: {integrity: sha512-u/O3vwbptzhMs3L1fQE82ZSLHQQfto5gyZzwteVIEyeaY5Fc7R4dapF/BvRoSYFeqfBk4m0V1Vafq5Pjv25wvA==}
+  css-what@7.0.0:
+    resolution: {integrity: sha512-wD5oz5xibMOPHzy13CyGmogB3phdvcDaB5t0W/Nr5Z2O/agcB8YwOz6e2Lsp10pNDzBoDO9nVa3RGs/2BttpHQ==}
     engines: {node: '>= 6'}
 
   csso@5.0.5:
@@ -1471,8 +1471,8 @@ packages:
   file-uri-to-path@1.0.0:
     resolution: {integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==}
 
-  find-proc@0.1.0:
-    resolution: {integrity: sha512-OaOpEYv2PiQ7SQ5LIrl+deA1XaWcxEjnpM6VuWXTUvn+teIXxeFTLDmu18/zDQpFmHN4o3oDBX+BT0AGwEhemg==}
+  find-proc@0.2.0:
+    resolution: {integrity: sha512-a6h2nTrgB3g5Wrn4au9Ux4kMk7IJtyF6oA8uGn+mk3weLZssUtc1cp6meHIzzuW2o1srrBAxzkmXLbqjRkgB6w==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
   flattie@1.1.1:
@@ -1913,6 +1913,10 @@ packages:
     resolution: {integrity: sha512-6R3J5M4AcbtLUdZmRv2SygeVaM7IhrLXu9BmnOGmmACak8fiUtOsYNWUS4uK7upbmHIBbLBeFeI//477BKLBzA==}
     engines: {node: '>=11.0.0'}
 
+  sax@1.6.1:
+    resolution: {integrity: sha512-42tBVwLWnaQvW5zc4HbZrTuWccECCZfBi92FDuwtqxasH+JbPB3/FOKb1m222K42R4WxuxzzMsTswfzgtSu64Q==}
+    engines: {node: '>=11.0.0'}
+
   semver@7.8.5:
     resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
     engines: {node: '>=10'}
@@ -1978,8 +1982,8 @@ packages:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
 
-  svgo@4.0.1:
-    resolution: {integrity: sha512-XDpWUOPC6FEibaLzjfe0ucaV0YrOjYotGJO1WpF0Zd+n6ZGEQUsSugaoLq9QkEZtAfQIxT42UChcssDVPP3+/w==}
+  svgo@4.1.0:
+    resolution: {integrity: sha512-bkxnTg1kSU0guhIBmibA6UUhrQmPVA1XsQLN+ylCd+UWzbnLkySOcXpyk1mrl05f+pcaCx2eHb+sp6BgMZWX+Q==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -2115,6 +2119,10 @@ packages:
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
+
+  verkit@0.4.0:
+    resolution: {integrity: sha512-sXMwN6DMHeouPfCxkxWkKAmxphWKEenHYY5H1nIBzU3PmDsmJp6kBXJdshjVdpMZuWCmL9SH7KFRx29AylpP6g==}
+    engines: {node: '>=18.12.0'}
 
   vfile-message@4.0.3:
     resolution: {integrity: sha512-QTHzsGd1EhbZs4AsQ20JX1rC3cOlt/IWJruk893DfLRr57lcnOeMaWG4K0JrRta4mIJZKth2Au3mM3u03/JWKw==}
@@ -2297,11 +2305,11 @@ snapshots:
       github-slugger: 2.0.0
       satteri: 0.10.4
 
-  '@astrojs/mdx@8.0.1(@astrojs/markdown-satteri@0.4.1)(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76)))':
+  '@astrojs/mdx@8.0.1(@astrojs/markdown-satteri@0.4.1)(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76)))':
     dependencies:
       '@astrojs/internal-helpers': 0.11.0
       '@astrojs/markdown-satteri': 0.4.1
-      astro: 7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76))
+      astro: 7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76))
       es-module-lexer: 2.1.0
 
   '@astrojs/prism@4.0.2':
@@ -2326,14 +2334,14 @@ snapshots:
       is-docker: 4.0.0
       package-manager-detector: 1.6.0
 
-  '@astrojs/vercel@11.0.10(@aws-sdk/credential-provider-web-identity@3.972.76)(astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76)))(rollup@4.61.1)(supports-color@7.2.0)':
+  '@astrojs/vercel@11.0.10(@aws-sdk/credential-provider-web-identity@3.972.76)(astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76)))(rollup@4.61.1)(supports-color@7.2.0)':
     dependencies:
       '@astrojs/internal-helpers': 0.11.0
       '@vercel/analytics': 2.0.1
       '@vercel/functions': 3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76)
       '@vercel/nft': 1.10.2(rollup@4.61.1)(supports-color@7.2.0)
       '@vercel/routing-utils': 6.5.0
-      astro: 7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76))
+      astro: 7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76))
       esbuild: 0.28.1
       tinyglobby: 0.2.17
     transitivePeerDependencies:
@@ -3162,7 +3170,7 @@ snapshots:
 
   aria-query@5.3.2: {}
 
-  astro@7.3.2(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76)):
+  astro@7.3.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.1)(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76)):
     dependencies:
       '@astrojs/compiler-rs': 0.4.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)
       '@astrojs/internal-helpers': 0.11.0
@@ -3183,7 +3191,7 @@ snapshots:
       dset: 3.1.4
       es-module-lexer: 2.1.0
       esbuild: 0.28.1
-      find-proc: 0.1.0
+      find-proc: 0.2.0
       flattie: 1.1.1
       fontace: 0.4.1
       get-tsconfig: 5.0.0-beta.4
@@ -3202,16 +3210,16 @@ snapshots:
       package-manager-detector: 1.6.0
       piccolore: 0.1.3
       picomatch: 4.0.4
-      semver: 7.8.5
       shiki: 4.4.3
       smol-toml: 1.6.1
-      svgo: 4.0.1
+      svgo: 4.1.0
       tinyclip: 0.1.14
       tinyexec: 1.2.4
       tinyglobby: 0.2.17
       ultrahtml: 1.6.0
       unifont: 0.7.5
       unstorage: 1.17.5(@vercel/functions@3.9.5(@aws-sdk/credential-provider-web-identity@3.972.76))
+      verkit: 0.4.0
       vite: 8.0.16(@types/node@24.13.1)(esbuild@0.28.1)
       vitefu: 1.1.3(vite@8.0.16(@types/node@24.13.1)(esbuild@0.28.1))
       xxhash-wasm: 1.1.0
@@ -3311,10 +3319,10 @@ snapshots:
     dependencies:
       uncrypto: 0.1.3
 
-  css-select@5.2.2:
+  css-select@6.0.0:
     dependencies:
       boolbase: 1.0.0
-      css-what: 6.2.2
+      css-what: 7.0.0
       domhandler: 5.0.3
       domutils: 3.2.2
       nth-check: 2.1.1
@@ -3329,7 +3337,7 @@ snapshots:
       mdn-data: 2.27.1
       source-map-js: 1.2.1
 
-  css-what@6.2.2: {}
+  css-what@7.0.0: {}
 
   csso@5.0.5:
     dependencies:
@@ -3463,7 +3471,7 @@ snapshots:
 
   file-uri-to-path@1.0.0: {}
 
-  find-proc@0.1.0: {}
+  find-proc@0.2.0: {}
 
   flattie@1.1.1: {}
 
@@ -3898,6 +3906,8 @@ snapshots:
 
   sax@1.6.0: {}
 
+  sax@1.6.1: {}
+
   semver@7.8.5: {}
 
   sharp@0.35.4(@types/node@24.13.1):
@@ -3986,15 +3996,15 @@ snapshots:
       has-flag: 4.0.0
     optional: true
 
-  svgo@4.0.1:
+  svgo@4.1.0:
     dependencies:
       commander: 11.1.0
-      css-select: 5.2.2
+      css-select: 6.0.0
       css-tree: 3.2.1
-      css-what: 6.2.2
+      css-what: 7.0.0
       csso: 5.0.5
       picocolors: 1.1.1
-      sax: 1.6.0
+      sax: 1.6.1
 
   tar@7.5.16:
     dependencies:
@@ -4089,6 +4099,8 @@ snapshots:
     dependencies:
       punycode: 2.3.1
     optional: true
+
+  verkit@0.4.0: {}
 
   vfile-message@4.0.3:
     dependencies:
