@@ -23,7 +23,7 @@
 		"@aws-sdk/client-ses": "3.1140.0",
 		"@fontsource-variable/ibm-plex-sans": "5.3.0",
 		"@fontsource/ibm-plex-mono": "5.3.0",
-		"astro": "7.3.4",
+		"astro": "7.3.5",
 		"shiki": "4.4.3"
 	},
 	"devDependencies": {
