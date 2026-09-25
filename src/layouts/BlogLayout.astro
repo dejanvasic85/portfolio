@@ -7,8 +7,10 @@ const { frontmatter } = Astro.props;
 
 <Layout
 	title={frontmatter.title}
-	description={frontmatter.excerpt ||
-		`Blog post by Dejan Vasic about ${frontmatter.tags?.join(', ') || 'web development'}`}
+	description={
+		frontmatter.excerpt ||
+		`Blog post by Dejan Vasic about ${frontmatter.tags?.join(', ') || 'web development'}`
+	}
 	type="article"
 >
 	<article class="blog-post">
@@ -16,13 +18,11 @@ const { frontmatter } = Astro.props;
 			<header>
 				<div class="post-meta">
 					<span class="post-date">{frontmatter.date}</span>
-					{
-						frontmatter.tags && (
-							<div class="tag-container">
-								<Tags tags={frontmatter.tags.map((t: string) => t)} />
-							</div>
-						)
-					}
+					{frontmatter.tags && (
+						<div class="tag-container">
+							<Tags tags={frontmatter.tags.map((t: string) => t)} />
+						</div>
+					)}
 				</div>
 				<h1>{frontmatter.title}</h1>
 				<p class="author">By Dejan Vasic</p>
@@ -34,7 +34,9 @@ const { frontmatter } = Astro.props;
 			</div>
 
 			<div class="post-footer">
-				<a href="/blog" class="btn-link">← Back to All Posts</a>
+				<a href="/blog" class="btn-link">
+					← Back to All Posts
+				</a>
 			</div>
 		</main>
 	</article>

@@ -80,14 +80,22 @@ const canonicalURL = new URL(cleanPath, Astro.site).href;
 		<LoadingIndicator />
 		<header class="site-header">
 			<div class="header-container">
-				<a href="/" class="wordmark" aria-label="dejan.vasic — home">dejan<span>.</span>vasic</a>
+				<a href="/" class="wordmark" aria-label="dejan.vasic — home">
+					dejan<span>.</span>vasic
+				</a>
 				<nav class="main-nav">
-					<a href="/" class={normalizedPathname === '' ? 'active' : ''}>Home</a>
-					<a href="/cv" class={normalizedPathname === '/cv' ? 'active' : ''}>CV</a>
-					<a href="/projects" class={normalizedPathname.startsWith('/projects') ? 'active' : ''}
-						>Projects</a
-					>
-					<a href="/blog" class={normalizedPathname.startsWith('/blog') ? 'active' : ''}>Blog</a>
+					<a href="/" class={normalizedPathname === '' ? 'active' : ''}>
+						Home
+					</a>
+					<a href="/cv" class={normalizedPathname === '/cv' ? 'active' : ''}>
+						CV
+					</a>
+					<a href="/projects" class={normalizedPathname.startsWith('/projects') ? 'active' : ''}>
+						Projects
+					</a>
+					<a href="/blog" class={normalizedPathname.startsWith('/blog') ? 'active' : ''}>
+						Blog
+					</a>
 				</nav>
 				<div class="theme-toggle-slot">
 					<ThemeToggle />
@@ -101,23 +109,29 @@ const canonicalURL = new URL(cleanPath, Astro.site).href;
 			<div class="footer-container">
 				<p>&copy; {new Date().getFullYear()} Dejan Vasic. All rights reserved.</p>
 				<div class="social-links">
-					<a href="https://github.com/dejanvasic85" target="_blank" rel="noopener noreferrer"
-						>GitHub
+					<a href="https://github.com/dejanvasic85" target="_blank" rel="noopener noreferrer">
+						GitHub
 					</a>
 					<a
 						href="https://www.linkedin.com/in/dejan-vasic/"
 						target="_blank"
-						rel="noopener noreferrer">LinkedIn</a
+						rel="noopener noreferrer"
 					>
-					<a href="https://x.com/dejanvasic85" target="_blank" rel="noopener noreferrer">X</a>
+						LinkedIn
+					</a>
+					<a href="https://x.com/dejanvasic85" target="_blank" rel="noopener noreferrer">
+						X
+					</a>
 					<a
 						href="https://bsky.app/profile/dejanvasic.bsky.social"
 						target="_blank"
-						rel="noopener noreferrer">Blue Sky</a
+						rel="noopener noreferrer"
 					>
-					<a href="https://medium.com/@dejanvasic24" target="_blank" rel="noopener noreferrer"
-						>Medium</a
-					>
+						Blue Sky
+					</a>
+					<a href="https://medium.com/@dejanvasic24" target="_blank" rel="noopener noreferrer">
+						Medium
+					</a>
 				</div>
 			</div>
 		</footer>
@@ -126,7 +140,6 @@ const canonicalURL = new URL(cleanPath, Astro.site).href;
 			import { initializeTransitions } from '../scripts/transitionEnhancer';
 			initializeTransitions();
 		</script>
-
 		<script>
 			let headerScrollHandler: (() => void) | null = null;
 

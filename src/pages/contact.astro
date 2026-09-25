@@ -47,19 +47,20 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 					name="message"
 					rows="6"
 					placeholder="Tell me about your project..."
-					transition:persist></textarea>
+					transition:persist
+				></textarea>
 				{inputErrors.message && <p class="field-error">{inputErrors.message}</p>}
 			</div>
 
-			{
-				result?.data?.success && (
-					<div class="success-message">
-						<p>{result.data.message}</p>
-					</div>
-				)
-			}
+			{result?.data?.success && (
+				<div class="success-message">
+					<p>{result.data.message}</p>
+				</div>
+			)}
 
-			<button type="submit" class="btn-primary">Send Message</button>
+			<button type="submit" class="btn-primary">
+				Send Message
+			</button>
 		</form>
 	</main>
 </Layout>
