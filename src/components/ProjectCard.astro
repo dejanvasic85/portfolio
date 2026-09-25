@@ -13,20 +13,20 @@ const { slug, title, heroStatement, image } = Astro.props;
 
 <article class="project-card">
 	<div class="card-image">
-		{
-			image ? (
-				<Image src={image} alt={`${title} preview`} width={480} height={270} loading="lazy" />
-			) : (
-				<div class="card-image-placeholder">
-					<span>{title[0]}</span>
-				</div>
-			)
-		}
+		{image ? (
+			<Image src={image} alt={`${title} preview`} width={480} height={270} loading="lazy" />
+		) : (
+			<div class="card-image-placeholder">
+				<span>{title[0]}</span>
+			</div>
+		)}
 	</div>
 	<div class="card-body">
 		<h2 class="card-title">{title}</h2>
 		<p class="hero-statement">{heroStatement}</p>
-		<a href={`/projects/${slug}`} class="details-link">View details →</a>
+		<a href={`/projects/${slug}`} class="details-link">
+			View details →
+		</a>
 	</div>
 </article>
 

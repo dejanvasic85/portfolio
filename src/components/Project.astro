@@ -39,32 +39,30 @@ const {
 		<p class="hero-statement">{heroStatement}</p>
 	</div>
 
-	{
-		images.desktop && (
-			<div class="project-screenshots">
-				<div class="screenshots-container">
+	{images.desktop && (
+		<div class="project-screenshots">
+			<div class="screenshots-container">
+				<Image
+					src={images.desktop}
+					alt={`${title} desktop screenshot`}
+					class="screenshot desktop-screenshot"
+					widths={[400, 800, 1200]}
+					sizes="(max-width: 768px) 100vw, 800px"
+					loading="lazy"
+				/>
+				{images.mobile && (
 					<Image
-						src={images.desktop}
-						alt={`${title} desktop screenshot`}
-						class="screenshot desktop-screenshot"
-						widths={[400, 800, 1200]}
-						sizes="(max-width: 768px) 100vw, 800px"
+						src={images.mobile}
+						alt={`${title} mobile screenshot`}
+						class="screenshot mobile-screenshot"
+						width={380}
+						densities={[1, 2]}
 						loading="lazy"
 					/>
-					{images.mobile && (
-						<Image
-							src={images.mobile}
-							alt={`${title} mobile screenshot`}
-							class="screenshot mobile-screenshot"
-							width={380}
-							densities={[1, 2]}
-							loading="lazy"
-						/>
-					)}
-				</div>
+				)}
 			</div>
-		)
-	}
+		</div>
+	)}
 
 	<div class="project-main">
 		<div class="project-content">
@@ -73,46 +71,46 @@ const {
 				<p>{description}</p>
 			</div>
 
-			{
-				businessMetrics.length > 0 && (
-					<div>
-						<h3>Goals</h3>
-						<ul class="metrics-list">
-							{businessMetrics.map((metric) => (
-								<li class="metric-item">{metric}</li>
-							))}
-						</ul>
-					</div>
-				)
-			}
+			{businessMetrics.length > 0 && (
+				<div>
+					<h3>Goals</h3>
+					<ul class="metrics-list">
+						{businessMetrics.map((metric) => (
+							<li class="metric-item">{metric}</li>
+						))}
+					</ul>
+				</div>
+			)}
 			<div class="tech-stack">
 				<h3>Technology Stack</h3>
 				<Tags tags={tags} />
 			</div>
 		</div>
 
-		{
-			testimonial && (
-				<div class="testimonial">
-					<blockquote class="testimonial-quote">"{testimonial.quote}"</blockquote>
-					<cite class="testimonial-author">— {testimonial.author}</cite>
-				</div>
-			)
-		}
+		{testimonial && (
+			<div class="testimonial">
+				<blockquote class="testimonial-quote">"{testimonial.quote}"</blockquote>
+				<cite class="testimonial-author">— {testimonial.author}</cite>
+			</div>
+		)}
 
 		<div class="project-links">
 			<a
 				href={projectUrl}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="btn-link btn-link-external">View Project</a
+				class="btn-link btn-link-external"
 			>
+				View Project
+			</a>
 			<a
 				href={sourceCodeUrl}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="btn-link btn-link-external secondary">Source Code</a
+				class="btn-link btn-link-external secondary"
 			>
+				Source Code
+			</a>
 		</div>
 	</div>
 </section>

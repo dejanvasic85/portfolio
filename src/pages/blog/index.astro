@@ -38,32 +38,31 @@ const sortedPosts = allPosts.sort((a, b) => {
 						d="M12.75 19.5v-.75a7.5 7.5 0 0 0-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
 					></path>
 				</svg>
-
 				RSS
 			</a>
 		</div>
 		<p class="intro">Thoughts on software engineering, leadership, and technology.</p>
 		<div class="posts">
-			{
-				sortedPosts.map((post) => (
-					<article class="post-card">
-						<div class="post-meta">
-							<span class="post-date">{post.frontmatter.date}</span>
-							<Tags tags={post.frontmatter.tags?.map((t: string) => t)} />
-						</div>
-						<h2>
-							<a href={post.url}>{post.frontmatter.title}</a>
-						</h2>
-						<p class="excerpt">{post.frontmatter.excerpt}</p>
-						<a href={post.url} class="btn-link small">
-							Read post →
-						</a>
-					</article>
-				))
-			}
+			{sortedPosts.map((post) => (
+				<article class="post-card">
+					<div class="post-meta">
+						<span class="post-date">{post.frontmatter.date}</span>
+						<Tags tags={post.frontmatter.tags?.map((t: string) => t)} />
+					</div>
+					<h2>
+						<a href={post.url}>{post.frontmatter.title}</a>
+					</h2>
+					<p class="excerpt">{post.frontmatter.excerpt}</p>
+					<a href={post.url} class="btn-link small">
+						Read post →
+					</a>
+				</article>
+			))}
 		</div>
 
-		<a href="/" class="btn-link" style="margin-top: 2rem;">← Back to Home</a>
+		<a href="/" class="btn-link" style="margin-top: 2rem;">
+			← Back to Home
+		</a>
 	</main>
 </Layout>
 

@@ -9,19 +9,19 @@ import { projects } from '../../content/projects';
 		<h1>Dejan Vasic's projects</h1>
 		<p class="intro">A selection of client and personal projects I've built.</p>
 		<div class="projects-list">
-			{
-				projects.map((project) => (
-					<ProjectCard
-						slug={project.slug}
-						title={project.title}
-						heroStatement={project.heroStatement}
-						image={project.images.desktop}
-					/>
-				))
-			}
+			{projects.map((project) => (
+				<ProjectCard
+					slug={project.slug}
+					title={project.title}
+					heroStatement={project.heroStatement}
+					image={project.images.desktop}
+				/>
+			))}
 		</div>
 
-		<a href="/" class="btn-link" style="margin-top: 2rem;">← Back to Home</a>
+		<a href="/" class="btn-link" style="margin-top: 2rem;">
+			← Back to Home
+		</a>
 	</main>
 </Layout>
 
