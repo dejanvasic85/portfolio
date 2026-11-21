@@ -188,8 +188,8 @@ importers:
         specifier: 11.0.14
         version: 11.0.14(@aws-sdk/credential-provider-web-identity@3.972.90)(astro@7.3.8(@types/node@24.13.1)(@vercel/functions@3.9.11(@aws-sdk/credential-provider-web-identity@3.972.90))(esbuild@0.28.1)(yaml@2.9.1))(rollup@4.61.1)(supports-color@7.2.0)
       '@aws-sdk/client-ses':
-        specifier: 3.1170.0
-        version: 3.1170.0
+        specifier: 3.1173.0
+        version: 3.1173.0
       '@fontsource-variable/ibm-plex-sans':
         specifier: 5.3.0
         version: 5.3.0
@@ -393,8 +393,8 @@ packages:
     peerDependencies:
       astro: ^7.0.0
 
-  '@aws-sdk/client-ses@3.1170.0':
-    resolution: {integrity: sha512-ozKO6RzCP47v+E6mVX1gSBl7RlCYqlWTy54D12neZ8dSKE+n4IeBqLEkTbZnDMvzQ5U8s4Qub7rULBF1PUgIJA==}
+  '@aws-sdk/client-ses@3.1173.0':
+    resolution: {integrity: sha512-+Hmk4bCNDHCxn0nxojPQKEyRptQJnZbvqf6OC9XZhJDds6vyFYmmXDcwjGqpJmwCPB8Crj8+wtVWgZpRosIE2w==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.981.0':
@@ -2485,7 +2485,7 @@ snapshots:
       - vue-router
       - ws
 
-  '@aws-sdk/client-ses@3.1170.0':
+  '@aws-sdk/client-ses@3.1173.0':
     dependencies:
       '@aws-sdk/core': 3.981.0
       '@aws-sdk/credential-provider-node': 3.972.97
